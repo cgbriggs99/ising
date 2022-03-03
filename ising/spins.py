@@ -21,11 +21,11 @@ Returns a representation using spin arrows for this object.
         return "".join(['↿' if i == 1 else '⇂' for i in self])
 
     def magnetization(self) :
-    """
+        """
 Finds the spin excess of a spin configuration.
 """
-    return len(list(filter(lambda x: x == 1, self))) - \
-               len(list(filter(lambda x: x == -1, self)))
+        return len(list(filter(lambda x: x == 1, self))) - \
+                   len(list(filter(lambda x: x == -1, self)))
 
 class SpinMatrix(SpinConfig) :
     """
@@ -54,11 +54,18 @@ an integer.
     def __len__(self) :
         return self.__len
     def __getitem__(self, index) :
-        assert(index >= 0 and index < self.__len)
-        return 2 * (self.__numeral & (1 << index)) - 1
+        assert(index < self.__len)
+        ind = index % len(self)
+        if ind < 0 :
+            ind += len(self)
+        return 2 * ((self.__numeral & (1 << (self.__len - ind - 1))) >>
+                    (self.__len - ind - 1)) - 1
     def __setitem__(self, index, value) :
-        self.__numeral = (self.__numeral & ~(1 << index)) | \
-                         (((value + 1) // 2) << index)
+        ind = index % len(self)
+        if ind < 0 :
+            ind += len(self)
+        self.__numeral = (self.__numeral & ~(1 << (self.__len - ind - 1))) | \
+                         (((value + 1) // 2) << (self.__len - ind - 1))
         return (value + 1) // 2
     def __iter__(self) :
         return _SpinIntegerIterator(self)
