@@ -1,0 +1,60 @@
+Hamiltonian
+===========
+
+.. py:module:: ising.hamiltonian
+
+Contains definitions for Hamiltonians for the Ising problem.
+
+.. py:class:: hamiltonian.Hamiltonian(coupling : float, magnet : float)
+
+   Represents a Hamiltonian for an Ising system.
+
+   :canonical: ising.hamiltonian.Hamiltonian
+   :param float coupling: The spin coupling constant for the system.
+   :param float magnet: The strength of the magnetic field in the direction of the spins.
+
+   .. py:method:: Hamiltonian.getcoupling()
+
+      Gets the coupling constant stored in the Hamiltonian.
+
+      :return: The value of the coupling constant.
+	       
+   .. py:method:: Hamiltonian.getmagnet()
+
+      Gets the strength of the magnetic field stored in the Hamiltonian.
+
+      :return: The strength of the magnetic field.
+
+   .. py:method:: Hamiltonian.setcoupling(value : float)
+
+      Sets the value of the coupling constant.
+
+      :param float value: The new value of the coupling constant.
+      :return: The new value of the coupling constant.
+
+   .. py:method:: Hamiltonian.setmagnet(value : float)
+
+      Sets the strength of the magnetic field.
+
+      :param float value: The new strength of the magnetic field.
+      :return: The new strength of the magnetic field.
+
+   .. py:method:: Hamiltonian.energy(spin : ising.spins.SpinConfig)
+
+      Finds the energy of a spin configuration with the parameters specified by the Hamiltonian. Uses the equation
+
+      .. math::
+
+	 E = J\sum_{\left\langle i,j\right\rangle} S_i S_j + M \sum_i S_i
+
+      :param spin: The spin configuration.
+      :type spin: :py:class:ising.spins.SpinConfig
+      :return: The energy of the given spin configuration.
+
+   .. py:method:: Hamiltonian.temperature(spin : ising.spins.SpinConfig, boltzmann = ising.ising.BOLTZMANN_K)
+
+      Finds the energy divided by the Boltzmann constant.
+
+      :param ising.spins.SpinConfig spin: The spin configuration.
+      :return: The energy of the spin configuration divided by the Boltzmann constant.
+      

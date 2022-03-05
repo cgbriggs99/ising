@@ -25,8 +25,10 @@ Represents a Hamiltonian for an Ising system.
         return self.__mag
     def setcoupling(self, value) :
         self.__coupling = value
+        return value
     def setmagnet(self, value) :
         self.__mag = value
+        return value
     def energy(self, spin : spins.SpinConfig) :
         """
 Find the raw energy of a spin configuration. Uses the formula
