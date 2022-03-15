@@ -5,7 +5,10 @@ from .ising import *
 from .hamiltonian import *
 from .spins import *
 from .thermo import *
-#from .src.fafb import *
+
+# This module is not guaranteed.
+try :
+    from .src.fafb import *
 
 # Handle versioneer
 from ._version import get_versions

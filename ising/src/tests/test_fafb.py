@@ -13,5 +13,6 @@ __temps = np.linspace(1, 100, 50)
 __threads = 4
 
 def test_fafb() :
+    # Test the backend.
     e, h, m = ising.fafb.plot_vals(__length, __J, __M, __temps, __k, __threads)
     assert(any(map(lambda x: x != 0, e + h + m)))

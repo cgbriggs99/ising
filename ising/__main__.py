@@ -10,10 +10,10 @@ if __name__ == "__main__" :
     import hamiltonian
 
     import matplotlib.pyplot as plot
-#    import hamiltonian
 
     import concurrent.futures
 
+    # Add command line arguments.
     parser = argparse.ArgumentParser(description = "Plot thermodynamic values" +
                                      " of an Ising system.")
     parser.add_argument("--length", "-l", metavar = "N", default = 10,
@@ -44,6 +44,7 @@ if __name__ == "__main__" :
     args = vars(parser.parse_args())
 
 
+    # Check if using the C backend.
     use_c = not args["python"]
     temps = np.linspace(args['low_temp'], args["high_temp"], args["points"])
     if not args["python"] :
@@ -55,17 +56,21 @@ if __name__ == "__main__" :
             print("Could not find ising.src.fafb")
             use_c = False
     if args["python"] or not use_c :
+        # Open up a thread pool. If it's going to run in Python,
+        # we might as well try to make it go faster.
         exc = concurrent.futures.ThreadPoolExecutor()
         ham = hamiltonian.Hamiltonian(args["coupling"], args["magnet"])
         ens = list(exc.map(lambda t: thermo.average_value(ham.energy, ham,
                                                  args["length"],temp = t,
                                                  boltzmann = args["boltzmann"]),
                            temps))
+        # Plot.
         plot.figure()
         plot.plot(temps, ens, label = "Energy")
         plot.xlabel("Temperature")
         plot.ylabel("Energy")
         plot.legend()
+        # Rinse and repeat.
         endev = list(exc.map(lambda t: math.sqrt(thermo.variance(ham.energy, ham,
                                                   args["length"], temp = t,
                                                   boltzmann = args["boltzmann"])
@@ -84,15 +89,18 @@ if __name__ == "__main__" :
         plot.xlabel("Temperature")
         plot.ylabel("Energy per Temperature")
         plot.legend()
+        # Don't forget to shutdown the threads.
         exc.shutdown()
         plot.show()
     else :
+        # Use the C function, which is also threaded.
         ens, endev, magdev = src.fafb.plot_vals(args["length"],
                                                   args["coupling"],
                                                   args["magnet"],
                                                   list(temps),
                                                   args["boltzmann"],
                                                   min(32, os.cpu_count() + 4))
+        # Plot.
         plot.figure()
         plot.plot(temps, ens, label = "Energy")
         plot.xlabel("Temperature")

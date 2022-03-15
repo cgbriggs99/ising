@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+# For the __main__.py module.
 try :
     from . import ising
     from . import spins

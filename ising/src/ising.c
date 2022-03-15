@@ -92,12 +92,14 @@ static void *compute_vals(void *arg) {
   }
   return (0);
 }
-  
+
+// Documentation in ising.h
 int threaded_ising(int positions, double coupling, double magnet,
 		      double boltzmann, double const *temps, int len_temps,
 		   double *out_ens, double *out_heat, double *mag_sus,
 		   int threads) {
 
+  // This thread is also going to be used, which is why it's threads - 1.
   pthread_t *thread = calloc(threads - 1, sizeof(pthread_t));
   pthread_attr_t *attr = calloc(threads - 1, sizeof(pthread_attr_t));
   
@@ -130,6 +132,7 @@ int threaded_ising(int positions, double coupling, double magnet,
     pthread_join(thread[i], &rets);
   }
 
+  // I hope there are no leaks.
   free(pass_args);
   free(thread);
   free(attr);

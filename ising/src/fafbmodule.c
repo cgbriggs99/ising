@@ -10,6 +10,7 @@
 #include "ising.h"
 #include <stdio.h>
 
+// Docstring in FafbMethods
 PyObject *fafb_pass_to_c(PyObject *self, PyObject *args) {
   int positions, len, i, threads;
   double coupling, magnet, boltzmann;
@@ -53,6 +54,7 @@ PyObject *fafb_pass_to_c(PyObject *self, PyObject *args) {
   ens_list = PyList_New(len);
   heats_list = PyList_New(len);
   magsus_list = PyList_New(len);
+  // If any are not able to be allocated, die.
   if(ens_list == NULL) {
     perror("Could not allocate first list.");
   }
@@ -85,6 +87,7 @@ PyObject *fafb_pass_to_c(PyObject *self, PyObject *args) {
       return (NULL);
     }
   }
+  // Free up resources. I hope there are no leaks.
   free(energies);
   free(heats);
   free(magsus);
@@ -93,6 +96,7 @@ PyObject *fafb_pass_to_c(PyObject *self, PyObject *args) {
   return (PyTuple_Pack(3, ens_list, heats_list, magsus_list));
 }
 
+// Makes things work.
 static PyMethodDef FafbMethods[] = {
   {"plot_vals", fafb_pass_to_c, METH_VARARGS, "Pass the Ising plotting function"
    " to C.\n"
@@ -107,6 +111,7 @@ static PyMethodDef FafbMethods[] = {
   {NULL, NULL, 0, NULL}
 };
 
+// Makes things work.
 static struct PyModuleDef fafbmodule = {
   PyModuleDef_HEAD_INIT,
   "fafb",
@@ -115,6 +120,7 @@ static struct PyModuleDef fafbmodule = {
   FafbMethods
 };
 
+// Makes things work.
 PyMODINIT_FUNC PyInit_fafb(void) {
   return PyModule_Create(&fafbmodule);
 }
