@@ -10,6 +10,8 @@ dependencies:
   - pip
   - make
   - clang
+  - numpy
+  - matplotlib
 
     # Testing
   - pytest
