@@ -2,7 +2,7 @@ Ising
 ========
 .. py:module:: ising.ising
 
-This module contains only the Boltzmann constant at this point.
+This module contains the Boltzmann constant and a wrapper for the actual plotting function.
    
 .. py:data:: BOLTZMANN_K
 

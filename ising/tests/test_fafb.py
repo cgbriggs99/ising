@@ -14,6 +14,8 @@ __threads = 4
 
 def test_fafb() :
     # Test the backend.
+    if "src" not in ising.__dict__ :
+        return
     e, h, m = ising.src.fafb.plot_vals(__length, __J, __M, list(__temps), __k,
                                        __threads)
     assert(any(map(lambda x: x != 0, e + h + m)))
