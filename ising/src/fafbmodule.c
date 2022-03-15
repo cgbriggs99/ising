@@ -102,7 +102,8 @@ static PyMethodDef FafbMethods[] = {
    ":param temps: Temperatures to use.\n"
    ":type temps: list(float)\n"
    ":param float boltzmann: The Boltzmann constant.\n"
-   ":param int threads: Number of threads to use.\n"},
+   ":param int threads: Number of threads to use.\n"
+   ":return: Three lists of energies, heats, and magnetic susceptibilities.\n"},
   {NULL, NULL, 0, NULL}
 };
 
