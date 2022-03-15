@@ -5,6 +5,7 @@ from .ising import *
 from .hamiltonian import *
 from .spins import *
 from .thermo import *
+#from .src.fafb import *
 
 # Handle versioneer
 from ._version import get_versions

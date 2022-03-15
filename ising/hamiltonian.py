@@ -1,7 +1,11 @@
 #!/usr/bin/python3
 
-from . import ising
-from . import spins
+try :
+    from . import ising
+    from . import spins
+except ImportError :
+    import ising
+    import spins
 
 ####################################
 #   mmmmmmm  mmmm  mmmm    mmmm    #

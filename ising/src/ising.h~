@@ -1,0 +1,13 @@
+/*
+ *  ising.h
+ *  Author: Connor Briggs (cgbriggs@vt.edu)
+ *  
+ *  Contains definitions for Ising code.
+ */
+
+#ifndef __ISING_H__
+#define __ISING_H__
+
+extern 
+
+#endif

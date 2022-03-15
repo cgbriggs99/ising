@@ -2,12 +2,12 @@
 
 if __name__ == "__main__" :
     import argparse
-#    import spins
-#    import thermo
+    import spins
+    import thermo
     import numpy as np
     import math
     import ising
-#    import hamiltonian
+    import hamiltonian
 
     import matplotlib.pyplot as plot
 #    import hamiltonian
@@ -38,43 +38,74 @@ if __name__ == "__main__" :
     parser.add_argument("--points", "-n", metavar = "N",
                         default = 100, type = int,
                         help = "Number of points to use in each graph.")
+    parser.add_argument("--python", action="store_true",
+                        help = "Use python backend instead of C backend.")
 
     args = vars(parser.parse_args())
 
-    exc = concurrent.futures.ThreadPoolExecutor()
-    ham = ising.Hamiltonian(args["coupling"], args["magnet"])
-    
+
+    use_c = not args["python"]
     temps = np.linspace(args['low_temp'], args["high_temp"], args["points"])
-    ens = list(exc.map(lambda t: ising.average_value(ham.energy, ham,
+    if not args["python"] :
+        try :
+            import src.fafb
+            import os
+            use_c = True
+        except :
+            print("Could not find ising.src.fafb")
+            use_c = False
+    if args["python"] or not use_c :
+        exc = concurrent.futures.ThreadPoolExecutor()
+        ham = hamiltonian.Hamiltonian(args["coupling"], args["magnet"])
+        ens = list(exc.map(lambda t: thermo.average_value(ham.energy, ham,
                                                  args["length"],temp = t,
                                                  boltzmann = args["boltzmann"]),
-                       temps))
-    plot.figure()
-    plot.plot(temps, ens, label = "Energy")
-    plot.xlabel("Temperature (K)")
-    plot.ylabel("Energy")
-    plot.legend()
-    try :
-        endev = list(exc.map(lambda t: math.sqrt(ising.variance(ham.energy, ham,
+                           temps))
+        plot.figure()
+        plot.plot(temps, ens, label = "Energy")
+        plot.xlabel("Temperature")
+        plot.ylabel("Energy")
+        plot.legend()
+        endev = list(exc.map(lambda t: math.sqrt(thermo.variance(ham.energy, ham,
                                                   args["length"], temp = t,
                                                   boltzmann = args["boltzmann"])
                                    ) / (args["boltzmann"] * t ** 2),
                          temps))
-        magdev = list(exc.map(lambda t: math.sqrt(ising.variance(
+        magdev = list(exc.map(lambda t: math.sqrt(thermo.variance(
             lambda sc: sc.magnetization(), ham, args["length"], temp = t,
             boltzmann = args["boltzmann"])) / (args["boltzmann"] * t), temps))
         plot.figure()
         plot.plot(temps, endev, label = "Heat capacity")
-        plot.xlabel("Temperature (K)")
-        plot.ylabel("Energy per Kelvin")
+        plot.xlabel("Temperature")
+        plot.ylabel("Energy per Temperature")
         plot.legend()
         plot.figure()
         plot.plot(temps, magdev, label = "Magnetic susceptibility")
-        plot.xlabel("Temperature (K)")
-        plot.ylabel("Energy per Kelvin")
+        plot.xlabel("Temperature")
+        plot.ylabel("Energy per Temperature")
         plot.legend()
-    except :
-        print("Error on variance")
-    exc.shutdown()
-    plot.show()
-    
+        exc.shutdown()
+        plot.show()
+    else :
+        ens, endev, magdev = src.fafb.plot_vals(args["length"],
+                                                  args["coupling"],
+                                                  args["magnet"],
+                                                  list(temps),
+                                                  args["boltzmann"],
+                                                  min(32, os.cpu_count() + 4))
+        plot.figure()
+        plot.plot(temps, ens, label = "Energy")
+        plot.xlabel("Temperature")
+        plot.ylabel("Energy")
+        plot.legend()
+        plot.figure()
+        plot.plot(temps, endev, label = "Heat Capacity")
+        plot.xlabel("Temperature")
+        plot.ylabel("Energy per Temperature")
+        plot.legend()
+        plot.figure()
+        plot.plot(temps, magdev, label = "Magnetic Susceptibility")
+        plot.xlabel("Temperature")
+        plot.ylabel("Energy per Temperature")
+        plot.legend()
+        plot.show()
