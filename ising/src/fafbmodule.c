@@ -65,6 +65,7 @@ PyObject *fafb_pass_to_c(PyObject *self, PyObject *args) {
     perror("Could not allocate third list.");
   }
   if(ens_list == NULL || heats_list == NULL || magsus_list == NULL) {
+    fprintf(stderr, "%d items\n", len);
     free(energies);
     free(heats);
     free(magsus);

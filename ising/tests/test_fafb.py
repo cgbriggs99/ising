@@ -14,5 +14,6 @@ __threads = 4
 
 def test_fafb() :
     # Test the backend.
-    e, h, m = ising.fafb.plot_vals(__length, __J, __M, __temps, __k, __threads)
+    e, h, m = ising.src.fafb.plot_vals(__length, __J, __M, list(__temps), __k,
+                                       __threads)
     assert(any(map(lambda x: x != 0, e + h + m)))

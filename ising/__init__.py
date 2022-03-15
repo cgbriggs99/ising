@@ -9,6 +9,8 @@ from .thermo import *
 # This module is not guaranteed.
 try :
     from .src.fafb import *
+except Exception :
+    pass
 
 # Handle versioneer
 from ._version import get_versions
