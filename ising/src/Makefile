@@ -3,7 +3,7 @@ include defs.mk
 
 # Flags. We want fast. -fPIC is to make it work.
 CFLAGS+=-I $(PYHEADER) -Ofast -fPIC
-LDLIBS+=-lm -lpthread
+LDLIBS+=-lpthread
 
 .PHONY:all
 all: fafb.so fafbmodule.o ising.o
@@ -14,9 +14,9 @@ clean:
 
 fafb.so: fafbmodule.o ising.o
 ifeq ($(shell uname -s),Darwin)
-	$(LD) -o fafb.so $^ $(LDLIBS) -lc
+	$(LD) -o fafb.so $^ $(LDLIBS) -lSystem
 else
-	$(LD) -o fafb.so $^ $(LDLIBS) -shared
+	$(LD) -o fafb.so $^ $(LDLIBS) -shared -lm
 endif
 
 # Depends on ising.h so that if it changes, the program will need to be redone.
