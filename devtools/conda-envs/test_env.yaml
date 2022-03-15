@@ -12,6 +12,7 @@ dependencies:
   - clang
   - numpy
   - matplotlib
+  - sphinx
 
     # Testing
   - pytest
