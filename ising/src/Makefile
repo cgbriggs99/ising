@@ -1,6 +1,5 @@
 include defs.mk
-
-CFLAGS+=-I $(PYHEADER) -pthread -Og -ggdb -g3 -fPIC
+CFLAGS+=-I $(PYHEADER) -Ofast -fPIC
 LDLIBS+=-lm -lpthread
 
 .PHONY:all
@@ -12,5 +11,8 @@ clean:
 
 fafb.so: fafbmodule.o ising.o
 	$(LD) -o fafb.so $^ -shared $(LDLIBS)
-fafbmodule.o: ising.o
+
+fafbmodule.o: fafbmodule.c ising.h
+
+ising.o: ising.c ising.h
 

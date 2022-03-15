@@ -82,7 +82,6 @@ PyObject *fafb_pass_to_c(PyObject *self, PyObject *args) {
       free(magsus);
       sprintf(buff, "%d %d %d\nCould not set item %d.", ret1, ret2, ret3, i);
       perror(buff);
-      fflush(stderr);
       return (NULL);
     }
   }
