@@ -4,6 +4,7 @@ import pytest
 import ising
 import math
 import numpy as np
+import os
 
 __length = 10
 __J = -2
@@ -14,7 +15,8 @@ __threads = 4
 
 def test_fafb() :
     # Test the backend.
-    if "src" not in ising.__dict__ :
+    if "fafb" not in ising.__dict__ :
+        print(os.listdir("ising/src"))
         return
     e, h, m = ising.src.fafb.plot_vals(__length, __J, __M, list(__temps), __k,
                                        __threads)
