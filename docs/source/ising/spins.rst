@@ -3,10 +3,8 @@ Spins
 
 .. py:module:: ising.spins
 
-   Contains representations for spin configurations.
-
-   :canonical: ising.spins
-
+Contains representations for spin configurations.
+	       
 .. py:class:: SpinConfig
 
    Represents a general spin configuration.
@@ -49,4 +47,28 @@ Spins
 
       :return: The spin excess.
 
-.. py:class:: SpinMatrix(
+.. py:class:: SpinMatrix(data : list(int)) : :py:class:`SpinConfig`
+
+   Represents a spin configuration set up with an array of 1's and -1's representing up and down spins. Implements all the base methods.
+
+      :param data: A list of 1's and -1's.
+      :type data: list(int)
+
+.. py:class:: SpinInteger(numeral : int, length : int) : :py:class:`SpinConfig`
+	      
+   Represents a spin configuration determined from the binary representation of an integer.
+
+   .. py:method:: __iter__()
+
+      :return: A :py:class:`_SpinIntegerIterator` that represents the object.
+
+   .. py:method:: copy()
+
+      :return: A copy of this object.
+
+.. py:class:: _SpinIntegerIterator(other : :py:class:`SpinInteger`)
+
+   Iterator class for :py:class:`SpinInteger`.
+
+   :param other: The :py:class:`SpinInteger` object to iterate over.
+

@@ -43,6 +43,7 @@ spins.
         return value
     def __iter__(self) :
         return iter(self.__data)
+    
 class SpinInteger(SpinConfig) :
     """
 Represents a spin configuration determined from the binary representation of

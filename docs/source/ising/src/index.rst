@@ -1,11 +1,8 @@
-Ising Documentation
+C Backend Documentation
 ===================
 
 .. toctree::
+   fafb
    ising
-   hamiltonian
-   spins
-   thermo
-   src/index
    :maxdepth: 2
    :caption: Contents

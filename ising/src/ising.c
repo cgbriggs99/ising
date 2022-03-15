@@ -10,7 +10,9 @@
 #include <pthread.h>
 #include "ising.h"
 #include <stdio.h>
+#include <stdint.h>
 
+// Structures the data to pass to each thread.
 typedef struct {
   int index, threads;
   int positions, len;
@@ -19,7 +21,8 @@ typedef struct {
   double *out_ens, *out_heat, *out_magsus;
 } pass_args_t;
 
-static int bit_counts[] = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
+// Precomputed bit counts.
+static char bit_counts[] = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
 			    1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
 			    1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
 			    2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6,
@@ -35,28 +38,32 @@ static int bit_counts[] = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
 			    3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
 			    3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
 			    4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8 };
+
+// Splits a 32 bit value into 8 bit chunks.
 typedef struct {
-  unsigned char a: 8, b:8, c:8, d:8;
+  uint8_t a: 8, b:8, c:8, d:8;
 } bitvec_32_t;
 
+// Convert between the two.
 typedef union {
-  unsigned int sh;
+  uint32_t in;
   bitvec_32_t vec;
 } conv_t;
 
-static inline int bitcount(unsigned int sh) {
+// Count the number of active bits.
+static inline int bitcount(uint32_t in) {
   conv_t conv;
-  conv.sh = sh;
+  conv.in = in;
   bitvec_32_t vec = conv.vec;
   return (bit_counts[vec.a] + bit_counts[vec.b] + bit_counts[vec.c] +
 	  bit_counts[vec.d]);
 }
 
 // Do this operation quickly. See ising.spins.SpinConfig.magnetization for source
-#define MAGNETIZATION(I, L) ((bitcount((unsigned int) I) << 1) - L)
+#define MAGNETIZATION(I, L) ((bitcount((uint32_t) I) << 1) - L)
 
 // Do this in bit operations instead of multiplications.
-#define SPINCOUPLE(I, L) ((bitcount((unsigned int) (((I << (L - 1)) | I >> 1) ^ ~I) & ~(((unsigned int) -1) << L)) << 1) - L)
+#define SPINCOUPLE(I, L) ((bitcount((uint32_t) (((I << (L - 1)) | I >> 1) ^ ~I) & ~(((uint32_t) -1) << L)) << 1) - L)
 
 // Compute the energies, heat capacities, and magnetic susceptibilities.
 static void *compute_vals(void *arg) {
