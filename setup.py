@@ -18,6 +18,11 @@ try:
 except:
     long_description = None
 
+import os
+print("Building C backend")
+os.system("make")
+print("Done")
+
 
 setup(
     # Self-descriptive entries which should always be present

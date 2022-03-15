@@ -8,6 +8,8 @@ dependencies:
     # Base depends
   - python
   - pip
+  - make
+  - gcc
 
     # Testing
   - pytest
