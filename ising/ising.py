@@ -7,10 +7,8 @@ BOLTZMANN_K = 1.38064852e-23 # J/K
 
 try :
     from . import hamiltonian
-    from . import 
 except ImportError :
     import hamiltonian
-    import src.fafb
 
 try :
     from .src import fafb
