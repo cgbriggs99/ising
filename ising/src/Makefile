@@ -13,7 +13,7 @@ clean:
 	$(DEL) -rf *.o *.so
 
 fafb.so: fafbmodule.o ising.o
-	$(LD) -o fafb.so $^ -shared $(LDLIBS)
+	$(LD) -o fafb.so $^ $(LDLIBS)
 
 # Depends on ising.h so that if it changes, the program will need to be redone.
 fafbmodule.o: fafbmodule.c ising.h
