@@ -1,8 +1,11 @@
+include ./src/defs.mk
+
 all:
 	$(MAKE) -C ./src all
 
 .PHONY:clean
 clean:
-	rm -rf *.pyc *.pyo
+	$(DEL) *.pyc *.pyo *.~
+	$(MAKE) -C ./src clean
 
 

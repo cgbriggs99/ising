@@ -7,7 +7,7 @@ all: fafb.so fafbmodule.o ising.o
 
 .PHONY:clean
 clean:
-	$(DEL) *.o *.so
+	$(DEL) -rf *.o *.so
 
 fafb.so: fafbmodule.o ising.o
 	$(LD) -o fafb.so $^ -shared $(LDLIBS)
