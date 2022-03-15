@@ -21,6 +21,7 @@ except:
 import os
 print("Building C backend")
 os.system("make")
+assert("fafb.so" in os.listdir("ising/src"))
 print("Done")
 
 
