@@ -16,7 +16,7 @@ ifeq ($(OS),Windows_NT)
 	$(LD) -o fafb.so $^ -shared -lm
 else
 ifeq ($(shell uname -s),Darwin)
-	$(LD) -o fafb.so $^ -lSystem
+	$(LD) -o fafb.so $^ -lSystem -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
 else
 	$(LD) -o fafb.so $^ -shared -lm -lpthread
 endif

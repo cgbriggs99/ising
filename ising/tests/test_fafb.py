@@ -16,6 +16,9 @@ __threads = 4
 def test_fafb() :
     # Test the backend.
     ham = ising.Hamiltonian(__J, __M)
+    e, h, m = ising.fafbwrapper(ham, __length, __temps, __k,
+                                       __threads, no_c = True)
+    assert(any(map(lambda x: x != 0, e + h + m)))
     assert("fafb.so" in os.listdir("ising/src"))
     e, h, m = ising.fafbwrapper(ham, __length, __temps, __k,
                                        __threads)
