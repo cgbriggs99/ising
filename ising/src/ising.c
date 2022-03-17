@@ -71,7 +71,7 @@ static inline int bitcount(uint32_t in) {
 
 // Compute the energies, heat capacities, and magnetic susceptibilities.
 #ifdef _WIN32
-static int compute_vals(void *arg) {
+static DWORD compute_vals(void *arg) {
 #else
 static void *compute_vals(void *arg) {
 #endif
@@ -110,7 +110,7 @@ int threaded_ising(int positions, double coupling, double magnet,
   // This thread is also going to be used, which is why it's threads - 1.
 #ifdef _WIN32
   HANDLE *thread = calloc(threads - 1, sizeof(HANDLE));
-  uint32_t *ids = calloc(threads - 1, sizeof(uint32_t));
+  DWORD *ids = calloc(threads - 1, sizeof(DWORD));
 #else
   pthread_t *thread = calloc(threads - 1, sizeof(pthread_t));
   pthread_attr_t *attr = calloc(threads - 1, sizeof(pthread_attr_t));
@@ -146,14 +146,14 @@ int threaded_ising(int positions, double coupling, double magnet,
   // Don't leave this thread all alone. It needs work too.
   compute_vals(&(pass_args[threads - 1]));
 
-  for(int i = 0; i < threads - 1; i++) {
 #ifdef _WIN32
-    WaitForMultipleObjects(threads - 1, thread, TRUE, INFINITE);
+  WaitForMultipleObjects(threads - 1, thread, TRUE, INFINITE);
 #else
+  for(int i = 0; i < threads - 1; i++) {
     pthread_join(thread[i], &rets);
-#endif
   }
-
+#endif
+    
   // I hope there are no leaks.
 #ifdef _WIN32
   free(thread);
