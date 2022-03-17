@@ -2,7 +2,7 @@
  *  fastcmodule.c
  *  Author: Connor Briggs (cgbriggs@vt.edu)
  *  
- *  C backend for the Ising problem. It should be fast as f*** boiiiii.
+ *  C backend for the Ising problem. It should be super fast.
  */
 
 #define PY_SSIZE_T_CLEAN
