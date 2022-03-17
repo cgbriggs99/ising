@@ -7,8 +7,10 @@ BOLTZMANN_K = 1.38064852e-23 # J/K
 
 try :
     from . import hamiltonian
+    from . import thermo
 except ImportError :
     import hamiltonian
+    import thermo
 
 try :
     from .src import fafb
@@ -21,17 +23,18 @@ except ImportError :
 import os
 import sys
 import concurrent.futures
+import math
 
 
-def fafbwrapper(hamiltonian, length, temps, boltzmann = BOLTZMANN_K,
-                threads = max(32, 4 + os.cpu_count())) :
+def fafbwrapper(ham, length, temps, boltzmann = BOLTZMANN_K,
+                threads = max(32, 4 + os.cpu_count()), no_c = False) :
     """
-    This is a wrappr for src.fafb.plot_vals that turns the temps into a list,
+    This is a wrapper for src.fafb.plot_vals that turns the temps into a list,
     and has default values for several parameters. Also works with Hamiltonian.
     """
-    if "src" in sys.modules :
-        return src.fafb.plot_vals(length, hamiltonian.getcoupling(),
-                              hamiltonian.getmagnet(), list(temps),
+    if "ising.src.fafb" in sys.modules and not no_c:
+        return fafb.plot_vals(length, ham.getcoupling(),
+                              ham.getmagnet(), list(temps),
                               boltzmann, threads)
     else :
         exc = concurrent.futures.ThreadPoolExecutor(threads)
@@ -41,7 +44,7 @@ def fafbwrapper(hamiltonian, length, temps, boltzmann = BOLTZMANN_K,
                            temps)), list(exc.map(lambda t: math.sqrt(thermo.variance(ham.energy, ham,
                                                   length, temp = t,
                                                   boltzmann = boltzmann)
-                                   ) / (argsboltzmann * t ** 2),
+                                   ) / (boltzmann * t ** 2),
                          temps)), list(exc.map(lambda t: math.sqrt(thermo.variance(
             lambda sc: sc.magnetization(), ham, length, temp = t,
             boltzmann = boltzmann)) / (boltzmann * t), temps)))
