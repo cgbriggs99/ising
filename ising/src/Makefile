@@ -12,10 +12,14 @@ clean:
 	$(DEL) -rf *.o *.so
 
 fafb.so: fafbmodule.o ising.o
-ifeq ($(shell uname -s),Darwin)
-	$(LD) -o fafb.so $^ $(LDLIBS) -lSystem
+ifeq ($(OS),Windows_NT)
+	$(LD) -o fafb.so $^ -shared -lm -lpthread
 else
-	$(LD) -o fafb.so $^ $(LDLIBS) -shared -lm -lpthread
+ifeq ($(shell uname -s),Darwin)
+	$(LD) -o fafb.so $^ -lSystem
+else
+	$(LD) -o fafb.so $^ -shared -lm -lpthread
+endif
 endif
 
 # Depends on ising.h so that if it changes, the program will need to be redone.
