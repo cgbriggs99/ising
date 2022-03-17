@@ -1,5 +1,5 @@
 C Backend Documentation
-===================
+=======================
 
 .. toctree::
    fastc

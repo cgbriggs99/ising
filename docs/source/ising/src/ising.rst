@@ -90,11 +90,11 @@ The actual worker for the C backend. Prototypes can be found in ``ising.h``.
    :param L: The number of positions in the Ising model.
    :return: The spin coupling part, not multiplied by the coupling constant.
 
-.. c:function:: static void *compute_vals(void *arg)
+.. c:function:: static void \*compute_vals(void \*arg)
 
    Worker function to be passed to the threads.
 
-   :param arg: The arguments. Defined in the function as :c:type:`void *`, but treated as :c:type:`pass_args_t *`.
+   :param arg: The arguments. Defined in the function as :c:type:`void` \*, but treated as :c:type:`pass_args_t`\*.
    :type arg: void *
    :return: NULL. All outputs are placed in :c:type:`pass_args_t`.
 

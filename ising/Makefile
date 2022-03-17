@@ -2,8 +2,6 @@
 include ./src/defs.mk
 
 all:
-	# Build subprograms.
-	$(MAKE) -C ./src all
 
 # Clean the environment.
 .PHONY:clean

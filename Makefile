@@ -2,8 +2,6 @@
 include ./ising/src/defs.mk
 
 all: docs
-	# Build subprograms.
-	$(MAKE) -C ./ising all
 
 # Clean up the environment.
 .PHONY:clean
