@@ -1,7 +1,7 @@
 # Get the differing Windows vs. Linux remove commands.
 include ./ising/src/defs.mk
 
-all: docs
+#all: docs
 
 # Clean up the environment.
 .PHONY:clean
@@ -10,6 +10,6 @@ clean:
 	$(MAKE) -C ./ising clean
 
 # Build the docs.
-.PHONY:docs
-docs:
-	sphinx-build -b html docs/source docs/build/html
+#.PHONY:docs
+#docs:
+#	sphinx-build -b html docs/source docs/build/html

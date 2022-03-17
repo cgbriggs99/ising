@@ -13,7 +13,6 @@ dependencies:
   - numpy
   - matplotlib
   - sphinx
-  - texlive-core
 
     # Testing
   - pytest
