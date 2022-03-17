@@ -7,7 +7,11 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include <pthread.h>
+#ifdef _WIN32
+#  include <windows.h>
+#else
+#  include <pthread.h>
+#endif
 #include "ising.h"
 #include <stdio.h>
 #include <stdint.h>
@@ -66,7 +70,11 @@ static inline int bitcount(uint32_t in) {
 #define SPINCOUPLE(I, L) ((bitcount((uint32_t) (((I << (L - 1)) | I >> 1) ^ ~I) & ~(((uint32_t) -1) << L)) << 1) - L)
 
 // Compute the energies, heat capacities, and magnetic susceptibilities.
+#ifdef _WIN32
+static int compute_vals(void *arg) {
+#else
 static void *compute_vals(void *arg) {
+#endif
   pass_args_t *pass = (pass_args_t *) arg;
 
   for(int i = pass->index; i < pass->len; i += pass->threads) {
@@ -100,8 +108,13 @@ int threaded_ising(int positions, double coupling, double magnet,
 		   int threads) {
 
   // This thread is also going to be used, which is why it's threads - 1.
+#ifdef _WIN32
+  HANDLE *thread = calloc(threads - 1, sizeof(HANDLE));
+  uint32_t *ids = calloc(threads - 1, sizeof(uint32_t));
+#else
   pthread_t *thread = calloc(threads - 1, sizeof(pthread_t));
   pthread_attr_t *attr = calloc(threads - 1, sizeof(pthread_attr_t));
+#endif
   
   pass_args_t *pass_args = calloc(threads, sizeof(pass_args_t));
   void *rets;
@@ -120,8 +133,13 @@ int threaded_ising(int positions, double coupling, double magnet,
     pass_args[i].out_heat = out_heat;
     pass_args[i].out_magsus = mag_sus;
     if(i != threads - 1) {
+#ifdef _WIN32
+      thread[i] = CreateThread(NULL, 0, compute_vals, &(pass_args[i]), 0,
+			    &(ids[i]));
+#else
       pthread_attr_init(&(attr[i]));
       pthread_create(&(thread[i]), &(attr[i]), compute_vals, &(pass_args[i]));
+#endif
     }
   }
 
@@ -129,13 +147,23 @@ int threaded_ising(int positions, double coupling, double magnet,
   compute_vals(&(pass_args[threads - 1]));
 
   for(int i = 0; i < threads - 1; i++) {
+#ifdef _WIN32
+    WaitForMultipleObjects(threads - 1, thread, TRUE, INFINITE);
+#else
     pthread_join(thread[i], &rets);
+#endif
   }
 
   // I hope there are no leaks.
+#ifdef _WIN32
+  free(thread);
+  free(pass_args);
+  free(ids);
+#else
   free(pass_args);
   free(thread);
   free(attr);
+#endif
 
   return (0);
 }
