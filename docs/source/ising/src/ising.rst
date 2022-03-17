@@ -3,7 +3,7 @@ Ising C Worker Functions
 
 The actual worker for the C backend. Prototypes can be found in ``ising.h``.
 
-.. c:type:: struct pass_args_t
+.. c:type:: pass_args_t
 
    Contains the data to pass to each thread.
 
