@@ -8,7 +8,7 @@ from .thermo import *
 
 # This module is not guaranteed.
 try :
-    from .src.fafb import *
+    from .src.fastc import *
 except Exception :
     pass
 

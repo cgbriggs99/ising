@@ -13,10 +13,10 @@ except ImportError :
     import thermo
 
 try :
-    from .src import fafb
+    from .src import fastc
 except ImportError :
     try :
-        import src.fafb
+        import src.fastc
     except ImportError :
         pass;
 
@@ -26,14 +26,16 @@ import concurrent.futures
 import math
 
 
-def fafbwrapper(ham, length, temps, boltzmann = BOLTZMANN_K,
-                threads = max(32, 4 + os.cpu_count()), no_c = False) :
+def fastcwrapper(ham, length, temps, boltzmann = BOLTZMANN_K,
+                threads = max(32, 4 + os.cpu_count()), no_c = None) :
     """
-    This is a wrapper for src.fafb.plot_vals that turns the temps into a list,
+    This is a wrapper for src.fastc.plot_vals that turns the temps into a list,
     and has default values for several parameters. Also works with Hamiltonian.
     """
-    if "ising.src.fafb" in sys.modules and not no_c:
-        return fafb.plot_vals(length, ham.getcoupling(),
+    assert ("ising.src.fastc" in sys.modules or not (no_c is False)), \
+           "Could not import fastc!"
+    if "ising.src.fastc" in sys.modules and (no_c is False or no_c is None):
+        return fastc.plot_vals(length, ham.getcoupling(),
                               ham.getmagnet(), list(temps),
                               boltzmann, threads)
     else :

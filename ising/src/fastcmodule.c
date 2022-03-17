@@ -1,5 +1,5 @@
 /*
- *  fafbmodule.c
+ *  fastcmodule.c
  *  Author: Connor Briggs (cgbriggs@vt.edu)
  *  
  *  C backend for the Ising problem. It should be fast as f*** boiiiii.
@@ -10,8 +10,8 @@
 #include "ising.h"
 #include <stdio.h>
 
-// Docstring in FafbMethods
-PyObject *fafb_pass_to_c(PyObject *self, PyObject *args) {
+// Docstring in FastcMethods
+PyObject *fastc_pass_to_c(PyObject *self, PyObject *args) {
   int positions, len, i, threads;
   double coupling, magnet, boltzmann;
   double *temps, *energies, *heats, *magsus;
@@ -98,8 +98,8 @@ PyObject *fafb_pass_to_c(PyObject *self, PyObject *args) {
 }
 
 // Makes things work.
-static PyMethodDef FafbMethods[] = {
-  {"plot_vals", fafb_pass_to_c, METH_VARARGS, "Pass the Ising plotting function"
+static PyMethodDef FastcMethods[] = {
+  {"plot_vals", fastc_pass_to_c, METH_VARARGS, "Pass the Ising plotting function"
    " to C.\n"
    ":param int positions: The number of spin positions.\n"
    ":param float coupling: Spin coupling constant.\n"
@@ -113,15 +113,15 @@ static PyMethodDef FafbMethods[] = {
 };
 
 // Makes things work.
-static struct PyModuleDef fafbmodule = {
+static struct PyModuleDef fastcmodule = {
   PyModuleDef_HEAD_INIT,
-  "fafb",
+  "fastc",
   "Contains C bindings for ising functions.",
   -1,
-  FafbMethods
+  FastcMethods
 };
 
 // Makes things work.
-PyMODINIT_FUNC PyInit_fafb(void) {
-  return PyModule_Create(&fafbmodule);
+PyMODINIT_FUNC PyInit_fastc(void) {
+  return PyModule_Create(&fastcmodule);
 }

@@ -49,11 +49,11 @@ if __name__ == "__main__" :
     temps = np.linspace(args['low_temp'], args["high_temp"], args["points"])
     if not args["python"] :
         try :
-            import src.fafb
+            import src.fastc
             import os
             use_c = True
         except :
-            print("Could not find ising.src.fafb")
+            print("Could not find ising.src.fastc")
             use_c = False
     if args["python"] or not use_c :
         # Open up a thread pool. If it's going to run in Python,
@@ -94,7 +94,7 @@ if __name__ == "__main__" :
         plot.show()
     else :
         # Use the C function, which is also threaded.
-        ens, endev, magdev = src.fafb.plot_vals(args["length"],
+        ens, endev, magdev = src.fastc.plot_vals(args["length"],
                                                   args["coupling"],
                                                   args["magnet"],
                                                   list(temps),

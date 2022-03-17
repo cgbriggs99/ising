@@ -4,7 +4,9 @@ Ising package
 """
 import sys
 from setuptools import setup, find_packages
+import setuptools
 import versioneer
+
 
 short_description = "Ising package".split("\n")[0]
 
@@ -18,12 +20,9 @@ try:
 except:
     long_description = None
 
-import os
-print("Building C backend")
-os.system("make")
-assert("fafb.so" in os.listdir("ising/src"))
-print("Done")
-
+fastc = setuptools.distutils.core.Extension("ising.src.fastc",
+                                           sources = ["./ising/src/fastcmodule.c", "./ising/src/ising.c"],
+                                           libraries = ["m"])
 
 setup(
     # Self-descriptive entries which should always be present
@@ -61,5 +60,5 @@ setup(
 
     # Manual control if final package is compressible or not, set False to prevent the .egg from being made
     # zip_safe=False,
-
+    ext_modules = [fastc]
 )
