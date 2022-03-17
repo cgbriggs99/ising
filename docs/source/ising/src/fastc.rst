@@ -1,7 +1,7 @@
-Fast AF Boiiiiiiiii
-===================
+Fast C Backend
+==============
 
-.. py:module:: ising.src.fafb
+.. py:module:: ising.src.fastc
 
 C backend that computes the energies, magnetic susceptibilities, and heat capacities faster than Python could ever wish.
 
@@ -17,9 +17,9 @@ C backend that computes the energies, magnetic susceptibilities, and heat capaci
    :param int threads: The number of threads to use.
    :return tuple(list(float), list(float), list(float): Three lists, the first being the energies, the second the heat capacities, and the third the magnetic susceptibilities.
 
-   :canonical: ising/src/fafbmodule.c:fafb_pass_to_c
+   :canonical: ising/src/fastcmodule.c:fastc_pass_to_c
 
-.. c:function:: PyMODINIT_FUNC PyInit_fafb(void)
+.. c:function:: PyMODINIT_FUNC PyInit_fastc(void)
 
    Makes the module work.
    

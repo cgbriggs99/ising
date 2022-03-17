@@ -12,9 +12,9 @@ This module contains the Boltzmann constant and a wrapper for the actual plottin
    :value: 1.38064852e-23
    :canonical: ising.ising.BOLTZMANN_K
 
-.. py:function:: fafbwrapper(ham : :py:class:`ising.Hamiltonian`, length : int, temps : iterable, boltzmann = :py:data:`BOLTZMANN_K` : float, threads = ``max(32, 4 + os.cpu_count()`` : int, no_c = False : bool)
+.. py:function:: fastcwrapper(ham : :py:class:`ising.Hamiltonian`, length : int, temps : iterable, boltzmann = :py:data:`BOLTZMANN_K` : float, threads = ``max(32, 4 + os.cpu_count()`` : int, no_c = False : bool)
 
-   This is a wrapper around :py:function:`ising.src.fafb.plot_vals` which converts iterables to lists, hamiltonians to their parameters, and adds default values for threads, the Boltzmann constant, and contains a flag for whether to actually use the C backend. It also handles whether the C backend is included.
+   This is a wrapper around :py:function:`ising.src.fastc.plot_vals` which converts iterables to lists, hamiltonians to their parameters, and adds default values for threads, the Boltzmann constant, and contains a flag for whether to actually use the C backend. It also handles whether the C backend is included.
 
    :param ham: The hamiltonian.
    :type ham: :py:class:`ising.Hamiltonian`

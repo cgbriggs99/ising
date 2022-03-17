@@ -2,7 +2,7 @@ C Backend Documentation
 ===================
 
 .. toctree::
-   fafb
+   fastc
    ising
    :maxdepth: 2
    :caption: Contents
