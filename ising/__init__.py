@@ -1,7 +1,7 @@
 """Ising package"""
 
 # Add imports here
-from .ising import *
+from .ising import BOLTZMANN_K, fastcwrapper
 from .hamiltonian import *
 from .spins import *
 from .thermo import *
