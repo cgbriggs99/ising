@@ -11,7 +11,7 @@ dependencies:
   - numpy
   - matplotlib
   - sphinx
-  - clang
+#  - clang
   - setuptools
 
     # Testing
