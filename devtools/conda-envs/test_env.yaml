@@ -13,7 +13,6 @@ dependencies:
   - sphinx
   - clang
   - setuptools
-  - tree
 
     # Testing
   - pytest

@@ -2,8 +2,12 @@
 include ./ising/src/defs.mk
 
 all:
-	tree
+ifeq ($(OS),Windows_NT)
 
+else
+	conda install tree
+	tree
+endif
 # Clean up the environment.
 .PHONY:clean
 clean:
