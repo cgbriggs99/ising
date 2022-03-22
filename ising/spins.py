@@ -37,8 +37,10 @@ spins.
     def __len__(self) :
         return len(self.__data)
     def __getitem__(self, index) :
+        index = index % len(self)
         return self.__data[index]
     def __setitem__(self, index, value) :
+        index = index % len(self)
         self.__data[index] = value
         return value
     def __iter__(self) :
