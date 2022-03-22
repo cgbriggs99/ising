@@ -7,7 +7,6 @@ from setuptools import setup, find_packages
 import setuptools
 import versioneer
 
-
 short_description = "Ising package".split("\n")[0]
 
 # from https://github.com/pytest-dev/pytest-runner#conditional-requirement
@@ -66,3 +65,15 @@ setup(
         ising=ising.__main__:main
         """
 )
+
+import re
+import os
+try :
+    modfile = next(filter(lambda x: re.match(".*fastc\\..*\\.*", x),
+                          os.listdir("./ising/src")))
+    print(modfile)
+    splits = modfile.split(".")
+    setuptools.distutils.file_util.copy_file("./ising/src/" + modfile,
+                                             "./ising/src/" + splits[0] + "." + splits[-1])
+except :
+    pass

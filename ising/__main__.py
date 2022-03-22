@@ -61,12 +61,11 @@ Runs the Ising command line program.
     if not args["python"] :
         import os
         try :
-            import src.fastc
+            import fastc
             use_c = True
         except ImportError :
             try :
-                from . import src
-                from .src import fastc
+                from . import fastc
                 use_c = True
             except ImportError :
                 print("Could not find ising.src.fastc")
@@ -113,7 +112,7 @@ Runs the Ising command line program.
             return ens, endev, magdev
     else :
         # Use the C function, which is also threaded.
-        ens, endev, magdev = src.fastc.plot_vals(args["length"],
+        ens, endev, magdev = fastc.plot_vals(args["length"],
                                                   args["coupling"],
                                                   args["magnet"],
                                                   list(temps),

@@ -2,7 +2,7 @@
 include ./ising/src/defs.mk
 
 all:
-	echo "Made all"
+
 
 # Clean up the environment.
 .PHONY:clean
