@@ -46,8 +46,4 @@ Find the variance of an intrinsic property normalized by the partition function.
                 math.exp(-hamilt.energy(spins.SpinInteger(sp, length)) / \
                          (boltzmann * temp))
                 for sp in range(2 ** length)) ** 2 / part ** 2
-    if out < 0 :
-        print(out)
-        print(partition(hamilt, length, temp, boltzmann))
-        raise ValueError
     return out

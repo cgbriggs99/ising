@@ -8,11 +8,9 @@ dependencies:
     # Base depends
   - python
   - pip
-#  - make
-#  - clang
   - numpy
   - matplotlib
-#  - sphinx
+  - sphinx
 
     # Testing
   - pytest

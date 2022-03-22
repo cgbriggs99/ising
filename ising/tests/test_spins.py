@@ -23,6 +23,9 @@ def test_spinmatrix() :
     ind = random.randint(0, len(sc) - 1)
     sc[ind] = -sc[ind]
     assert(sc[ind] != __matrix[ind])
+    assert(len(str(sc)) == len(sc))
+    assert(sc[-1] == sc[len(sc) - 1])
+    assert(sc[len(sc)] == sc[0])
 
 def test_spinint() :
     sc = ising.SpinInteger(__value, __length)
@@ -34,11 +37,16 @@ def test_spinint() :
         assert(sc[ind] == __matrix[ind])
     # Test iter
     assert(iter(sc) is not sc)
+    it = iter(sc)
+    assert(iter(it) is it)
     for i, j in zip(sc, __matrix) :
         assert(i == j)
     ind = random.randint(0, len(sc) - 1)
     sc[ind] = -sc[ind]
     assert(sc[ind] != __matrix[ind])
+    assert(len(str(sc)) == len(sc))
+    assert(sc[-1] == sc[len(sc) - 1])
+    assert(sc[len(sc)] == sc[0])
 
 
     
