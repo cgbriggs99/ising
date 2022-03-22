@@ -5,15 +5,15 @@ class SpinConfig :
 Represents an abstract spin configuration.
 """
     def __init__(self) :
-        pass
+        raise NotImplemented
     def __len__(self) :
-        pass
+        raise NotImplemented
     def __getitem__(self, index) :
-        pass
+        raise NotImplemented
     def __setitem__(self, index) :
-        pass
+        raise NotImplemented
     def __iter__(self, index, value) :
-        pass
+        raise NotImplemented
     def __str__(self) :
         """
 Returns a representation using spin arrows for this object.
@@ -43,6 +43,7 @@ spins.
         return value
     def __iter__(self) :
         return iter(self.__data)
+    
 class SpinInteger(SpinConfig) :
     """
 Represents a spin configuration determined from the binary representation of

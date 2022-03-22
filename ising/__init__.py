@@ -6,6 +6,12 @@ from .hamiltonian import *
 from .spins import *
 from .thermo import *
 
+# This module is not guaranteed.
+try :
+    from .src.fastc import *
+except Exception :
+    pass
+
 # Handle versioneer
 from ._version import get_versions
 versions = get_versions()

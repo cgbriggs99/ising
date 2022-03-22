@@ -11,8 +11,10 @@ __k = 1
 __temp = 0.1
 
 def test_thermo() :
+    # Set up the hamiltonina.
     ham = ising.Hamiltonian(__J, __M)
     part = ising.partition(ham, __length, __temp, __k)
+    # Make sure nothing blows up
     assert(math.isfinite(part) and part > 0)
     energy = ising.average_value(ham.energy, ham, __length, __temp, __k)
     assert(math.isfinite(energy) and math.log10(abs(energy)) < 12 and

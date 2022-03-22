@@ -1,9 +1,15 @@
 #!/usr/bin/python3
 
-from . import ising
 import math
-from . import hamiltonian
-from . import spins
+try :
+    from . import ising
+    from . import hamiltonian
+    from . import spins
+except ImportError :
+    import ising
+    import hamiltonian
+    import spins
+
 
 def partition(hamilt : hamiltonian.Hamiltonian, length, temp = 298.15,
               boltzmann = ising.BOLTZMANN_K) :
