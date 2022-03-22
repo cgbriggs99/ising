@@ -9,8 +9,9 @@ from .fastcwrapper import *
 
 # Do not include
 try :
-    from .fastc import plot_vals
+    from .fastc import *
 except Exception :
+    
     pass
 
 # Handle versioneer

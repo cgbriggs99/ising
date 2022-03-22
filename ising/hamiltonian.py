@@ -36,8 +36,7 @@ Represents a Hamiltonian for an Ising system.
         return value
     def energy(self, spin : spins.SpinConfig) :
         """
-Find the raw energy of a spin configuration. Uses the formula
-$$-J \sum_{i} S_i S_{i+1} + \mu \sum_i S_i$$
+Find the raw energy of a spin configuration.
 """
         assert(isinstance(spin, spins.SpinConfig))
         return -self.getcoupling() * sum(spin[i - 1] * spin[i]

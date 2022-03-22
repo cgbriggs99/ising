@@ -13,7 +13,15 @@ except ImportError :
     import constants
     print("No dots", file = sys.stderr)
 
-import sys
+import os
+import re
+
+files = os.listdir("./ising")
+print(list(filter(lambda x : re.match("fastc\\.[^\\.]*", x), files)),
+      file = sys.stderr)
+sys.stderr.flush()
+assert(len(files) > 0)
+
 try :
     from . import fastc
 except ImportError :
