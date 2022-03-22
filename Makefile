@@ -1,7 +1,8 @@
 # Get the differing Windows vs. Linux remove commands.
 include ./ising/src/defs.mk
 
-#all: docs
+all:
+	echo "Made all"
 
 # Clean up the environment.
 .PHONY:clean
