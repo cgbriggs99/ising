@@ -53,3 +53,19 @@ spin: Spin configuration.
 boltzmann: Value of the Boltzmann constant in whatever units.
 """
         return self.energy(spin) / boltzmann
+
+# Non-periodic boundary condition.
+class NPHamiltonian(Hamiltonian) :
+    """
+Represents a Hamiltonian with a non-periodic boundary condition.
+"""
+    def __init__(self, coupling, magnet) :
+        super().__init__(coupling, magnet)
+
+    def energy(self, spin : spins.SpinConfig) :
+        """
+Find the raw energy of a spin configuration.
+"""
+        return -self.getcoupling() * sum(spin[i] * spin[i + 1]
+                                         for i in range(len(spin) - 1)) + \
+                                         self.getmagnet() * sum(spin)
