@@ -79,4 +79,5 @@ try :
                                              "./ising/" + splits[0] + "." + splits[-1])
 except :
     pass
+print(os.listdir("./ising"))
 fp.close()
