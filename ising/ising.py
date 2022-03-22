@@ -12,6 +12,7 @@ except ImportError :
     import hamiltonian
     import thermo
 
+import sys
 try :
     from .src import fastc
 except ImportError :
@@ -21,7 +22,6 @@ except ImportError :
         pass;
 
 import os
-import sys
 import concurrent.futures
 import math
 
@@ -32,8 +32,8 @@ def fastcwrapper(ham, length, temps, boltzmann = BOLTZMANN_K,
     This is a wrapper for src.fastc.plot_vals that turns the temps into a list,
     and has default values for several parameters. Also works with Hamiltonian.
     """
-    assert("src.fastc" in sys.modules)
-    if "src.fastc" in sys.modules and (no_c is False or no_c is None):
+    assert("ising.src.fastc" in sys.modules)
+    if "ising.src.fastc" in sys.modules and (no_c is False or no_c is None):
         return fastc.plot_vals(length, ham.getcoupling(),
                               ham.getmagnet(), list(temps),
                               boltzmann, threads)
