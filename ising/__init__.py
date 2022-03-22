@@ -8,10 +8,10 @@ from .thermo import *
 from .__main__ import main
 
 # Do not include
-#try :
-#    from .fastc import 
-#except Exception :
-#    pass
+try :
+    from .fastc import plot_vals
+except Exception :
+    pass
 
 # Handle versioneer
 from ._version import get_versions
