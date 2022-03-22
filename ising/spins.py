@@ -55,7 +55,6 @@ an integer.
     def __len__(self) :
         return self.__len
     def __getitem__(self, index) :
-        assert(index < self.__len)
         ind = index % len(self)
         if ind < 0 :
             ind += len(self)

@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
-def main() :
+def main(pass_args = None, test = False) :
+    """
+Runs the Ising command line program.
+    """
     import argparse
     try :
         import spins
@@ -46,8 +49,10 @@ def main() :
                         help = "Number of points to use in each graph.")
     parser.add_argument("--python", action="store_true",
                         help = "Use python backend instead of C backend.")
-
-    args = vars(parser.parse_args())
+    if pass_args == None :
+        args = vars(parser.parse_args())
+    else :
+        args = vars(parser.parse_args(pass_args))
 
 
     # Check if using the C backend.
@@ -102,7 +107,10 @@ def main() :
         plot.legend()
         # Don't forget to shutdown the threads.
         exc.shutdown()
-        plot.show()
+        if not test :
+            plot.show()
+        else :
+            return ens, endev, magdev
     else :
         # Use the C function, which is also threaded.
         ens, endev, magdev = src.fastc.plot_vals(args["length"],
@@ -127,7 +135,10 @@ def main() :
         plot.xlabel("Temperature")
         plot.ylabel("Energy per Temperature")
         plot.legend()
-        plot.show()
+        if not test :
+            plot.show()
+        else :
+            return ens, endev, magdev
 
 
 if __name__ == "__main__" :
