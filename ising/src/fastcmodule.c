@@ -22,6 +22,7 @@ PyObject *fastc_pass_to_c(PyObject *self, PyObject *args) {
   int ret = PyArg_ParseTuple(args, "iddOdi", &positions,
 		       &coupling, &magnet, &temps_obj, &boltzmann,
 			     &threads);
+  printf("Running in C\n");
   if(!ret) {
     perror("Did not return 0.");
     return (NULL);

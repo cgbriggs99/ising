@@ -17,6 +17,7 @@ Runs the Ising command line program.
         from . import hamiltonian
     import numpy as np
     import math
+    import os
 
     import matplotlib.pyplot as plot
 
@@ -49,95 +50,39 @@ Runs the Ising command line program.
                         help = "Number of points to use in each graph.")
     parser.add_argument("--python", action="store_true",
                         help = "Use python backend instead of C backend.")
+    parser.add_argument("--threads", metavar = "N",
+                        default = max(32, 4 + os.cpu_count()), type = int,
+                        help = "Number of threads to use.")
     if pass_args == None :
         args = vars(parser.parse_args())
     else :
         args = vars(parser.parse_args(pass_args))
 
-
-    # Check if using the C backend.
-    use_c = not args["python"]
     temps = np.linspace(args['low_temp'], args["high_temp"], args["points"])
-    if not args["python"] :
-        import os
-        try :
-            import fastc
-            use_c = True
-        except ImportError :
-            try :
-                from . import fastc
-                use_c = True
-            except ImportError :
-                print("Could not find ising.src.fastc")
-                use_c = False
-    if args["python"] or not use_c :
-        # Open up a thread pool. If it's going to run in Python,
-        # we might as well try to make it go faster.
-        exc = concurrent.futures.ThreadPoolExecutor()
-        ham = hamiltonian.Hamiltonian(args["coupling"], args["magnet"])
-        ens = list(exc.map(lambda t: thermo.average_value(ham.energy, ham,
-                                                 args["length"],temp = t,
-                                                 boltzmann = args["boltzmann"]),
-                           temps))
-        # Plot.
-        plot.figure()
-        plot.plot(temps, ens, label = "Energy")
-        plot.xlabel("Temperature")
-        plot.ylabel("Energy")
-        plot.legend()
-        # Rinse and repeat.
-        endev = list(exc.map(lambda t: math.sqrt(thermo.variance(ham.energy, ham,
-                                                  args["length"], temp = t,
-                                                  boltzmann = args["boltzmann"])
-                                   ) / (args["boltzmann"] * t ** 2),
-                         temps))
-        magdev = list(exc.map(lambda t: math.sqrt(thermo.variance(
-            lambda sc: sc.magnetization(), ham, args["length"], temp = t,
-            boltzmann = args["boltzmann"])) / (args["boltzmann"] * t), temps))
-        plot.figure()
-        plot.plot(temps, endev, label = "Heat capacity")
-        plot.xlabel("Temperature")
-        plot.ylabel("Energy per Temperature")
-        plot.legend()
-        plot.figure()
-        plot.plot(temps, magdev, label = "Magnetic susceptibility")
-        plot.xlabel("Temperature")
-        plot.ylabel("Energy per Temperature")
-        plot.legend()
-        # Don't forget to shutdown the threads.
-        exc.shutdown()
-        if not test :
-            plot.show()
-        else :
-            return ens, endev, magdev
+
+    ens, endev, magdev = ising.fastcwrapper(hamiltonian.Hamiltonian(
+            args["coupling"], args["magnet"]), args["length"], temps,
+                                           threads = args["threads"],
+                                       no_c = args["python"])
+    plot.figure()
+    plot.plot(temps, ens, label = "Energy")
+    plot.xlabel("Temperature")
+    plot.ylabel("Energy")
+    plot.legend()
+    plot.figure()
+    plot.plot(temps, endev, label = "Heat Capacity")
+    plot.xlabel("Temperature")
+    plot.ylabel("Energy per Temperature")
+    plot.legend()
+    plot.figure()
+    plot.plot(temps, magdev, label = "Magnetic Susceptibility")
+    plot.xlabel("Temperature")
+    plot.ylabel("Energy per Temperature")
+    plot.legend()
+    if not test :
+        plot.show()
     else :
-        # Use the C function, which is also threaded.
-        ens, endev, magdev = fastc.plot_vals(args["length"],
-                                                  args["coupling"],
-                                                  args["magnet"],
-                                                  list(temps),
-                                                  args["boltzmann"],
-                                                  min(32, os.cpu_count() + 4))
-        # Plot.
-        plot.figure()
-        plot.plot(temps, ens, label = "Energy")
-        plot.xlabel("Temperature")
-        plot.ylabel("Energy")
-        plot.legend()
-        plot.figure()
-        plot.plot(temps, endev, label = "Heat Capacity")
-        plot.xlabel("Temperature")
-        plot.ylabel("Energy per Temperature")
-        plot.legend()
-        plot.figure()
-        plot.plot(temps, magdev, label = "Magnetic Susceptibility")
-        plot.xlabel("Temperature")
-        plot.ylabel("Energy per Temperature")
-        plot.legend()
-        if not test :
-            plot.show()
-        else :
-            return ens, endev, magdev
+        return ens, endev, magdev
 
 
 if __name__ == "__main__" :
