@@ -10,11 +10,13 @@ Runs the Ising command line program.
         import thermo
         import ising
         import hamiltonian
+        import fastcwrapper
     except ImportError :
         from . import spins
         from . import thermo
         from . import ising
         from . import hamiltonian
+        from . import fastcwrapper
     import numpy as np
     import math
     import os
@@ -60,7 +62,7 @@ Runs the Ising command line program.
 
     temps = np.linspace(args['low_temp'], args["high_temp"], args["points"])
 
-    ens, endev, magdev = ising.fastcwrapper(hamiltonian.Hamiltonian(
+    ens, endev, magdev = fastcwrapper.plotvals(hamiltonian.Hamiltonian(
             args["coupling"], args["magnet"]), args["length"], temps,
                                            threads = args["threads"],
                                        no_c = args["python"])

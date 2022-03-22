@@ -1,11 +1,11 @@
 """Ising package"""
 
 # Add imports here
-from .ising import BOLTZMANN_K, fastcwrapper
+from .ising import *
 from .hamiltonian import *
 from .spins import *
 from .thermo import *
-from .__main__ import main
+from .fastcwrapper import *
 
 # Do not include
 try :
