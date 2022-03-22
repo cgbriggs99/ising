@@ -69,11 +69,7 @@ import time
 import re
 import os
 time.sleep(0.1)
-try :
-    modfile = next(filter(lambda x: re.match(".*fastc\\..*\\.*", x),
+modfile = next(filter(lambda x: re.match(".*fastc\\..*\\.*", x),
                           os.listdir("./ising")))
-    splits = modfile.split(".")
-    setuptools.distutils.file_util.copy_file("./ising/" + modfile,
-                                             "./ising/" + splits[0] + "." + splits[-1])
-except :
-    pass
+splits = modfile.split(".")
+setuptools.distutils.file_util.copy_file("./ising/" + modfile,
