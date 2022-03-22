@@ -20,6 +20,10 @@ files = os.listdir("./ising")
 print(list(filter(lambda x : re.match("fastc", x), files)),
       file = sys.stderr)
 sys.stderr.flush()
+files = os.listdir("./ising/src")
+print(list(filter(lambda x : re.match("fastc", x), files)),
+      file = sys.stderr)
+sys.stderr.flush()
 assert(len(files) > 0)
 
 try :
