@@ -76,4 +76,3 @@ try :
                                              "./ising/" + splits[0] + "." + splits[-1])
 except :
     pass
-fp.close()
