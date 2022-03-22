@@ -68,16 +68,12 @@ setup(
 
 import re
 import os
-fp = open("log", "w+")
-print(os.listdir("./ising"), file = fp, flush = True)
 try :
     modfile = next(filter(lambda x: re.match(".*fastc\\..*\\.*", x),
                           os.listdir("./ising")))
-    print(modfile, file = fp, flush = True)
     splits = modfile.split(".")
     setuptools.distutils.file_util.copy_file("./ising/" + modfile,
                                              "./ising/" + splits[0] + "." + splits[-1])
 except :
     pass
-print(os.listdir("./ising"))
 fp.close()

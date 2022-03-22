@@ -2,7 +2,7 @@
 include ./ising/src/defs.mk
 
 all:
-	echo `cat log`
+	tree
 
 # Clean up the environment.
 .PHONY:clean
