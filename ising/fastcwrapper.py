@@ -17,7 +17,7 @@ import os
 import re
 
 files = os.listdir("./ising")
-print(list(filter(lambda x : re.match("fastc\\.[^\\.]*", x), files)),
+print(list(filter(lambda x : re.match("fastc", x), files)),
       file = sys.stderr)
 sys.stderr.flush()
 assert(len(files) > 0)
