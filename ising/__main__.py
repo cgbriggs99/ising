@@ -1,13 +1,19 @@
 #!/usr/bin/python3
 
-if __name__ == "__main__" :
+def main() :
     import argparse
-    import spins
-    import thermo
+    try :
+        import spins
+        import thermo
+        import ising
+        import hamiltonian
+    except ImportError :
+        from . import spins
+        from . import thermo
+        from . import ising
+        from . import hamiltonian
     import numpy as np
     import math
-    import ising
-    import hamiltonian
 
     import matplotlib.pyplot as plot
 
@@ -48,13 +54,18 @@ if __name__ == "__main__" :
     use_c = not args["python"]
     temps = np.linspace(args['low_temp'], args["high_temp"], args["points"])
     if not args["python"] :
+        import os
         try :
             import src.fastc
-            import os
             use_c = True
-        except :
-            print("Could not find ising.src.fastc")
-            use_c = False
+        except ImportError :
+            try :
+                from . import src
+                from .src import fastc
+                use_c = True
+            except ImportError :
+                print("Could not find ising.src.fastc")
+                use_c = False
     if args["python"] or not use_c :
         # Open up a thread pool. If it's going to run in Python,
         # we might as well try to make it go faster.
@@ -117,3 +128,7 @@ if __name__ == "__main__" :
         plot.ylabel("Energy per Temperature")
         plot.legend()
         plot.show()
+
+
+if __name__ == "__main__" :
+    main()

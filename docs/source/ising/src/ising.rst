@@ -51,13 +51,19 @@ The actual worker for the C backend. Prototypes can be found in ``ising.h``.
 
       Array of magnetic susceptibilities. Acts as the output for :c:func:`compute_vals`.
 
-.. c:type:: struct bitvec_32_t
+.. c:type:: bitvec_32_t
 	      
    Splits a 32 bit value into 8 bit chunks. Interactions with a packed bit-field struct should be optimized at compile time.
 
-   .. c:var:: uint8_t a, b, c, d
+   .. c:var:: uint8_t a
 
-.. c:type:: union conv_t
+   .. c:var:: uint8_t b
+
+   .. c:var:: uint8_t c
+
+   .. c:var:: uint8_t d
+
+.. c:type:: conv_t
 
    Converts between an unsigned 32 bit value (``uint32_t``) and a ``bitvec_32_t``.
 
@@ -90,11 +96,11 @@ The actual worker for the C backend. Prototypes can be found in ``ising.h``.
    :param L: The number of positions in the Ising model.
    :return: The spin coupling part, not multiplied by the coupling constant.
 
-.. c:function:: static void \*compute_vals(void \*arg)
+.. c:function:: static void *compute_vals(void *arg)
 
    Worker function to be passed to the threads.
 
-   :param arg: The arguments. Defined in the function as :c:type:`void` \*, but treated as :c:type:`pass_args_t`\*.
+   :param arg: The arguments. Defined in the function as `void` \*, but treated as :c:type:`pass_args_t`\*.
    :type arg: void *
    :return: NULL. All outputs are placed in :c:type:`pass_args_t`.
 

@@ -9,6 +9,7 @@ Welcome to Ising's documentation!
 .. toctree::
    ising/index
    install
+   running
    :maxdepth: 3
    :caption: Contents
 

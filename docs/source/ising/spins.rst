@@ -17,13 +17,13 @@ Contains representations for spin configurations.
 
       :raises: NotImplemented
 
-   .. py:method:: __getitem__(index)
+   .. py:method:: __getitem__(index, value)
 
       Allows for subscripting.
 
       :raises: NotImplemented
 
-   .. py:method:: __setitem__(index)
+   .. py:method:: __setitem__(index, value)
 
       Allows for assigning to a position.
 
@@ -47,16 +47,19 @@ Contains representations for spin configurations.
 
       :return: The spin excess.
 
-.. py:class:: SpinMatrix(data : list(int)) : :py:class:`SpinConfig`
+.. py:class:: SpinMatrix(data)
 
    Represents a spin configuration set up with an array of 1's and -1's representing up and down spins. Implements all the base methods.
 
-      :param data: A list of 1's and -1's.
-      :type data: list(int)
+   :param data: A list of 1's and -1's.
+   :type data: list(int)
 
-.. py:class:: SpinInteger(numeral : int, length : int) : :py:class:`SpinConfig`
+.. py:class:: SpinInteger(numeral, length)
 	      
    Represents a spin configuration determined from the binary representation of an integer.
+
+   :param int numeral: The number whose binary representation gives the spin state.
+   :param int length: The number of particles in the Ising system.
 
    .. py:method:: __iter__()
 
@@ -66,7 +69,7 @@ Contains representations for spin configurations.
 
       :return: A copy of this object.
 
-.. py:class:: _SpinIntegerIterator(other : :py:class:`SpinInteger`)
+.. py:class:: _SpinIntegerIterator(other)
 
    Iterator class for :py:class:`SpinInteger`.
 
