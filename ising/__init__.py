@@ -9,7 +9,7 @@ from .__main__ import main
 
 # This module is not guaranteed.
 try :
-    from .src.fastc import *
+    from .fastc import *
 except Exception :
     pass
 
