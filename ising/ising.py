@@ -20,7 +20,7 @@ import sys
 try :
     from . import fastc
 except ImportError :
-    import src.fastc
+    import fastc
 
 import os
 import concurrent.futures
