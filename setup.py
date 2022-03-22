@@ -19,7 +19,7 @@ try:
 except:
     long_description = None
 
-fastc = setuptools.distutils.core.Extension("ising.fastc",
+fastc = setuptools.extension.Extension("ising.fastc",
                                            sources = ["./ising/src/fastcmodule.c", "./ising/src/ising.c"],
                                            libraries = ["m", "pthread"] if sys.platform == "linux" else [])
 
@@ -68,12 +68,15 @@ setup(
 
 import re
 import os
+fp = open("log", "w+")
+print(os.listdir("./ising"), file = fp, flush = True)
 try :
     modfile = next(filter(lambda x: re.match(".*fastc\\..*\\.*", x),
                           os.listdir("./ising")))
-    print(modfile)
+    print(modfile, file = fp, flush = True)
     splits = modfile.split(".")
     setuptools.distutils.file_util.copy_file("./ising/" + modfile,
                                              "./ising/" + splits[0] + "." + splits[-1])
 except :
     pass
+fp.close()
