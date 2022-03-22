@@ -23,8 +23,7 @@ except:
 fastc = setuptools.distutils.core.Extension("ising.src.fastc",
                                            sources = ["./ising/src/fastcmodule.c", "./ising/src/ising.c"],
                                            libraries = ["m"
-                                                        if sys.platform != "win32"
-                                                        else "libm"])
+                                                        if sys.platform != "win32"])
 
 setup(
     # Self-descriptive entries which should always be present
