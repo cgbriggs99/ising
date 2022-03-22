@@ -8,13 +8,13 @@ Runs the Ising command line program.
     try :
         import spins
         import thermo
-        import ising
+        import constants
         import hamiltonian
         import fastcwrapper
     except ImportError :
         from . import spins
         from . import thermo
-        from . import ising
+        from . import constants
         from . import hamiltonian
         from . import fastcwrapper
     import numpy as np
@@ -33,10 +33,10 @@ Runs the Ising command line program.
                         help = "Number of positions in the Ising system with" +
                         " periodic boundary conditions.")
     parser.add_argument("--coupling", "-j", metavar = "J", default = -1 *
-                        ising.BOLTZMANN_K,
+                        constants.BOLTZMANN_K,
                         type = float, help = "Spin coupling constant.")
     parser.add_argument("--magnet", "-m", metavar = "M", default = 0.1 *
-                        ising.BOLTZMANN_K,
+                        constants.BOLTZMANN_K,
                         type = float, help = "Magnetic coupling constant")
     parser.add_argument("--low-temp", metavar = "T",
                         default = 0.1, type = float,
@@ -45,7 +45,7 @@ Runs the Ising command line program.
                         default = 298.15, type = float,
                         help = "Higher temperature in Kelvin")
     parser.add_argument("--boltzmann", "-k", metavar = "K",
-                        default = ising.BOLTZMANN_K, type = float,
+                        default = constants.BOLTZMANN_K, type = float,
                         help = "Value of the Boltzmann constant to use.")
     parser.add_argument("--points", "-n", metavar = "N",
                         default = 100, type = int,

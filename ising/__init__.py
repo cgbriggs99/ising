@@ -1,7 +1,7 @@
 """Ising package"""
 
 # Add imports here
-from .ising import *
+from .constants import *
 from .hamiltonian import *
 from .spins import *
 from .thermo import *

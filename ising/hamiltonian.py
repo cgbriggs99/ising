@@ -2,10 +2,10 @@
 
 # For the __main__.py module.
 try :
-    from . import ising
+    from . import constants
     from . import spins
 except ImportError :
-    import ising
+    import constants
     import spins
 
 ####################################
@@ -44,7 +44,7 @@ $$-J \sum_{i} S_i S_{i+1} + \mu \sum_i S_i$$
                                          for i in range(len(spin))) + \
                                          self.getmagnet() * sum(spin)
     def temperature(self, spin : spins.SpinConfig,
-                    boltzmann = ising.BOLTZMANN_K) :
+                    boltzmann = constants.BOLTZMANN_K) :
         """
 Finds E/k.
 

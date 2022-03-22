@@ -5,12 +5,12 @@ import sys
 try :
     from . import hamiltonian
     from . import thermo
-    from . import ising
+    from . import constants
     print("dots", file = sys.stderr)
 except ImportError :
     import hamiltonian
     import thermo
-    import ising
+    import constants
     print("No dots", file = sys.stderr)
 
 import sys
@@ -24,7 +24,7 @@ import concurrent.futures
 import math
 
 
-def plotvals(ham, length, temps, boltzmann = ising.BOLTZMANN_K,
+def plotvals(ham, length, temps, boltzmann = constants.BOLTZMANN_K,
                 threads = max(32, 4 + os.cpu_count()), no_c = None) :
     """
     This is a wrapper for src.fastc.plot_vals that turns the temps into a list,
