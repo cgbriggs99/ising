@@ -67,7 +67,7 @@ jobs:
       shell: bash -l {0}
 
       run: |
-        pytest -v --cov=ising --cov-report=xml --color=yes build/tests
+        pytest -v --cov=ising --cov-report=xml --color=yes ising/tests
 
     - name: CodeCov
       uses: codecov/codecov-action@v1
