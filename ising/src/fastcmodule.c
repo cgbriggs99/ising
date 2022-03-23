@@ -15,13 +15,14 @@ PyObject *fastc_pass_to_c(PyObject *self, PyObject *args) {
   int positions, len, i, threads;
   double coupling, magnet, boltzmann;
   double *temps, *energies, *heats, *magsus;
-  PyObject *temps_obj, *hold, *out_tuple, *ens_list,
+  PyObject *temps_obj, *hold, *ens_list,
     *heats_list, *magsus_list;
 
   // Parse the arguments.
   int ret = PyArg_ParseTuple(args, "iddOdi", &positions,
 		       &coupling, &magnet, &temps_obj, &boltzmann,
 			     &threads);
+  printf("Running in C\n");
   if(!ret) {
     perror("Did not return 0.");
     return (NULL);

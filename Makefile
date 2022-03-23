@@ -2,12 +2,11 @@
 include ./ising/src/defs.mk
 
 all:
-	echo "Made all"
 
 # Clean up the environment.
 .PHONY:clean
 clean:
-	$(DEL) *.o *.so *~
+	$(DEL) *.o *.so *~ build
 	$(MAKE) -C ./ising clean
 	$(MAKE) -C ./docs clean
 

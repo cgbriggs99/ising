@@ -5,8 +5,9 @@ import ising
 import math
 import numpy as np
 import os
+import time
 
-__length = 10
+__length = 8
 __J = -2
 __M = 1.1
 __k = 1
@@ -16,9 +17,15 @@ __threads = 4
 def test_fastc() :
     # Test the backend.
     ham = ising.Hamiltonian(__J, __M)
-    e, h, m = ising.fastcwrapper(ham, __length, __temps, __k,
+    t1 = time.perf_counter()
+    e, h, m = ising.fastcwrapper.plotvals(ham, __length, __temps, __k,
                                        __threads, no_c = True)
+    t2 = time.perf_counter()
     assert(any(map(lambda x: x != 0, e + h + m)))
-    e, h, m = ising.fastcwrapper(ham, __length, __temps, __k,
+    t3 = time.perf_counter()
+    e, h, m = ising.fastcwrapper.plotvals(ham, __length, __temps, __k,
                                        __threads)
+    t4 = time.perf_counter()
     assert(any(map(lambda x: x != 0, e + h + m)))
+
+    assert(abs((t4 - t3) / (t2 - t1)) < 0.1)

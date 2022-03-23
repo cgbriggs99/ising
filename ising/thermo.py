@@ -2,17 +2,17 @@
 
 import math
 try :
-    from . import ising
+    from . import constants
     from . import hamiltonian
     from . import spins
 except ImportError :
-    import ising
+    import constants
     import hamiltonian
     import spins
 
 
 def partition(hamilt : hamiltonian.Hamiltonian, length, temp = 298.15,
-              boltzmann = ising.BOLTZMANN_K) :
+              boltzmann = constants.BOLTZMANN_K) :
     """
 Returns the value of the partition function for a Hamiltonian at a given
 temperature and a boltzmann constant with given units.
@@ -21,7 +21,7 @@ temperature and a boltzmann constant with given units.
                         (boltzmann * temp)) for sp in range(2 ** length))
 
 def average_value(func, hamilt : hamiltonian.Hamiltonian, length, temp = 298.15,
-                  boltzmann = ising.BOLTZMANN_K, *args, **kwargs) :
+                  boltzmann = constants.BOLTZMANN_K, *args, **kwargs) :
     """
 Find the value of an intrinsic property normalized by the partition function.
 """
@@ -33,7 +33,7 @@ Find the value of an intrinsic property normalized by the partition function.
                                                          temp, boltzmann)
 
 def variance(func, hamilt : hamiltonian.Hamiltonian, length, temp = 298.15,
-          boltzmann = ising.BOLTZMANN_K, *args, **kwargs) :
+          boltzmann = constants.BOLTZMANN_K, *args, **kwargs) :
     """
 Find the variance of an intrinsic property normalized by the partition function.
 """
@@ -46,8 +46,4 @@ Find the variance of an intrinsic property normalized by the partition function.
                 math.exp(-hamilt.energy(spins.SpinInteger(sp, length)) / \
                          (boltzmann * temp))
                 for sp in range(2 ** length)) ** 2 / part ** 2
-    if out < 0 :
-        print(out)
-        print(partition(hamilt, length, temp, boltzmann))
-        raise ValueError
     return out

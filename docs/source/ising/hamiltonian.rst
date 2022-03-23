@@ -57,6 +57,6 @@ Contains definitions for Hamiltonians for the Ising problem.
 
       :param spin: The spin configuration.
       :type spin: :py:class:`ising.spins.SpinConfig`
-      :param float boltzmann: Value of the Bolztmann constant to use. Defaults to :py:data:`BOLTZMANN_K`.
+      :param float boltzmann: Value of the Bolztmann constant to use. Defaults to :py:data:`ising.constants.BOLTZMANN_K`.
       :return: The energy of the spin configuration divided by the Boltzmann constant.
       

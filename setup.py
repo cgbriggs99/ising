@@ -7,7 +7,6 @@ from setuptools import setup, find_packages
 import setuptools
 import versioneer
 
-
 short_description = "Ising package".split("\n")[0]
 
 # from https://github.com/pytest-dev/pytest-runner#conditional-requirement
@@ -20,7 +19,7 @@ try:
 except:
     long_description = None
 
-fastc = setuptools.distutils.core.Extension("ising.src.fastc",
+fastc = setuptools.distutils.core.Extension("ising.fastc",
                                            sources = ["./ising/src/fastcmodule.c", "./ising/src/ising.c"],
                                            libraries = ["m", "pthread"] if sys.platform == "linux" else [])
 

@@ -1,14 +1,14 @@
 """Ising package"""
 
 # Add imports here
-from .ising import *
+from .constants import *
 from .hamiltonian import *
 from .spins import *
 from .thermo import *
+from .fastcwrapper import *
 
-# This module is not guaranteed.
 try :
-    from .src.fastc import *
+    from .fastc import *
 except Exception :
     pass
 
