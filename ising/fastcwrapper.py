@@ -6,28 +6,14 @@ try :
     from . import hamiltonian
     from . import thermo
     from . import constants
-    print("dots", file = sys.stderr)
 except ImportError :
     import hamiltonian
     import thermo
     import constants
-    print("No dots", file = sys.stderr)
-
-import os
-import re
-
-files = os.listdir("./ising")
-print(list(filter(lambda x : re.match("fastc", x), files)),
-      file = sys.stderr)
-sys.stderr.flush()
-files = os.listdir("./ising/src")
-print(list(filter(lambda x : re.match("fastc", x), files)),
-      file = sys.stderr)
-sys.stderr.flush()
-assert(len(files) > 0)
 
 import concurrent.futures
 import math
+import os
 
 
 def plotvals(ham, length, temps, boltzmann = constants.BOLTZMANN_K,

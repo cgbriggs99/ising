@@ -7,11 +7,9 @@ from .spins import *
 from .thermo import *
 from .fastcwrapper import *
 
-# Do not include
 try :
     from .fastc import *
 except Exception :
-    
     pass
 
 # Handle versioneer
