@@ -11,7 +11,7 @@ endif
 # Clean up the environment.
 .PHONY:clean
 clean:
-	$(DEL) *.o *.so *~
+	$(DEL) *.o *.so *~ build
 	$(MAKE) -C ./ising clean
 	$(MAKE) -C ./docs clean
 
