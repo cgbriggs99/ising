@@ -26,12 +26,6 @@ print(list(filter(lambda x : re.match("fastc", x), files)),
 sys.stderr.flush()
 assert(len(files) > 0)
 
-try :
-    from . import fastc
-except ImportError :
-    import fastc
-
-import os
 import concurrent.futures
 import math
 
@@ -62,3 +56,7 @@ def plotvals(ham, length, temps, boltzmann = constants.BOLTZMANN_K,
         exc.shutdown()
         return out
  
+try :
+    from . import fastc
+except ImportError :
+    import fastc
