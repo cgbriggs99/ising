@@ -1,40 +1,29 @@
 #!/usr/bin/python3
 
-"""
-Contains the Boltzmann constant.
-"""
-BOLTZMANN_K = 1.38064852e-23 # J/K
+import sys
 
 try :
     from . import hamiltonian
     from . import thermo
+    from . import constants
 except ImportError :
     import hamiltonian
     import thermo
+    import constants
 
-try :
-    from .src import fastc
-except ImportError :
-    try :
-        import src.fastc
-    except ImportError :
-        pass;
-
-import os
-import sys
 import concurrent.futures
 import math
+import os
 
 
-def fastcwrapper(ham, length, temps, boltzmann = BOLTZMANN_K,
+def plotvals(ham, length, temps, boltzmann = constants.BOLTZMANN_K,
                 threads = max(32, 4 + os.cpu_count()), no_c = None) :
     """
     This is a wrapper for src.fastc.plot_vals that turns the temps into a list,
     and has default values for several parameters. Also works with Hamiltonian.
     """
-    assert ("ising.src.fastc" in sys.modules or not (no_c is False)), \
-           "Could not import fastc!"
-    if "ising.src.fastc" in sys.modules and (no_c is False or no_c is None):
+    assert("ising.fastc" in sys.modules)
+    if "ising.fastc" in sys.modules and (no_c is False or no_c is None):
         return fastc.plot_vals(length, ham.getcoupling(),
                               ham.getmagnet(), list(temps),
                               boltzmann, threads)
@@ -52,3 +41,8 @@ def fastcwrapper(ham, length, temps, boltzmann = BOLTZMANN_K,
             boltzmann = boltzmann)) / (boltzmann * t), temps)))
         exc.shutdown()
         return out
+ 
+try :
+    from . import fastc
+except ImportError :
+    import fastc

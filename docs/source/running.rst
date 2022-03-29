@@ -13,11 +13,11 @@ Specifies the number of spin particles in the model. Default 10.
 
 .. option:: --coupling X, -j X
 
-Specifies the spin coupling constant. Default -1 * :py:data:`ising.BOLTZMANN_K`.
+Specifies the spin coupling constant. Default -1 * :py:data:`ising.constants.BOLTZMANN_K`.
 
 .. option:: --magnet X, -m X
 
-Specifies the magnetic coupling constant. Default 0.1 * :py:data:`ising.BOLTZMANN_K`
+Specifies the magnetic coupling constant. Default 0.1 * :py:data:`ising.constants.BOLTZMANN_K`.
 
 .. option:: --low-temp X
 
@@ -29,7 +29,7 @@ Specifies the maximum temperature in Kelvin for the graph. Can not be less than 
 
 .. option:: --boltzmann X, -k X
 
-The value to use as the Boltzmann constant in whatever units needed. Default :py:data:`ising.BOLTZMANN_K`, which is in Joules per Kelvin.
+The value to use as the Boltzmann constant in whatever units needed. Default :py:data:`ising.constants.BOLTZMANN_K`, which is in Joules per Kelvin.
 
 .. option:: --points N, -n N
 

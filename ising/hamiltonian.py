@@ -2,10 +2,10 @@
 
 # For the __main__.py module.
 try :
-    from . import ising
+    from . import constants
     from . import spins
 except ImportError :
-    import ising
+    import constants
     import spins
 
 ####################################
@@ -36,15 +36,14 @@ Represents a Hamiltonian for an Ising system.
         return value
     def energy(self, spin : spins.SpinConfig) :
         """
-Find the raw energy of a spin configuration. Uses the formula
-$$-J \sum_{i} S_i S_{i+1} + \mu \sum_i S_i$$
+Find the raw energy of a spin configuration.
 """
         assert(isinstance(spin, spins.SpinConfig))
         return -self.getcoupling() * sum(spin[i - 1] * spin[i]
                                          for i in range(len(spin))) + \
                                          self.getmagnet() * sum(spin)
     def temperature(self, spin : spins.SpinConfig,
-                    boltzmann = ising.BOLTZMANN_K) :
+                    boltzmann = constants.BOLTZMANN_K) :
         """
 Finds E/k.
 

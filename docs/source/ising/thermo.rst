@@ -13,7 +13,7 @@ Contains functions for computing thermodynamic data.
    :type hamilt: :py:class:`ising.hamiltonian.Hamiltonian`
    :param int length: The number of positions in the Ising system.
    :param float temp: The temperature to compute the partition function for. Defaults to 298.15 K.
-   :param float boltzmann: The value of the Boltzmann constant. Defaults to :py:data:`ising.ising.BOLTZMANN_K`.
+   :param float boltzmann: The value of the Boltzmann constant. Defaults to :py:data:`ising.constants.BOLTZMANN_K`.
    :return: The value of the partition function.
 
 .. py:function:: average_value(func, hamilt, length, [temp = 298.15, boltzmann = BOLTZMANN_K])
@@ -22,11 +22,11 @@ Contains functions for computing thermodynamic data.
 
    :param func: Function that takes a SpinConfig as its first argument.
    :type func: function(:py:class:`ising.spins.SpinConfig`, \*args, \*\*kwargs)
-   :param hamilt: :py:class:`ising.hamltonian.Hamiltonian` object containing the coupling constants.
+   :param hamilt: :py:class:`ising.hamiltonian.Hamiltonian` object containing the coupling constants.
    :type hamilt: :py:class:`ising.hamiltonian.Hamiltonian`
    :param int length: The number of positions in the Ising system.
    :param float temp: The temperature to compute the partition function for. Defaults to 298.15 K.
-   :param float boltzmann: The value of the Boltzmann constant. Defaults to :py:data:`ising.ising.BOLTZMANN_K`.
+   :param float boltzmann: The value of the Boltzmann constant. Defaults to :py:data:`ising.constants.BOLTZMANN_K`.
    :return: The average value of a property.
 
 .. py:function:: variance(func, hamilt, length, [tmep = 298.15, boltzmann = BOLTZMANN_K])
@@ -39,5 +39,5 @@ Contains functions for computing thermodynamic data.
    :type hamilt: :py:class:`ising.hamiltonian.Hamiltonian`
    :param int length: The number of positions in the Ising system.
    :param float temp: The temperature to compute the partition function for. Defaults to 298.15 K.
-   :param float boltzmann: The value of the Boltzmann constant. Defaults to :py:data:`ising.ising.BOLTZMANN_K`.
+   :param float boltzmann: The value of the Boltzmann constant. Defaults to :py:data:`ising.constants.BOLTZMANN_K`.
    :return: The variance of a property.
