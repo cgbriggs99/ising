@@ -4,9 +4,11 @@
 try :
     from . import constants
     from . import spins
+    from . import graph
 except ImportError :
     import constants
     import spins
+    import graph
 
 ####################################
 #   mmmmmmm  mmmm  mmmm    mmmm    #
@@ -18,6 +20,23 @@ except ImportError :
 # Distinguish between periodic boundary and non-periodic boundary. Perhaps
 # also have a general graph version.
 class Hamiltonian :
+    def __init__(self) :
+        pass
+
+    def energy(self, spin : spins.SpinConfig) :
+        pass
+
+    def temperature(self, spin : spins.SpinConfig,
+                    boltzmann = constants.BOLTZMANN_K) :
+        """
+Finds E/k.
+
+Parameters
+spin: Spin configuration.
+boltzmann: Value of the Boltzmann constant in whatever units.
+"""
+        return self.energy(spin) / boltzmann
+class ConstantHamiltonian(Hamiltonian) :
     """
 Represents a Hamiltonian for an Ising system.
 """
@@ -34,6 +53,11 @@ Represents a Hamiltonian for an Ising system.
     def setmagnet(self, value) :
         self.__mag = value
         return value
+
+class PeriodicHamiltonian(ConstantHamiltonian) :
+    def __init__(self, coupling, magnet) :
+        super().__init__(coupling, magnet)
+        
     def energy(self, spin : spins.SpinConfig) :
         """
 Find the raw energy of a spin configuration.
@@ -42,19 +66,9 @@ Find the raw energy of a spin configuration.
         return -self.getcoupling() * sum(spin[i - 1] * spin[i]
                                          for i in range(len(spin))) + \
                                          self.getmagnet() * sum(spin)
-    def temperature(self, spin : spins.SpinConfig,
-                    boltzmann = constants.BOLTZMANN_K) :
-        """
-Finds E/k.
-
-Parameters
-spin: Spin configuration.
-boltzmann: Value of the Boltzmann constant in whatever units.
-"""
-        return self.energy(spin) / boltzmann
 
 # Non-periodic boundary condition.
-class NPHamiltonian(Hamiltonian) :
+class NPHamiltonian(ConstantHamiltonian) :
     """
 Represents a Hamiltonian with a non-periodic boundary condition.
 """
@@ -68,3 +82,42 @@ Find the raw energy of a spin configuration.
         return -self.getcoupling() * sum(spin[i] * spin[i + 1]
                                          for i in range(len(spin) - 1)) + \
                                          self.getmagnet() * sum(spin)
+# Generalized boundary condition.
+class GraphHamiltonian(Hamiltonian) :
+    def __init__(self, conns : graph.Graph, mags) :
+        """
+The data argument for the vertces should be the index in the spin matrix it
+corresponds with. The length of each edge should be the spin coupling constant.
+mags here is either a list of magnet constants, or a single constant.
+"""
+        self.__graph = conns
+        self.__mags = mags
+
+    def getconns(self) :
+        return self.__graph
+
+    def getmags(self) :
+        return self.__mags
+
+    def setmags(self, mags) :
+        self.__mags = mags
+        return mags
+
+    def energy(self, spin : spins.SpinConfig) :
+        couple = 0
+        for v in self.getconns().getverts() :
+            neigh = self.getconns().getneighbors(v)
+            for n in neigh :
+                couple += neigh[1] * (spin[v.getdata()] * spin[n[0].getdata()])
+        if hasattr(self.getmags(), "__iter__") :
+            try :
+                mag = sum(spin[i] * self.getmags()[i] for i in range(len(spin)))
+            except :
+                raise Exception("The number of magnet constants needs to" +
+                                " be the same as the number of spins.")
+        else :
+            mag = self.getmags() * sum(spin)
+        return couple + mag
+    
+                        
+                
