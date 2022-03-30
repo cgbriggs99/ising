@@ -24,7 +24,7 @@ class Hamiltonian :
         pass
 
     def energy(self, spin : spins.SpinConfig) :
-        pass
+        raise NotImplemented()
 
     def temperature(self, spin : spins.SpinConfig,
                     boltzmann = constants.BOLTZMANN_K) :
@@ -96,10 +96,10 @@ mags here is either a list of magnet constants, or a single constant.
     def getconns(self) :
         return self.__graph
 
-    def getmags(self) :
+    def getmagnet(self) :
         return self.__mags
 
-    def setmags(self, mags) :
+    def setmagnet(self, mags) :
         self.__mags = mags
         return mags
 
@@ -107,16 +107,25 @@ mags here is either a list of magnet constants, or a single constant.
         couple = 0
         for v in self.getconns().getverts() :
             neigh = self.getconns().getneighbors(v)
+            print(neigh)
             for n in neigh :
-                couple += neigh[1] * (spin[v.getdata()] * spin[n[0].getdata()])
-        if hasattr(self.getmags(), "__iter__") :
+                # Undirected edges end up being double counted. Don't do that.
+                if n[2] :
+                    couple += -n[1] / 2 * \
+                              (spin[v.getdata()] * spin[n[0].getdata()])
+                else :
+                    couple += -n[1] * (spin[v.getdata()] * spin[n[0].getdata()])
+                    
+        if hasattr(self.getmagnet(), "__iter__") :
             try :
-                mag = sum(spin[i] * self.getmags()[i] for i in range(len(spin)))
+                mag = sum(spin[i] * self.getmagnet()[i] for i in range(len(spin)))
             except :
                 raise Exception("The number of magnet constants needs to" +
                                 " be the same as the number of spins.")
         else :
-            mag = self.getmags() * sum(spin)
+            mag = self.getmagnet() * sum(spin)
+        print(couple)
+        print(mag)
         return couple + mag
     
                         

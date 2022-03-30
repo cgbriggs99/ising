@@ -62,7 +62,7 @@ Runs the Ising command line program.
 
     temps = np.linspace(args['low_temp'], args["high_temp"], args["points"])
 
-    ens, endev, magdev = fastcwrapper.plotvals(hamiltonian.Hamiltonian(
+    ens, endev, magdev = fastcwrapper.plotvals(hamiltonian.PeriodicHamiltonian(
             args["coupling"], args["magnet"]), args["length"], temps,
                                            threads = args["threads"],
                                        no_c = args["python"])

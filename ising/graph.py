@@ -34,8 +34,7 @@ class Vertex(Copyable) :
 
     def __eq__(self, other) :
         if isinstance(other, Vertex) :
-            return (self is other) or (self.__data == other.__data and \
-                   self.__index == other.__index)
+            return (self is other) or (self.__data == other.__data)
         elif isinstance(self.__index, type(other)) or \
              isinstance(other, type(self.__index)) :
             return self.__index == other
@@ -47,14 +46,18 @@ class Vertex(Copyable) :
             out = Vertex(self.__data.copy(), self.getindex())
             return out
         else :
-            return Vertex(data, self.getindex())
+            return Vertex(self.__data, self.getindex())
 
     def __str__(self) :
         if self.getdata() is not None :
             return f"({self.getindex()}: {self.getdata()})"
         else :
             return f"({self.getindex()})"
-        
+    def __repr__(self) :
+        return str(self)
+    
+    def __hash__(self) :
+        return self.getindex()
 
 class Edge(Copyable) :
     def __init__(self, index, start, end, length = 1) :
@@ -91,14 +94,16 @@ class Edge(Copyable) :
         self.__index = index
         return self.__index
 
+    def cantraverse(self, vert) :
+        return (self.__start == vert)
+
     def traverse(self, vert) :
         assert(self.__start == vert)
         return (self.__end, self.__length)
 
     def __eq__(self, other) :
         if isinstance(other, Edge) :
-            return (self is other) or (self.__length == other.__length and \
-                   self.__index == other.__index and
+            return (self is other) or (self.__length == other.__length and
                                        self.__start == other.__start and
                                        self.__end == other.__end)
         elif isinstance(self.__index, type(other)) or \
@@ -121,6 +126,11 @@ class Edge(Copyable) :
         else :
             return f"[{self.getindex()} : " +\
                    f"{self.getstart()} -> {self.getend()}]"
+    def __repr__(self) :
+        return str(self)
+    
+    def __hash__(self) :
+        return self.getindex()
         
 
 class UndirectedEdge(Edge) :
@@ -128,12 +138,19 @@ class UndirectedEdge(Edge) :
 Undirected edges.
 """
     def __init__(self, index, start, end, length = 1) :
-        super(Edge).__init__(index, start, end, length)
+        super().__init__(index, start, end, length)
+        self.__start = start
+        self.__end = end
+        self.__index = index
+        self.__length = length
+
+    def cantraverse(self, vert) :
+        return (self.__start == vert or self.__end == vert)
 
     def traverse(self, vert) :
         if self.__start == vert :
             return (self.__end, self.__length)
-        elif self.__end = vert :
+        elif self.__end == vert :
             return (self.__start, self.__length)
         else :
             raise Exception("Vertex not the start or end of the edge.")
@@ -143,7 +160,19 @@ Undirected edges.
                                   self.getend().copy(), self.getlength().copy())
         else :
             return UndirectedEdge(self.getindex(), self.getstart().copy(),
-                                  self.getend().copy(), self.getlength())
+                                     self.getend().copy(), self.getlength())
+    def __eq__(self, other) :
+        if isinstance(other, UndirectedEdge) :
+            return (self is other) or (self.__length == other.__length and
+                                       (self.__start == other.__start and
+                                       self.__end == other.__end) or
+                                       (self.__start == other.__end and
+                                        self.__end == other.__start))
+        elif isinstance(self.__index, type(other)) or \
+             isinstance(other, type(self.__index)) :
+            return self.__index == other
+        else :
+            return False
 
     def __str__(self) :
         if self.getlength() is not None :
@@ -152,6 +181,8 @@ Undirected edges.
         else :
             return f"[{self.getindex()} : " +\
                    f"{self.getstart()} <-> {self.getend()}]"
+    def __repr__(self) :
+        return str(self)
 
 class VertexFactory(despats.Singleton) :
     def __init__(self) :
@@ -161,6 +192,13 @@ class VertexFactory(despats.Singleton) :
         out = Vertex(data, self.__index)
         self.__index += 1
         return out
+    def makevertex_list(self, nverts, data = None) :
+        if hasattr(data, "__iter__") :
+            return [VertexFactory.getsingleton().makevertex(d)
+                    for d, _ in zip(data, range(nverts))]
+        else :
+            return [VertexFactory.getsingleton().makevertex(data)
+                    for _ in range(nverts)]
 
 class EdgeFactory(despats.Singleton) :
     def __init__(self) :
@@ -168,11 +206,11 @@ class EdgeFactory(despats.Singleton) :
 
     def makeedge(self, *args, **kwargs) :
         if "directed" in kwargs and kwargs["directed"] == True :
-            out = UndirectedEdge(self.__index, *args)
+            out = Edge(self.__index, *args)
             self.__index += 1
             return out
         else :
-            out = Edge(self.__index, *args)
+            out = UndirectedEdge(self.__index, *args)
             self.__index += 1
             return out
     
@@ -185,7 +223,7 @@ Represents a general graph.
     def __init__(self, verts, edges) :
         if verts == None :
             self.__verts = list()
-        else
+        else :
             self.__verts = verts
         if edges == None :
             self.__edges = list()
@@ -195,8 +233,36 @@ Represents a general graph.
     def getverts(self) :
         return self.__verts
 
+    def getvert(self, index) :
+        for v in self.getverts() :
+            if v.getindex() == index or v == index:
+                return v
+        return None
+
     def getedges(self) :
         return self.__edges
+
+    def getedge(self, index, cutoff = 1e-6) :
+        if hasattr(index, "__iter__") :
+            for e in self.getedges() :
+                if isinstance(e, UndirectedEdge) :
+                    if ((e.getstart() == index[0] and e.getend() == index[1]) or\
+                       (e.getstart() == index[1] and e.getend() == index[0])) \
+                        and ((len(index) == 3 and \
+                              abs(e.getlength() - index[2]) < cutoff) or
+                             len(index) != 3) :
+                        return e
+                else :
+                    if (e.getstart() == index[0] and e.getend() == index[1]) and \
+                       ((len(index) == 3 and \
+                         abs(e.getlengt() - index[2]) < cutoff) or
+                        len(index) != 3) :
+                        return e
+        else :
+            for e in self.getedges() :
+                if e.getindex() == index :
+                    return e
+        return None
 
     def addverts(self, vert) :
         """
@@ -204,9 +270,9 @@ Can do single vertices or a collection of vertices.
 """
         if hasattr(vert, "__iter__") :
             for v in vert :
-                self.__verts.add(v)
+                self.__verts.append(v)
         else :
-            self.__verts.add(vert)
+            self.__verts.append(vert)
         return self.__verts
     
     def addedges(self, edge) :
@@ -216,9 +282,9 @@ Can do singe edges or a collection of edges.
         if hasattr(edge, "__iter__") :
             assert(all(map(lambda x : isinstance(x, Edge), edge)))
             for e in edge :
-                self.__edges.add(e)
+                self.__edges.append(e)
         elif isinstance(edge, Edge) :
-            self.__edges.add(edge)
+            self.__edges.append(edge)
         return self.__edges
             
     def hasvertex(self, vert) :
@@ -230,14 +296,40 @@ Can do singe edges or a collection of edges.
     def getneighbors(self, vert) :
         neigh = []
         for e in self.getedges() :
-            try :
-                neigh.add(tuple(e.traverse(vert)))
-            except :
-                pass
+            if e.cantraverse(vert) :
+                neigh.append(tuple(list(e.traverse(vert)) + [
+                                   isinstance(e, UndirectedEdge)]))
         return neigh
 
     def __str__(self) :
         return "{" + str(self.getedges()) + ", " + str(self.getverts()) + "}"
+    def __repr__(self) :
+        return str(self)
     
+def dijkstra(graph : Graph, start : Vertex, end : Vertex) :
+    visited = {start : (0, None)}
+    openset = [(start, n) for n in graph.getneighbors(start)]
     
-    
+
+    while len(openset) > 0:
+        vert = openset.pop()
+        dist = visited[vert[0]][0] + vert[1][1]
+        if (vert[1][0] in visited.keys() and visited[vert[1][0]][0] > dist) or \
+           vert[1][0] not in visited.keys() :
+            # Update if vertex is new, or if the distance it has is shorter.
+            visited[vert[1][0]] = (dist, vert[0])
+            # Only generate neighbors if it was added.
+            openset = openset + [(vert[0], n) for n in
+                                 graph.getneighbors(vert[0])]
+    if end in visited.keys() :
+        verts = []
+        edges = []
+        curr = end
+        while curr != start :
+            verts.add(curr)
+            edges.add(graph.getedge((visited[curr][1], curr,
+                                     visited[curr][1][0] -
+                                     visited[visited[curr][1][1]][1][0])))
+        return Graph(verts, edges)
+    else :
+        return None
