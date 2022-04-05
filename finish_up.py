@@ -9,9 +9,9 @@ build_dirs = os.listdir("build")
 lib_dir = next(filter(lambda x: re.match("lib\\..*", x), build_dirs))
 files = os.listdir("build/" + lib_dir + "/ising")
 try :
-    modfile = next(filter(lambda x: re.match("fastc\\..*\\..*", x), files))
+    modfile = next(filter(lambda x: re.match("fastc\\..*", x), files))
 except :
-    raise Exception(str(files))
+    raise Exception(str(files + list(os.listdir(ising))))
 parts = modfile.split(".")
 shutil.copyfile("build/" + lib_dir + "/ising/" + modfile, "ising/" + parts[0] + "."
                 + parts[-1])

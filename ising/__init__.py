@@ -6,6 +6,7 @@ from .hamiltonian import *
 from .spins import *
 from .thermo import *
 from .fastcwrapper import *
+from .despats import *
 
 try :
     from .fastc import *

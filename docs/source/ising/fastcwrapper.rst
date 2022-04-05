@@ -9,8 +9,8 @@ Wraps the :py:func:`plot_vals` function to allow for more customization.
 
    This is a wrapper around :py:func:`ising.fastc.plot_vals` which converts iterables to lists, hamiltonians to their parameters, and adds default values for threads, the Boltzmann constant, and contains a flag for whether to actually use the C backend. It also handles whether the C backend is included.
 
-   :param ham: The hamiltonian.
-   :type ham: :py:class:`ising.hamiltonian.Hamiltonian`
+   :param ham: The hamiltonian. Currently only works on periodic boundary conditions.
+   :type ham: :py:class:`ising.hamiltonian.PeriodicHamiltonian`
    :param int length: The number of positions in the Ising model.
    :param iterable temps: The temperatures to plot for.
    :param float boltzmann: The Boltzmann constant. Defaults to :py:data:`ising.constants.BOLTZMANN_K`

@@ -2,8 +2,10 @@ Ising Documentation
 ===================
 
 .. toctree::
-   constants   
+   constants
+   despats/index
    fastcwrapper
+   graph
    hamiltonian
    main
    spins

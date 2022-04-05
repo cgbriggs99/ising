@@ -16,7 +16,7 @@ __threads = 4
 
 def test_fastc() :
     # Test the backend.
-    ham = ising.Hamiltonian(__J, __M)
+    ham = ising.PeriodicHamiltonian(__J, __M)
     t1 = time.perf_counter()
     e, h, m = ising.fastcwrapper.plotvals(ham, __length, __temps, __k,
                                        __threads, no_c = True)
