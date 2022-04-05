@@ -53,3 +53,7 @@ spin: Spin configuration.
 boltzmann: Value of the Boltzmann constant in whatever units.
 """
         return self.energy(spin) / boltzmann
+
+    def energy_pos(self, spin : spins.SpinConfig, pos : int,
+                   boltzmann = ising.BOLTZMANN_K) :
+        raise NotImplemented
