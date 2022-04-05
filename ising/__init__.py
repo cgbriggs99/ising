@@ -5,6 +5,7 @@ from .ising import *
 from .hamiltonian import *
 from .spins import *
 from .thermo import *
+from .despats import *
 
 # This module is not guaranteed.
 try :

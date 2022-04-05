@@ -71,7 +71,8 @@ def main() :
         # we might as well try to make it go faster.
         exc = concurrent.futures.ThreadPoolExecutor()
         ham = hamiltonian.Hamiltonian(args["coupling"], args["magnet"])
-        ens = list(exc.map(lambda t: thermo.average_value(ham.energy, ham,
+        ens = list(exc.map(lambda t: thermo.ThermoStrategy.getsingleton().
+                           average(ham.energy, ham,
                                                  args["length"],temp = t,
                                                  boltzmann = args["boltzmann"]),
                            temps))
@@ -82,12 +83,15 @@ def main() :
         plot.ylabel("Energy")
         plot.legend()
         # Rinse and repeat.
-        endev = list(exc.map(lambda t: math.sqrt(thermo.variance(ham.energy, ham,
-                                                  args["length"], temp = t,
-                                                  boltzmann = args["boltzmann"])
+        endev = list(exc.map(lambda t: math.sqrt(thermo.ThermoStrategy.
+                                                 getsingleton().variance(
+                                                    ham.energy, ham,
+                                                      args["length"], temp = t,
+                                                      boltzmann = args["boltzmann"])
                                    ) / (args["boltzmann"] * t ** 2),
                          temps))
-        magdev = list(exc.map(lambda t: math.sqrt(thermo.variance(
+        magdev = list(exc.map(lambda t: math.sqrt(thermo.ThermoStrategy.
+                                                  getsingleton().variance(
             lambda sc: sc.magnetization(), ham, args["length"], temp = t,
             boltzmann = args["boltzmann"])) / (args["boltzmann"] * t), temps))
         plot.figure()
