@@ -43,9 +43,15 @@ class RandomIterator :
     
 
 class MonteCarloStrategy(thermo.ThermoStrategy) :
-    def __init__(self, points = 1000) :
+    def __init__(self) :
         super().__init__()
+        self.__montecarlo = 1000
+
+    def setpoints(self, points) :
         self.__montecarlo = points
+
+    def getpoints(self) :
+        return self.__montecarlo
 
     def partition(self, hamilt : hamiltonian.Hamiltonian, length : int,
                   temp : float, boltzmann : float) :
@@ -77,10 +83,19 @@ class MonteCarloStrategy(thermo.ThermoStrategy) :
         return (total2 / den - (total1 / den) ** 2)
         
 class MetropolisStrategy(thermo.ThermoStrategy) :
-    def __init__(self, poinits = 1000, depth = 10) :
+    def __init__(self) :
         super().__init__()
-        self.__metropolis = points
+        self.__metropolis = 1000
+        self.__depth = 10
+
+    def getdepth(self) :
+        return self.__depth
+    def getpoitns(self) :
+        return self.__metropolis
+    def setdepth(self, depth) :
         self.__depth = depth
+    def setpoints(self, points) :
+        self.__metropolis = points
 
     def partition(self, hamilt : hamiltonian.Hamiltonian, length : int,
                   temp : float, boltzmann : float) :
