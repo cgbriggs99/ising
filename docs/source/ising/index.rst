@@ -2,10 +2,14 @@ Ising Documentation
 ===================
 
 .. toctree::
-   ising
+   constants
+   despats/index
+   fastcwrapper
+   graph
    hamiltonian
+   main
    spins
-   thermo
    src/index
+   thermo
    :maxdepth: 2
    :caption: Contents

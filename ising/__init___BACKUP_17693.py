@@ -5,7 +5,10 @@ from .constants import *
 from .hamiltonian import *
 from .spins import *
 from .thermo import *
+<<<<<<< HEAD
+=======
 from .fastcwrapper import *
+>>>>>>> da56f9cd41c9923711c628128325629f9ca676c5
 from .despats import *
 
 try :

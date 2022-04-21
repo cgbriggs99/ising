@@ -1,9 +1,9 @@
 Fast C Backend
 ==============
 
-.. py:module:: ising.src.fastc
-
 C backend that computes the energies, magnetic susceptibilities, and heat capacities faster than Python could ever wish.
+
+.. py:module:: ising.fastc
 
 .. py:function:: plot_vals(positions, coupling, magnet, temps, boltzmann, threads)
 

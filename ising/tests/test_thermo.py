@@ -12,7 +12,7 @@ __temp = 0.1
 
 def test_thermo() :
     # Set up the hamiltonian.
-    ham = ising.Hamiltonian(__J, __M)
+    ham = ising.PeriodicHamiltonian(__J, __M)
     # Set the strategy.
     ising.thermo.ThermoMethod.getsingleton().setstrat(
         ising.thermo.FullCalcStrategy.getsingleton())
