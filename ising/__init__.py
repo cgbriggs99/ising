@@ -7,6 +7,8 @@ from .spins import *
 from .thermo import *
 from .fastcwrapper import *
 from .despats import *
+from .montecarlo import *
+from .graph import *
 
 try :
     from .fastc import *

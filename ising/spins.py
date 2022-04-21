@@ -69,6 +69,10 @@ an integer.
         self.__numeral = (self.__numeral & ~(1 << (self.__len - ind - 1))) | \
                          (((value + 1) // 2) << (self.__len - ind - 1))
         return (value + 1) // 2
+    
+    def flipbit(self, index) :
+        self[index] = 1 - self[index]
+        
     def __iter__(self) :
         return _SpinIntegerIterator(self)
     def copy(self) :
