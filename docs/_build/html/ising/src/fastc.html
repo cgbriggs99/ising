@@ -1,51 +1,175 @@
 
+
 <!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Fast C Backend &mdash; Ising  documentation</title>
+  
 
-    <title>Fast C Backend &#8212; Ising alpha-0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/classic.css" />
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
     
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
     
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Ising C Worker Functions" href="ising.html" />
     <link rel="prev" title="C Backend Documentation" href="index.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="ising.html" title="Ising C Worker Functions"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="C Backend Documentation"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Ising alpha-0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Ising Documentation</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">C Backend Documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Fast C Backend</a></li> 
-      </ul>
-    </div>  
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Ising
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Ising Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Ising Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../despats/index.html">Design Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fastcwrapper.html">FastC Wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../graph.html">Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hamiltonian.html">Hamiltonian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../main.html">Main Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spins.html">Spins</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">C Backend Documentation</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Fast C Backend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ising.html">Ising C Worker Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../thermo.html">Thermodynamics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../running.html">Running Ising</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Ising</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Ising Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">C Backend Documentation</a> &raquo;</li>
+        
+      <li>Fast C Backend</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/ising/src/fastc.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <section id="fast-c-backend">
 <h1>Fast C Backend<a class="headerlink" href="#fast-c-backend" title="Permalink to this headline">¶</a></h1>
@@ -83,67 +207,52 @@
 </section>
 
 
-            <div class="clearer"></div>
+           </div>
+           
           </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ising.html" class="btn btn-neutral float-right" title="Ising C Worker Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="C Backend Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2022, Connor Briggs. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.6
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h4>Previous topic</h4>
-    <p class="topless"><a href="index.html"
-                          title="previous chapter">C Backend Documentation</a></p>
+
+    </section>
+
   </div>
-  <div>
-    <h4>Next topic</h4>
-    <p class="topless"><a href="ising.html"
-                          title="next chapter">Ising C Worker Functions</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../../_sources/ising/src/fastc.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="ising.html" title="Ising C Worker Functions"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="C Backend Documentation"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Ising alpha-0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Ising Documentation</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="index.html" >C Backend Documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Fast C Backend</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2022, Connor Briggs.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
-    </div>
-  </body>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
 </html>
