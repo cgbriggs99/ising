@@ -13,4 +13,4 @@ clean:
 # Build the docs.
 .PHONY:docs
 docs:
-	$(MAKE) -C docs html
+	$(MAKE) -C build_docs html

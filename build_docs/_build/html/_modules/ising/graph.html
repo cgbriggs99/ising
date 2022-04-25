@@ -1,0 +1,518 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ising.graph &mdash; Ising  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Ising
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Ising</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>ising.graph</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ising.graph</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python3</span>
+
+<span class="k">try</span> <span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">despats</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">despats</span>
+
+<div class="viewcode-block" id="Copyable"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Copyable">[docs]</a><span class="k">class</span> <span class="nc">Copyable</span> <span class="p">:</span>
+<div class="viewcode-block" id="Copyable.copy"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Copyable.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">raise</span> <span class="bp">NotImplemented</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Copy not implemented yet for </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Copyable.iscopyable"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Copyable.iscopyable">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">iscopyable</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;copy&quot;</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="Vertex"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex">[docs]</a><span class="k">class</span> <span class="nc">Vertex</span><span class="p">(</span><span class="n">Copyable</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">=</span> <span class="n">index</span>
+
+<div class="viewcode-block" id="Vertex.getdata"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex.getdata">[docs]</a>    <span class="k">def</span> <span class="nf">getdata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span></div>
+    
+<div class="viewcode-block" id="Vertex.setdata"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex.setdata">[docs]</a>    <span class="k">def</span> <span class="nf">setdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="Vertex.getindex"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex.getindex">[docs]</a>    <span class="k">def</span> <span class="nf">getindex</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__index</span></div>
+
+<div class="viewcode-block" id="Vertex._setindex"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex._setindex">[docs]</a>    <span class="k">def</span> <span class="nf">_setindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span> <span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="k">return</span> <span class="n">index</span></div>
+
+<div class="viewcode-block" id="Vertex.__eq__"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Vertex</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__data</span> <span class="ow">and</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__index</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">))</span> <span class="ow">or</span> \
+             <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__index</span><span class="p">))</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">==</span> <span class="n">other</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Vertex.copy"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">Copyable</span><span class="o">.</span><span class="n">iscopyable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="p">):</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">out</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="n">Vertex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Vertex.__str__"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getdata</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getdata</span><span class="p">()</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+    
+<div class="viewcode-block" id="Vertex.__hash__"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Vertex.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="Edge"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge">[docs]</a><span class="k">class</span> <span class="nc">Edge</span><span class="p">(</span><span class="n">Copyable</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__start</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">=</span> <span class="n">index</span>
+
+<div class="viewcode-block" id="Edge.getstart"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.getstart">[docs]</a>    <span class="k">def</span> <span class="nf">getstart</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__start</span></div>
+
+<div class="viewcode-block" id="Edge.getend"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.getend">[docs]</a>    <span class="k">def</span> <span class="nf">getend</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__end</span></div>
+
+<div class="viewcode-block" id="Edge.getlength"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.getlength">[docs]</a>    <span class="k">def</span> <span class="nf">getlength</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__length</span></div>
+
+<div class="viewcode-block" id="Edge.setstart"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.setstart">[docs]</a>    <span class="k">def</span> <span class="nf">setstart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__start</span> <span class="o">=</span> <span class="n">vert</span>
+        <span class="k">return</span> <span class="n">vert</span></div>
+
+<div class="viewcode-block" id="Edge.setend"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.setend">[docs]</a>    <span class="k">def</span> <span class="nf">setend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">=</span> <span class="n">vert</span>
+        <span class="k">return</span> <span class="n">vert</span></div>
+
+    <span class="k">def</span> <span class="nf">setlength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="k">return</span> <span class="n">length</span>
+
+<div class="viewcode-block" id="Edge.getindex"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.getindex">[docs]</a>    <span class="k">def</span> <span class="nf">getindex</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__index</span></div>
+
+<div class="viewcode-block" id="Edge._setindex"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge._setindex">[docs]</a>    <span class="k">def</span> <span class="nf">_setindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__index</span></div>
+
+<div class="viewcode-block" id="Edge.cantraverse"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.cantraverse">[docs]</a>    <span class="k">def</span> <span class="nf">cantraverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">vert</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Edge.traverse"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.traverse">[docs]</a>    <span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">assert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">vert</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Edge.__eq__"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Edge</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__length</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__length</span> <span class="ow">and</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">__start</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__start</span> <span class="ow">and</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">__end</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__end</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__index</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">))</span> <span class="ow">or</span> \
+             <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__index</span><span class="p">))</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Edge.copy"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">Copyable</span><span class="o">.</span><span class="n">iscopyable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__length</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="n">Edge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__start</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__length</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="n">Edge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__start</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__end</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">__length</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Edge.__str__"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span><span class="si">}</span><span class="s2"> : &quot;</span> <span class="o">+</span> \
+                   <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">()</span><span class="si">}</span><span class="s2">)]&quot;</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span><span class="si">}</span><span class="s2"> : &quot;</span> <span class="o">+</span>\
+                   <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span><span class="si">}</span><span class="s2">]&quot;</span></div>
+    
+<div class="viewcode-block" id="Edge.__hash__"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Edge.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span></div></div>
+        
+
+<div class="viewcode-block" id="UndirectedEdge"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.UndirectedEdge">[docs]</a><span class="k">class</span> <span class="nc">UndirectedEdge</span><span class="p">(</span><span class="n">Edge</span><span class="p">)</span> <span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Undirected edges.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">cantraverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">vert</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span> <span class="o">==</span> <span class="n">vert</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">vert</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span> <span class="o">==</span> <span class="n">vert</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">())</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Vertex not the start or end of the edge.&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">Copyable</span><span class="o">.</span><span class="n">iscopyable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">())</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="n">UndirectedEdge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="n">UndirectedEdge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">())</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">UndirectedEdge</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span> <span class="ow">is</span> <span class="n">other</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">getlength</span><span class="p">()</span> <span class="ow">and</span>
+                                       <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="ow">and</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">getend</span><span class="p">())</span> <span class="ow">or</span>
+                                       <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span> <span class="ow">and</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">getstart</span><span class="p">()))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">(),</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">))</span> <span class="ow">or</span> \
+             <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()))</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span><span class="si">}</span><span class="s2"> : &quot;</span> <span class="o">+</span> \
+                   <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span><span class="si">}</span><span class="s2"> &lt;-&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getlength</span><span class="p">()</span><span class="si">}</span><span class="s2">)]&quot;</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span><span class="si">}</span><span class="s2"> : &quot;</span> <span class="o">+</span> \
+                   <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span><span class="si">}</span><span class="s2"> &lt;-&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span><span class="si">}</span><span class="s2">]&quot;</span></div>
+
+<div class="viewcode-block" id="VertexFactory"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.VertexFactory">[docs]</a><span class="k">class</span> <span class="nc">VertexFactory</span><span class="p">(</span><span class="n">despats</span><span class="o">.</span><span class="n">Singleton</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="VertexFactory.makevertex"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.VertexFactory.makevertex">[docs]</a>    <span class="k">def</span> <span class="nf">makevertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">Vertex</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+<div class="viewcode-block" id="VertexFactory.makevertex_list"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.VertexFactory.makevertex_list">[docs]</a>    <span class="k">def</span> <span class="nf">makevertex_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nverts</span> <span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">VertexFactory</span><span class="o">.</span><span class="n">getsingleton</span><span class="p">()</span><span class="o">.</span><span class="n">makevertex</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">nverts</span><span class="p">))]</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">VertexFactory</span><span class="o">.</span><span class="n">getsingleton</span><span class="p">()</span><span class="o">.</span><span class="n">makevertex</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nverts</span><span class="p">)]</span></div></div>
+
+<div class="viewcode-block" id="EdgeFactory"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.EdgeFactory">[docs]</a><span class="k">class</span> <span class="nc">EdgeFactory</span><span class="p">(</span><span class="n">despats</span><span class="o">.</span><span class="n">Singleton</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="EdgeFactory.makeedge"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.EdgeFactory.makeedge">[docs]</a>    <span class="k">def</span> <span class="nf">makeedge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">directed</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">directed</span> <span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">Edge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">out</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">UndirectedEdge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">out</span></div></div>
+    
+<span class="c1"># Base representation.</span>
+<div class="viewcode-block" id="Graph"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph">[docs]</a><span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="n">Copyable</span><span class="p">)</span> <span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Represents a general graph.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verts</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">verts</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__verts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__verts</span> <span class="o">=</span> <span class="n">verts</span>
+        <span class="k">if</span> <span class="n">edges</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__edges</span> <span class="o">=</span> <span class="n">edges</span>
+
+<div class="viewcode-block" id="Graph.getverts"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.getverts">[docs]</a>    <span class="k">def</span> <span class="nf">getverts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__verts</span></div>
+
+<div class="viewcode-block" id="Graph.getvert"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.getvert">[docs]</a>    <span class="k">def</span> <span class="nf">getvert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getverts</span><span class="p">()</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span> <span class="o">==</span> <span class="n">index</span> <span class="ow">or</span> <span class="n">v</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">v</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Graph.getedges"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.getedges">[docs]</a>    <span class="k">def</span> <span class="nf">getedges</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__edges</span></div>
+
+<div class="viewcode-block" id="Graph.getedge"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.getedge">[docs]</a>    <span class="k">def</span> <span class="nf">getedge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">cutoff</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getedges</span><span class="p">()</span> <span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">UndirectedEdge</span><span class="p">)</span> <span class="p">:</span>
+                    <span class="k">if</span> <span class="p">((</span><span class="n">e</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span> <span class="o">==</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span>\
+                       <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span> <span class="o">==</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> \
+                        <span class="ow">and</span> <span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> \
+                              <span class="nb">abs</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">getlength</span><span class="p">()</span> <span class="o">-</span> <span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">)</span> <span class="ow">or</span>
+                             <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">)</span> <span class="p">:</span>
+                        <span class="k">return</span> <span class="n">e</span>
+                <span class="k">else</span> <span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">getstart</span><span class="p">()</span> <span class="o">==</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">getend</span><span class="p">()</span> <span class="o">==</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                       <span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> \
+                         <span class="nb">abs</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">getlengt</span><span class="p">()</span> <span class="o">-</span> <span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">)</span> <span class="ow">or</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">)</span> <span class="p">:</span>
+                        <span class="k">return</span> <span class="n">e</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getedges</span><span class="p">()</span> <span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">getindex</span><span class="p">()</span> <span class="o">==</span> <span class="n">index</span> <span class="p">:</span>
+                    <span class="k">return</span> <span class="n">e</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Graph.addverts"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.addverts">[docs]</a>    <span class="k">def</span> <span class="nf">addverts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Can do single vertices or a collection of vertices.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">vert</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Vertex</span><span class="p">),</span> <span class="n">vert</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vert</span> <span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__verts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__verts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vert</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__verts</span></div>
+    
+<div class="viewcode-block" id="Graph.addedges"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.addedges">[docs]</a>    <span class="k">def</span> <span class="nf">addedges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">)</span> <span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Can do singe edges or a collection of edges.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">assert</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Edge</span><span class="p">),</span> <span class="n">edge</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edge</span> <span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="n">Edge</span><span class="p">)</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__edges</span></div>
+            
+<div class="viewcode-block" id="Graph.hasvertex"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.hasvertex">[docs]</a>    <span class="k">def</span> <span class="nf">hasvertex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="n">vert</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getverts</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Graph.hasedge"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.hasedge">[docs]</a>    <span class="k">def</span> <span class="nf">hasedge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="n">edge</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getedges</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Graph.getneighbors"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.Graph.getneighbors">[docs]</a>    <span class="k">def</span> <span class="nf">getneighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">neigh</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getedges</span><span class="p">()</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">cantraverse</span><span class="p">(</span><span class="n">vert</span><span class="p">)</span> <span class="p">:</span>
+                <span class="n">neigh</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">vert</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span>
+                                   <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">UndirectedEdge</span><span class="p">)]))</span>
+        <span class="k">return</span> <span class="n">neigh</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getedges</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getverts</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span></div>
+    
+<div class="viewcode-block" id="dijkstra"><a class="viewcode-back" href="../../source/ising/graph.html#ising.graph.dijkstra">[docs]</a><span class="k">def</span> <span class="nf">dijkstra</span><span class="p">(</span><span class="n">graph</span> <span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">start</span> <span class="p">:</span> <span class="n">Vertex</span><span class="p">,</span> <span class="n">end</span> <span class="p">:</span> <span class="n">Vertex</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="p">{</span><span class="n">start</span> <span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)}</span>
+    <span class="n">openset</span> <span class="o">=</span> <span class="p">[(</span><span class="n">start</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">getneighbors</span><span class="p">(</span><span class="n">start</span><span class="p">)]</span>
+
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">openset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vert</span> <span class="o">=</span> <span class="n">openset</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">visited</span><span class="p">[</span><span class="n">vert</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">vert</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">vert</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">visited</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">visited</span><span class="p">[</span><span class="n">vert</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">dist</span><span class="p">)</span> <span class="ow">or</span> \
+           <span class="n">vert</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="p">:</span>
+            <span class="c1"># Update if vertex is new, or if the distance it has is shorter.</span>
+            <span class="n">visited</span><span class="p">[</span><span class="n">vert</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">vert</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="c1"># Only generate neighbors if it was added.</span>
+            <span class="n">openset</span> <span class="o">=</span> <span class="n">openset</span> <span class="o">+</span> <span class="p">[(</span><span class="n">vert</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span>
+                                 <span class="n">graph</span><span class="o">.</span><span class="n">getneighbors</span><span class="p">(</span><span class="n">vert</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="k">if</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">visited</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="p">:</span>
+        <span class="n">verts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">curr</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="k">while</span> <span class="n">curr</span> <span class="o">!=</span> <span class="n">start</span> <span class="p">:</span>
+            <span class="n">verts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">getedge</span><span class="p">((</span><span class="n">visited</span><span class="p">[</span><span class="n">curr</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">curr</span><span class="p">,</span>
+                                     <span class="n">visited</span><span class="p">[</span><span class="n">curr</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span>
+                                     <span class="n">visited</span><span class="p">[</span><span class="n">visited</span><span class="p">[</span><span class="n">curr</span><span class="p">][</span><span class="mi">1</span><span class="p">]][</span><span class="mi">0</span><span class="p">])))</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="n">visited</span><span class="p">[</span><span class="n">curr</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            
+        <span class="nb">print</span><span class="p">(</span><span class="n">Graph</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">edges</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Graph</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2022, Connor Briggs. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.6
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
