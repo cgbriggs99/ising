@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Spins &#8212; Ising alpha-0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="C Backend Documentation" href="src/index.html" />
+    <link rel="prev" title="Main Module Documentation" href="main.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="src/index.html" title="C Backend Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="main.html" title="Main Module Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ising alpha-0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Ising Documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spins</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-ising.spins">
+<span id="spins"></span><h1>Spins<a class="headerlink" href="#module-ising.spins" title="Permalink to this headline">¶</a></h1>
+<p>Contains representations for spin configurations.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ising.spins.SpinConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ising.spins.</span></span><span class="sig-name descname"><span class="pre">SpinConfig</span></span><a class="headerlink" href="#ising.spins.SpinConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a general spin configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Canonical</dt>
+<dd class="field-odd"><p>ising.spins.SpinConfig</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.spins.SpinConfig.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinConfig.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the number of positions in the spin configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>NotImplemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.spins.SpinConfig.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinConfig.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows for subscripting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>NotImplemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.spins.SpinConfig.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinConfig.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows for assigning to a position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>NotImplemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.spins.SpinConfig.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinConfig.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows for iterating over the positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>NotImplemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.spins.SpinConfig.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinConfig.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation using spin-arrow notation to show the spin state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A string with up and down arrows.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.spins.SpinConfig.magnetization">
+<span class="sig-name descname"><span class="pre">magnetization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinConfig.magnetization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the spin excess of the configuration. That is, the number of up spins minus the number of down spins.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The spin excess.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ising.spins.SpinMatrix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ising.spins.</span></span><span class="sig-name descname"><span class="pre">SpinMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a spin configuration set up with an array of 1’s and -1’s representing up and down spins. Implements all the base methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>(</em><em>int</em><em>)</em>) – A list of 1’s and -1’s.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ising.spins.SpinInteger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ising.spins.</span></span><span class="sig-name descname"><span class="pre">SpinInteger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numeral</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinInteger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a spin configuration determined from the binary representation of an integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>numeral</strong> (<em>int</em>) – The number whose binary representation gives the spin state.</p></li>
+<li><p><strong>length</strong> (<em>int</em>) – The number of particles in the Ising system.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.spins.SpinInteger.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinInteger.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A <a class="reference internal" href="#ising.spins._SpinIntegerIterator" title="ising.spins._SpinIntegerIterator"><code class="xref py py-class docutils literal notranslate"><span class="pre">_SpinIntegerIterator</span></code></a> that represents the object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.spins.SpinInteger.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins.SpinInteger.copy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A copy of this object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ising.spins._SpinIntegerIterator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ising.spins.</span></span><span class="sig-name descname"><span class="pre">_SpinIntegerIterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ising.spins._SpinIntegerIterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator class for <a class="reference internal" href="#ising.spins.SpinInteger" title="ising.spins.SpinInteger"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpinInteger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> – The <a class="reference internal" href="#ising.spins.SpinInteger" title="ising.spins.SpinInteger"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpinInteger</span></code></a> object to iterate over.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="main.html"
+                          title="previous chapter">Main Module Documentation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="src/index.html"
+                          title="next chapter">C Backend Documentation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/ising/spins.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="src/index.html" title="C Backend Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="main.html" title="Main Module Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Ising alpha-0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Ising Documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Spins</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Connor Briggs.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>
