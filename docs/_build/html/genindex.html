@@ -158,12 +158,14 @@
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
@@ -324,12 +326,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ising/graph.html#ising.graph.Graph.addedges">addedges() (ising.graph.Graph method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ising/graph.html#ising.graph.Graph.addverts">addverts() (ising.graph.Graph method)</a>
 </li>
-      <li><a href="ising/thermo.html#ising.thermo.average_value">average_value() (in module ising.thermo)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ising/thermo.html#ising.thermo.ThermoMethod.average">average() (ising.thermo.ThermoMethod method)</a>
+
+      <ul>
+        <li><a href="ising/thermo.html#ising.thermo.ThermoStrategy.average">(ising.thermo.ThermoStrategy method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -415,6 +421,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ising/thermo.html#ising.thermo.FullCalcStrategy">FullCalcStrategy (class in ising.thermo)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -423,6 +437,8 @@
       <li><a href="ising/hamiltonian.html#ising.hamiltonian.ConstantHamiltonian.getcoupling">getcoupling() (ising.hamiltonian.ConstantHamiltonian method)</a>
 </li>
       <li><a href="ising/graph.html#ising.graph.Vertex.getdata">getdata() (ising.graph.Vertex method)</a>
+</li>
+      <li><a href="ising/montecarlo.html#ising.montecarlo.MetropolisStrategy.getdepth">getdepth() (ising.montecarlo.MetropolisStrategy method)</a>
 </li>
       <li><a href="ising/graph.html#ising.graph.Graph.getedge">getedge() (ising.graph.Graph method)</a>
 </li>
@@ -438,19 +454,27 @@
       </ul></li>
       <li><a href="ising/graph.html#ising.graph.Edge.getlength">getlength() (ising.graph.Edge method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ising/hamiltonian.html#ising.hamiltonian.ConstantHamiltonian.getmagnet">getmagnet() (ising.hamiltonian.ConstantHamiltonian method)</a>
 
       <ul>
         <li><a href="ising/hamiltonian.html#ising.hamiltonian.GraphHamiltonian.getmagnet">(ising.hamiltonian.GraphHamiltonian method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ising/graph.html#ising.graph.Graph.getneighbors">getneighbors() (ising.graph.Graph method)</a>
 </li>
+      <li><a href="ising/montecarlo.html#ising.montecarlo.MetropolisStrategy.getpoints">getpoints() (ising.montecarlo.MetropolisStrategy method)</a>
+
+      <ul>
+        <li><a href="ising/montecarlo.html#ising.montecarlo.MonteCarloStrategy.getpoints">(ising.montecarlo.MonteCarloStrategy method)</a>
+</li>
+      </ul></li>
       <li><a href="ising/despats/singleton.html#ising.despats.singleton.Singleton.getsingleton">getsingleton() (ising.despats.singleton.Singleton class method)</a>
 </li>
       <li><a href="ising/graph.html#ising.graph.Edge.getstart">getstart() (ising.graph.Edge method)</a>
+</li>
+      <li><a href="ising/thermo.html#ising.thermo.ThermoMethod.getstrat">getstrat() (ising.thermo.ThermoMethod method)</a>
 </li>
       <li><a href="ising/graph.html#ising.graph.Graph.getvert">getvert() (ising.graph.Graph method)</a>
 </li>
@@ -565,6 +589,13 @@
 </li>
       </ul></li>
       <li>
+    ising.montecarlo
+
+      <ul>
+        <li><a href="ising/montecarlo.html#module-ising.montecarlo">module</a>
+</li>
+      </ul></li>
+      <li>
     ising.spins
 
       <ul>
@@ -596,6 +627,8 @@
 </li>
       <li><a href="ising/graph.html#ising.graph.VertexFactory.makevertex_list">makevertex_list() (ising.graph.VertexFactory method)</a>
 </li>
+      <li><a href="ising/montecarlo.html#ising.montecarlo.MetropolisStrategy">MetropolisStrategy (class in ising.montecarlo)</a>
+</li>
       <li>
     module
 
@@ -614,11 +647,17 @@
 </li>
         <li><a href="ising/hamiltonian.html#module-ising.hamiltonian">ising.hamiltonian</a>
 </li>
+        <li><a href="ising/montecarlo.html#module-ising.montecarlo">ising.montecarlo</a>
+</li>
         <li><a href="ising/spins.html#module-ising.spins">ising.spins</a>
 </li>
         <li><a href="ising/thermo.html#module-ising.thermo">ising.thermo</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ising/montecarlo.html#ising.montecarlo.MonteCarloStrategy">MonteCarloStrategy (class in ising.montecarlo)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -633,8 +672,12 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ising/thermo.html#ising.thermo.partition">partition() (in module ising.thermo)</a>
+      <li><a href="ising/thermo.html#ising.thermo.ThermoMethod.partition">partition() (ising.thermo.ThermoMethod method)</a>
+
+      <ul>
+        <li><a href="ising/thermo.html#ising.thermo.ThermoStrategy.partition">(ising.thermo.ThermoStrategy method)</a>
 </li>
+      </ul></li>
       <li><a href="ising/src/ising.html#c.pass_args_t">pass_args_t (C type)</a>
 </li>
       <li><a href="ising/src/ising.html#c.pass_args_t.boltzmann">pass_args_t.boltzmann (C var)</a>
@@ -672,12 +715,22 @@
   </ul></td>
 </tr></table>
 
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ising/montecarlo.html#ising.montecarlo.RandomIterator">RandomIterator (class in ising.montecarlo)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ising/hamiltonian.html#ising.hamiltonian.ConstantHamiltonian.setcoupling">setcoupling() (ising.hamiltonian.ConstantHamiltonian method)</a>
 </li>
       <li><a href="ising/graph.html#ising.graph.Vertex.setdata">setdata() (ising.graph.Vertex method)</a>
+</li>
+      <li><a href="ising/montecarlo.html#ising.montecarlo.MetropolisStrategy.setdepth">setdepth() (ising.montecarlo.MetropolisStrategy method)</a>
 </li>
       <li><a href="ising/graph.html#ising.graph.Edge.setend">setend() (ising.graph.Edge method)</a>
 </li>
@@ -687,9 +740,17 @@
         <li><a href="ising/hamiltonian.html#ising.hamiltonian.GraphHamiltonian.setmagnet">(ising.hamiltonian.GraphHamiltonian method)</a>
 </li>
       </ul></li>
+      <li><a href="ising/montecarlo.html#ising.montecarlo.MetropolisStrategy.setpoints">setpoints() (ising.montecarlo.MetropolisStrategy method)</a>
+
+      <ul>
+        <li><a href="ising/montecarlo.html#ising.montecarlo.MonteCarloStrategy.setpoints">(ising.montecarlo.MonteCarloStrategy method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ising/graph.html#ising.graph.Edge.setstart">setstart() (ising.graph.Edge method)</a>
+</li>
+      <li><a href="ising/thermo.html#ising.thermo.ThermoMethod.setstrat">setstrat() (ising.thermo.ThermoMethod method)</a>
 </li>
       <li><a href="ising/despats/singleton.html#ising.despats.singleton.Singleton">Singleton (class in ising.despats.singleton)</a>
 </li>
@@ -709,8 +770,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ising/hamiltonian.html#ising.hamiltonian.Hamiltonian.temperature">temperature() (ising.hamiltonian.Hamiltonian method)</a>
 </li>
+      <li><a href="ising/thermo.html#ising.thermo.ThermoMethod">ThermoMethod (class in ising.thermo)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ising/thermo.html#ising.thermo.ThermoStrategy">ThermoStrategy (class in ising.thermo)</a>
+</li>
       <li><a href="ising/src/ising.html#c.threaded_ising">threaded_ising (C function)</a>
 </li>
       <li><a href="ising/graph.html#ising.graph.Edge.traverse">traverse() (ising.graph.Edge method)</a>
@@ -729,8 +794,12 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ising/thermo.html#ising.thermo.variance">variance() (in module ising.thermo)</a>
+      <li><a href="ising/thermo.html#ising.thermo.ThermoMethod.variance">variance() (ising.thermo.ThermoMethod method)</a>
+
+      <ul>
+        <li><a href="ising/thermo.html#ising.thermo.ThermoStrategy.variance">(ising.thermo.ThermoStrategy method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ising/graph.html#ising.graph.Vertex">Vertex (class in ising.graph)</a>

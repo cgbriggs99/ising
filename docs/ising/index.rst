@@ -8,6 +8,7 @@ Ising Documentation
    graph
    hamiltonian
    main
+   montecarlo
    spins
    src/index
    thermo
