@@ -5,38 +5,12 @@ try :
     from . import constants
     from . import hamiltonian
     from . import spins
-    from .despats import singleton
+    from . import despats
 except ImportError :
     import constants
     import hamiltonian
     import spins
     import despats.singleton
-
-class ThermoMethod(despats.singleton.Singleton) :
-    def __init__(self) :
-        self.__strat = FullCalcStrategy.getsingleton()
-        
-    def setstrat(self, strat : ThermoStrategy) :
-        self.__strat = strat
-
-    def getstrat(self) :
-        return self.__strat
-
-    def partition(self, hamilt : hamiltonian.Hamiltonian, length : int,
-                  temp = 298.15, boltzmann = ising.BOLTZMANN_K) :
-        return self.__strat.partition(hamilt, length, temp, boltzmann)
-    
-    def average(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
-                  temp = 298.15, boltzmann = ising.BOLTZMANN_K,
-                *args, **kwargs) :
-        return self.__strat.average(func, hamilt, length, temp, boltzmann,
-                                    *args, **kwargs)
-    
-    def variance(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
-                  temp = 298.15, boltzmann = ising.BOLTZMANN_K,
-                 *args, **kwargs) :
-        return self.__strat.partition(func, hamilt, length, temp, boltzmann,
-                                      *args, **kwargs)
 
 class ThermoStrategy(despats.singleton.Singleton) :
     def __init__(self) :
@@ -54,7 +28,33 @@ class ThermoStrategy(despats.singleton.Singleton) :
                  temp : float, boltzmann : float, *args, **kwargs) :
         raise NotImplemented
 
-class FullCalc(ThermoStrategy) :
+class ThermoMethod(despats.singleton.Singleton) :
+    def __init__(self) :
+        self.__strat = FullCalcStrategy.getsingleton()
+        
+    def setstrat(self, strat : ThermoStrategy) :
+        self.__strat = strat
+
+    def getstrat(self) :
+        return self.__strat
+
+    def partition(self, hamilt : hamiltonian.Hamiltonian, length : int,
+                  temp = 298.15, boltzmann = constants.BOLTZMANN_K) :
+        return self.__strat.partition(hamilt, length, temp, boltzmann)
+    
+    def average(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
+                  temp = 298.15, boltzmann = constants.BOLTZMANN_K,
+                *args, **kwargs) :
+        return self.__strat.average(func, hamilt, length, temp, boltzmann,
+                                    *args, **kwargs)
+    
+    def variance(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
+                  temp = 298.15, boltzmann = constants.BOLTZMANN_K,
+                 *args, **kwargs) :
+        return self.__strat.variance(func, hamilt, length, temp, boltzmann,
+                                      *args, **kwargs)
+
+class FullCalcStrategy(ThermoStrategy) :
     def __init__(self) :
         super().__init__()
 
@@ -77,7 +77,7 @@ Find the value of an intrinsic property normalized by the partition function.
         return sum(func(spins.SpinInteger(sp, length), *args, *kwargs) *
                    math.exp(-hamilt.energy(spins.SpinInteger(sp, length)) / \
                                                 (boltzmann * temp))
-                   for sp in range(2 ** length)) / partition(hamilt, length,
+                   for sp in range(2 ** length)) / self.partition(hamilt, length,
                                                              temp, boltzmann)
 
     def variance(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
@@ -85,7 +85,7 @@ Find the value of an intrinsic property normalized by the partition function.
         """
 Find the variance of an intrinsic property normalized by the partition function.
 """
-        part = partition(hamilt, length, temp, boltzmann)
+        part = self.partition(hamilt, length, temp, boltzmann)
         out = sum(func(spins.SpinInteger(sp, length), *args, **kwargs) ** 2 *
                    math.exp(-hamilt.energy(spins.SpinInteger(sp, length)) / \
                             (boltzmann * temp)) for sp in range(2 ** length)) /\
@@ -94,8 +94,4 @@ Find the variance of an intrinsic property normalized by the partition function.
                     math.exp(-hamilt.energy(spins.SpinInteger(sp, length)) / \
                              (boltzmann * temp))
                     for sp in range(2 ** length)) ** 2 / part ** 2
-        if out < 0 :
-            print(out)
-            print(partition(hamilt, length, temp, boltzmann))
-            raise ValueError
         return out

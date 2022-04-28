@@ -31,7 +31,6 @@ def test_montecarlo() :
     assert(math.isfinite(variance) and math.log10(abs(variance)) < 12)
 
 def test_metropolis() :
-    def test_montecarlo() :
     # Set up the hamiltonian.
     ham = ising.PeriodicHamiltonian(__J, __M)
     # Set the strategy.

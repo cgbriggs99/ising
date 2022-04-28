@@ -13,7 +13,7 @@ import math
 import random
 
 class RandomIterator :
-    def __init__(*args) :
+    def __init__(self, *args) :
         self.__curr = 0
         if len(args) == 2 :
             self.__start = 0
@@ -61,7 +61,7 @@ class MonteCarloStrategy(thermo.ThermoStrategy) :
                 temp : float, boltzmann : float, *args, **kwargs) :
         total = 0
         den = 0
-        for i in RandomRange(self.__montecarlo, 2 ** length) :
+        for i in RandomIterator(self.__montecarlo, 2 ** length) :
             sp = spins.SpinInteger(i, length)
             total += func(sp, *args, **kwargs) * \
                      math.exp(-hamilt.energy(sp) / (boltzmann * temp))
@@ -69,11 +69,11 @@ class MonteCarloStrategy(thermo.ThermoStrategy) :
         return (total / den)
         
     def variance(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
-                 temp : float, boltzmann : float) :
+                 temp : float, boltzmann : float, *args, **kwargs) :
         total1 = 0
         total2 = 0
         den = 0
-        for i in RandomRange(self.__montecarlo, 2 ** length) :
+        for i in RandomIterator(self.__montecarlo, 2 ** length) :
             sp = spins.SpinInteger(i, length)
             total1 += func(sp, *args, **kwargs) * \
                       math.exp(-hamilt.energy(sp) / (boltzmann * temp))
@@ -90,7 +90,7 @@ class MetropolisStrategy(thermo.ThermoStrategy) :
 
     def getdepth(self) :
         return self.__depth
-    def getpoitns(self) :
+    def getpoints(self) :
         return self.__metropolis
     def setdepth(self, depth) :
         self.__depth = depth
@@ -105,7 +105,7 @@ class MetropolisStrategy(thermo.ThermoStrategy) :
                 temp : float, boltzmann : float, *args, **kwargs) :
         total = 0
         den = 0
-        for i in RandomRange(self.__metropolis, 2 ** length) :
+        for i in RandomIterator(self.__metropolis, 2 ** length) :
             sp = spins.SpinInteger(i, length)
             energy = hamilt.energy(sp) / (boltzmann * temp)
             total += func(sp, *args, **kwargs) * math.exp(-energy)
@@ -139,7 +139,7 @@ class MetropolisStrategy(thermo.ThermoStrategy) :
         total1 = 0
         total2 = 0
         den = 0
-        for i in RandomRange(self.__metropolis, 2 ** length) :
+        for i in RandomIterator(self.__metropolis, 2 ** length) :
             sp = spins.SpinInteger(i, length)
             energy = hamilt.energy(sp) / (boltzmann * temp)
             total1 += func(sp, *args, **kwargs) * math.exp(-energy)

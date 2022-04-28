@@ -37,7 +37,7 @@ boltzmann: Value of the Boltzmann constant in whatever units.
 """
         return self.energy(spin) / boltzmann
     def energy_pos(self, spin : spins.SpinConfig, pos : int,
-               boltzmann = ising.BOLTZMANN_K) :
+               boltzmann = constants.BOLTZMANN_K) :
         raise NotImplemented
     
 class ConstantHamiltonian(Hamiltonian) :

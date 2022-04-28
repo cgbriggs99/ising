@@ -29,14 +29,14 @@ def plotvals(ham, length, temps, boltzmann = constants.BOLTZMANN_K,
                               boltzmann, threads)
     else :
         exc = concurrent.futures.ThreadPoolExecutor(threads)
-        out = (list(exc.map(lambda t: thermo.average_value(ham.energy, ham,
+        out = (list(exc.map(lambda t: thermo.ThermoMethod.getsingleton().average(ham.energy, ham,
                                                 length,temp = t,
                                                  boltzmann = boltzmann),
-                           temps)), list(exc.map(lambda t: math.sqrt(thermo.variance(ham.energy, ham,
+                           temps)), list(exc.map(lambda t: math.sqrt(thermo.ThermoMethod.getsingleton().variance(ham.energy, ham,
                                                   length, temp = t,
                                                   boltzmann = boltzmann)
                                    ) / (boltzmann * t ** 2),
-                         temps)), list(exc.map(lambda t: math.sqrt(thermo.variance(
+                         temps)), list(exc.map(lambda t: math.sqrt(thermo.ThermoMethod.getsingleton().variance(
             lambda sc: sc.magnetization(), ham, length, temp = t,
             boltzmann = boltzmann)) / (boltzmann * t), temps)))
         exc.shutdown()
