@@ -10,6 +10,7 @@
 #include "ising.h"
 #include <stdio.h>
 #include <errno.h>
+#include <stdint.h>
 
 PyObject *fastc_energy(PyObject *self, PyObject *args) {
   int sp, pos;
