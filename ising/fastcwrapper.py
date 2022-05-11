@@ -31,7 +31,7 @@ Gets the number of threads.
 """
         return self._threads
 
-    def setthreads(self, threads : int):
+    def setthreads(self, threads: int):
         """
 Sets the number of threads.
 """
