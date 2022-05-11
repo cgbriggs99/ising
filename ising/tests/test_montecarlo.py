@@ -28,7 +28,7 @@ def test_montecarlo() :
            math.log10(abs(energy)) > -12)
     variance = ising.thermo.ThermoMethod.getsingleton().variance(
         ham.energy, ham, __length, __temp, __k)
-    assert(math.isfinite(variance) and math.log10(abs(variance)) < 12)
+    assert(math.isfinite(variance) and variance >= 0 and (variance == 0 or math.log10(abs(variance)) < 12))
 
 def test_metropolis() :
     # Set up the hamiltonian.

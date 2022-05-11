@@ -1,26 +1,44 @@
 #!/usr/bin/python3
 
+"""
+ising.graph
+
+Contains definitions for graphs, as well as a couple functions to test them.
+"""
+
 try :
     from . import despats
 except ImportError :
     import despats
 
 class Copyable :
+    """
+Defines an object that is copyable.
+"""
     def copy(self) :
-        raise NotImplemented(f"Copy not implemented yet for {type(self)}.")
+        """
+Copy an object.
+"""
+        raise NotImplementedError(f"Copy not implemented yet for {type(self)}.")
 
     @staticmethod
     def iscopyable(obj) :
+        """
+Returns whether an object is copyable.
+"""
         return hasattr(obj, "copy")
 
 class Vertex(Copyable) :
+    """
+Represents a vertex in a graph.
+"""
     def __init__(self, data, index) :
         self.__data = data
         self.__index = index
 
     def getdata(self) :
         return self.__data
-    
+
     def setdata(self, data) :
         self.__data = data
         return data
@@ -54,7 +72,7 @@ class Vertex(Copyable) :
             return f"({self.getindex()}: {self.getdata()})"
         else :
             return f"({self.getindex()})"
-    
+
     def __hash__(self) :
         return self.getindex()
 
@@ -94,10 +112,10 @@ class Edge(Copyable) :
         return self.__index
 
     def cantraverse(self, vert) :
-        return (self.getstart() == vert)
+        return self.getstart() == vert
 
     def traverse(self, vert) :
-        assert(self.getstart() == vert)
+        assert self.getstart() == vert
         return (self.getend(), self.getlength())
 
     def __eq__(self, other) :
@@ -125,10 +143,10 @@ class Edge(Copyable) :
         else :
             return f"[{self.getindex()} : " +\
                    f"{self.getstart()} -> {self.getend()}]"
-    
+
     def __hash__(self) :
         return self.getindex()
-        
+
 
 class UndirectedEdge(Edge) :
     """
@@ -138,7 +156,7 @@ Undirected edges.
         super().__init__(index, start, end, length)
 
     def cantraverse(self, vert) :
-        return (self.getstart() == vert or self.getend() == vert)
+        return self.getstart() == vert or self.getend() == vert
 
     def traverse(self, vert) :
         if self.getstart() == vert :
@@ -204,7 +222,7 @@ class EdgeFactory(despats.Singleton) :
             out = UndirectedEdge(self.__index, start, end, length)
             self.__index += 1
             return out
-    
+
 # Base representation.
 class Graph(Copyable) :
     """
@@ -266,7 +284,7 @@ Can do single vertices or a collection of vertices.
         else :
             self.__verts.append(vert)
         return self.__verts
-    
+
     def addedges(self, edge) :
         """
 Can do singe edges or a collection of edges.
@@ -278,7 +296,7 @@ Can do singe edges or a collection of edges.
         elif isinstance(edge, Edge) :
             self.__edges.append(edge)
         return self.__edges
-            
+
     def hasvertex(self, vert) :
         return vert in self.getverts()
 
@@ -295,7 +313,7 @@ Can do singe edges or a collection of edges.
 
     def __str__(self) :
         return "{" + str(self.getedges()) + ", " + str(self.getverts()) + "}"
-    
+
 def dijkstra(graph : Graph, start : Vertex, end : Vertex) :
     visited = {start : (0, None)}
     openset = [(start, n) for n in graph.getneighbors(start)]
@@ -320,7 +338,7 @@ def dijkstra(graph : Graph, start : Vertex, end : Vertex) :
                                      visited[curr][0] -
                                      visited[visited[curr][1]][0])))
             curr = visited[curr][1]
-            
+
         print(Graph(verts, edges))
         return Graph(verts, edges)
     else :
