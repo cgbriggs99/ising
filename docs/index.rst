@@ -1,5 +1,5 @@
 .. Ising documentation master file, created by
-   sphinx-quickstart on Wed May 11 01:18:48 2022.
+   sphinx-quickstart on Thu Mar  3 13:18:10 2022.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -7,8 +7,11 @@ Welcome to Ising's documentation!
 =================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   ising/index
+   install
+   running
+   :maxdepth: 3
+   :caption: Contents
 
 
 

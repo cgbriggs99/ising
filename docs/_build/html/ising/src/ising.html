@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Ising C Worker Functions &mdash; Ising  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Thermodynamics" href="../thermo.html" />
+    <link rel="prev" title="Fast C Backend" href="fastc.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Ising
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Ising Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Ising Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../despats/index.html">Design Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fastcwrapper.html">FastC Wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../graph.html">Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hamiltonian.html">Hamiltonian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../main.html">Main Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../montecarlo.html">Monte-Carlo Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spins.html">Spins</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">C Backend Documentation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fastc.html">Fast C Backend</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Ising C Worker Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../thermo.html">Thermodynamics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../running.html">Running Ising</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Ising</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Ising Documentation</a> &raquo;</li>
+        
+          <li><a href="index.html">C Backend Documentation</a> &raquo;</li>
+        
+      <li>Ising C Worker Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/ising/src/ising.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="ising-c-worker-functions">
+<h1>Ising C Worker Functions<a class="headerlink" href="#ising-c-worker-functions" title="Permalink to this headline">¶</a></h1>
+<p>The actual worker for the C backend. Prototypes can be found in <code class="docutils literal notranslate"><span class="pre">ising.h</span></code>.</p>
+<dl class="c type">
+<dt class="sig sig-object c" id="c.pass_args_t">
+<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pass_args_t</span></span></span><a class="headerlink" href="#c.pass_args_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Contains the data to pass to each thread.</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.index">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">index</span></span></span><a class="headerlink" href="#c.pass_args_t.index" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The index of the worker thread that is working on this set of values.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.threads">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">threads</span></span></span><a class="headerlink" href="#c.pass_args_t.threads" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The total number of threads.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.positions">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">positions</span></span></span><a class="headerlink" href="#c.pass_args_t.positions" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The number of positions in the Ising model.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.len">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">len</span></span></span><a class="headerlink" href="#c.pass_args_t.len" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The number of temperatures.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.coupling">
+<span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">coupling</span></span></span><a class="headerlink" href="#c.pass_args_t.coupling" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Value of the spin coupling constant.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.magnet">
+<span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">magnet</span></span></span><a class="headerlink" href="#c.pass_args_t.magnet" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Value of the magnetic coupling constant.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.boltzmann">
+<span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">boltzmann</span></span></span><a class="headerlink" href="#c.pass_args_t.boltzmann" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Value of the Boltzmann constant.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.temps">
+<span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">temps</span></span></span><a class="headerlink" href="#c.pass_args_t.temps" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>List of temperatures to calculate at.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.out_ens">
+<span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">out_ens</span></span></span><a class="headerlink" href="#c.pass_args_t.out_ens" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Array of energies. Acts as the output for <a class="reference internal" href="#c.compute_vals" title="compute_vals"><code class="xref c c-func docutils literal notranslate"><span class="pre">compute_vals()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.out_heat">
+<span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">out_heat</span></span></span><a class="headerlink" href="#c.pass_args_t.out_heat" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Array of heat capacities. Acts as the output for <a class="reference internal" href="#c.compute_vals" title="compute_vals"><code class="xref c c-func docutils literal notranslate"><span class="pre">compute_vals()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.pass_args_t.out_magsus">
+<span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">out_magsus</span></span></span><a class="headerlink" href="#c.pass_args_t.out_magsus" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Array of magnetic susceptibilities. Acts as the output for <a class="reference internal" href="#c.compute_vals" title="compute_vals"><code class="xref c c-func docutils literal notranslate"><span class="pre">compute_vals()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.bitvec_32_t">
+<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitvec_32_t</span></span></span><a class="headerlink" href="#c.bitvec_32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Splits a 32 bit value into 8 bit chunks. Interactions with a packed bit-field struct should be optimized at compile time.</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.bitvec_32_t.a">
+<span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">a</span></span></span><a class="headerlink" href="#c.bitvec_32_t.a" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.bitvec_32_t.b">
+<span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">b</span></span></span><a class="headerlink" href="#c.bitvec_32_t.b" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.bitvec_32_t.c">
+<span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">c</span></span></span><a class="headerlink" href="#c.bitvec_32_t.c" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.bitvec_32_t.d">
+<span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">d</span></span></span><a class="headerlink" href="#c.bitvec_32_t.d" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="c type">
+<dt class="sig sig-object c" id="c.conv_t">
+<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">conv_t</span></span></span><a class="headerlink" href="#c.conv_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts between an unsigned 32 bit value (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>) and a <code class="docutils literal notranslate"><span class="pre">bitvec_32_t</span></code>.</p>
+<dl class="c var">
+<dt class="sig sig-object c" id="c.conv_t.in">
+<span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">in</span></span></span><a class="headerlink" href="#c.conv_t.in" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="c var">
+<dt class="sig sig-object c" id="c.conv_t.vec">
+<a class="reference internal" href="#c.bitvec_32_t" title="bitvec_32_t"><span class="n"><span class="pre">bitvec_32_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">vec</span></span></span><a class="headerlink" href="#c.conv_t.vec" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.bitcount">
+<span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bitcount</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n"><span class="pre">in</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.bitcount" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Count the number of one bits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in</strong> (<span><span class="c-expr sig sig-inline c"><span class="n">uint32_t</span></span></span>) – The value to count the bits of.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of one bits in the number.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.MAGNETIZATION">
+<span class="sig-name descname"><span class="n"><span class="pre">MAGNETIZATION</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I</span></span>, <span class="n"><span class="pre">L</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.MAGNETIZATION" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Computes the magnetization part of the energy. First, it finds the number of one bits. Then, multiplies by two, and subtracts the total number of positions. This is done using bit arithmetic to make it blazing fast.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>I</strong> – The number representing the state.</p></li>
+<li><p><strong>L</strong> – The number of positions in the Ising model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The magnetization part, not multiplied by the coupling constant.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.SPINCOUPLE">
+<span class="sig-name descname"><span class="n"><span class="pre">SPINCOUPLE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">I</span></span>, <span class="n"><span class="pre">L</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.SPINCOUPLE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Computes the spin coupling part of the energy. First, it shifts the number to mimic a rotation. Then, it uses a bitwise XOR to perform multiplications between +1 and -1. Then, it computes the number of one bits, multiplies by two, and subtracts the number of positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>I</strong> – The number representing the state.</p></li>
+<li><p><strong>L</strong> – The number of positions in the Ising model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The spin coupling part, not multiplied by the coupling constant.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.compute_vals">
+<span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">compute_vals</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.compute_vals" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Worker function to be passed to the threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">void</span><span class="p">*</span></span></span>) – The arguments. Defined in the function as <cite>void</cite> *, but treated as <a class="reference internal" href="#c.pass_args_t" title="pass_args_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">pass_args_t</span></code></a>*.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>NULL. All outputs are placed in <a class="reference internal" href="#c.pass_args_t" title="pass_args_t"><code class="xref c c-type docutils literal notranslate"><span class="pre">pass_args_t</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.threaded_ising">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">threaded_ising</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">positions</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">coupling</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">magnet</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n"><span class="pre">boltzmann</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">temps</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">len_temps</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_ens</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">out_heat</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">mag_sus</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">threads</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.threaded_ising" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Master function for the threads. Dispatches the workers with the appropriate indices so that they can chop up the work correctly, then runs on the data itself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positions</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">int</span></span></span>) – The number of positions in the Ising model.</p></li>
+<li><p><strong>coupling</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">double</span></span></span>) – The spin coupling constant.</p></li>
+<li><p><strong>magnet</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">double</span></span></span>) – The magnet coupling constant.</p></li>
+<li><p><strong>temps</strong> (<span><span class="c-expr sig sig-inline c"><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="p">*</span></span></span>) – The list of temperatures.</p></li>
+<li><p><strong>len_temps</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">int</span></span></span>) – The length of the list of temperatures.</p></li>
+<li><p><strong>out_ens</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">double</span><span class="p">*</span></span></span>) – The ouptut array that will contain the energies.</p></li>
+<li><p><strong>out_heat</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">double</span><span class="p">*</span></span></span>) – The output array that will contain the heat capacities.</p></li>
+<li><p><strong>mag_sus</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">double</span><span class="p">*</span></span></span>) – The output array that will contain the magnetic susceptibilities.</p></li>
+<li><p><strong>threads</strong> (<span><span class="c-expr sig sig-inline c"><span class="kt">int</span></span></span>) – The number of threads to run, including the master.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>0 on success.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../thermo.html" class="btn btn-neutral float-right" title="Thermodynamics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fastc.html" class="btn btn-neutral float-left" title="Fast C Backend" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2022, Connor Briggs. Project structure based on the Computational Molecular Science Python Cookiecutter version 1.6
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
