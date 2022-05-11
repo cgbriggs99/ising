@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 import ising
 
-__LENGTH = 8
+__LENGTH = 10
 __J = -2
 __M = 1.1
 __K = 1

@@ -10,7 +10,7 @@ __LENGTH = 10
 __J = -2
 __M = 1.1
 __K = 1
-__TEMP = 0.1
+__TEMP = 298.15
 
 
 def test_montecarlo():
