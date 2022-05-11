@@ -198,11 +198,23 @@
 
 <p>The number of points to plot. Default 100.</p>
 <dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-ising-python">
-<span class="sig-name descname"><span class="pre">--python</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ising-python" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object std" id="cmdoption-ising-depth">
+<span class="sig-name descname"><span class="pre">--depth</span></span><span class="sig-prename descclassname"> <span class="pre">N</span></span><a class="headerlink" href="#cmdoption-ising-depth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>Use a Python backend, which is slower. Defaults to using the C backend.</p>
+<p>Sets the depth of the Metropolis sampling.</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ising-mc-points">
+<span class="sig-name descname"><span class="pre">--mc-points</span></span><span class="sig-prename descclassname"> <span class="pre">N</span></span><a class="headerlink" href="#cmdoption-ising-mc-points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Sets the number of seed points for the Monte-Carlo simulation.</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ising-backend">
+<span id="cmdoption-ising-arg-c"></span><span id="cmdoption-ising-arg-python"></span><span class="sig-name descname"><span class="pre">--backend</span></span><span class="sig-prename descclassname"> <span class="pre">{monte-carlo</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">c</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">python}</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ising-backend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Chooses the backend. Chooses from using a Monte-Carlo method, a full calculation in C, or a full calculation in Python. Defaults to full calculation in C.</p>
 </section>
 
 

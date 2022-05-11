@@ -169,22 +169,60 @@
   <section id="fastc-wrapper">
 <h1>FastC Wrapper<a class="headerlink" href="#fastc-wrapper" title="Permalink to this headline">¶</a></h1>
 <p>Wraps the <code class="xref py py-func docutils literal notranslate"><span class="pre">plot_vals()</span></code> function to allow for more customization.</p>
-<span class="target" id="module-ising.fastcwrapper"></span><dl class="py function">
-<dt class="sig sig-object py" id="ising.fastcwrapper.plotvals">
-<span class="sig-prename descclassname"><span class="pre">ising.fastcwrapper.</span></span><span class="sig-name descname"><span class="pre">plotvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ham</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temps</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">boltzmann</span> <span class="pre">=</span> <span class="pre">BOLTZMANN_K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span> <span class="pre">=</span> <span class="pre">max(32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">4</span> <span class="pre">+</span> <span class="pre">os.cpu_count())</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_c</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ising.fastcwrapper.plotvals" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a wrapper around <a class="reference internal" href="src/fastc.html#ising.fastc.plot_vals" title="ising.fastc.plot_vals"><code class="xref py py-func docutils literal notranslate"><span class="pre">ising.fastc.plot_vals()</span></code></a> which converts iterables to lists, hamiltonians to their parameters, and adds default values for threads, the Boltzmann constant, and contains a flag for whether to actually use the C backend. It also handles whether the C backend is included.</p>
+<span class="target" id="module-ising.fastcwrapper"></span><dl class="py class">
+<dt class="sig sig-object py" id="ising.fastcwrapper.CThermoStrategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ising.fastcwrapper.</span></span><span class="sig-name descname"><span class="pre">CThermoStrategy</span></span><a class="reference internal" href="../_modules/ising/fastcwrapper.html#CThermoStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ising.fastcwrapper.CThermoStrategy" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="thermo.html#ising.thermo.ThermoStrategy" title="ising.thermo.ThermoStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">ising.thermo.ThermoStrategy</span></code></a>. Wraps the C backend.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.fastcwrapper.CThermoStrategy.getthreads">
+<span class="sig-name descname"><span class="pre">getthreads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ising/fastcwrapper.html#CThermoStrategy.getthreads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ising.fastcwrapper.CThermoStrategy.getthreads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the number of threads.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ham</strong> (<a class="reference internal" href="hamiltonian.html#ising.hamiltonian.PeriodicHamiltonian" title="ising.hamiltonian.PeriodicHamiltonian"><code class="xref py py-class docutils literal notranslate"><span class="pre">ising.hamiltonian.PeriodicHamiltonian</span></code></a>) – The hamiltonian. Currently only works on periodic boundary conditions.</p></li>
-<li><p><strong>length</strong> (<em>int</em>) – The number of positions in the Ising model.</p></li>
-<li><p><strong>temps</strong> (<em>iterable</em>) – The temperatures to plot for.</p></li>
-<li><p><strong>boltzmann</strong> (<em>float</em>) – The Boltzmann constant. Defaults to <a class="reference internal" href="constants.html#ising.constants.BOLTZMANN_K" title="ising.constants.BOLTZMANN_K"><code class="xref py py-data docutils literal notranslate"><span class="pre">ising.constants.BOLTZMANN_K</span></code></a></p></li>
-<li><p><strong>threads</strong> (<em>int</em>) – The number of threads to use. Defaults to <code class="docutils literal notranslate"><span class="pre">max(32,</span> <span class="pre">4</span> <span class="pre">+</span> <span class="pre">os.cpu_count())</span></code>.</p></li>
-<li><p><strong>no_c</strong> (<em>bool</em>) – Whether or not to use the C backend. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-</ul>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of threads to use for the partition function.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.fastcwrapper.CThermoStrategy.setthreads">
+<span class="sig-name descname"><span class="pre">setthreads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ising/fastcwrapper.html#CThermoStrategy.setthreads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ising.fastcwrapper.CThermoStrategy.setthreads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the number of threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>threads</strong> (<em>int</em>) – The new number of threads.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ising.fastcwrapper.CPlotStrategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ising.fastcwrapper.</span></span><span class="sig-name descname"><span class="pre">CPlotStrategy</span></span><a class="reference internal" href="../_modules/ising/fastcwrapper.html#CPlotStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ising.fastcwrapper.CPlotStrategy" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="thermo.html#ising.thermo.PlotValsStrategy" title="ising.thermo.PlotValsStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">ising.thermo.PlotValsStrategy</span></code></a>. Wraps the C backend.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.fastcwrapper.CPlotStrategy.getthreads">
+<span class="sig-name descname"><span class="pre">getthreads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ising/fastcwrapper.html#CPlotStrategy.getthreads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ising.fastcwrapper.CPlotStrategy.getthreads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the number of threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of threads to use for the partition function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ising.fastcwrapper.CPlotStrategy.setthreads">
+<span class="sig-name descname"><span class="pre">setthreads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ising/fastcwrapper.html#CPlotStrategy.setthreads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ising.fastcwrapper.CPlotStrategy.setthreads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the number of threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>threads</strong> (<em>int</em>) – The new number of threads.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>

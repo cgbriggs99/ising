@@ -105,3 +105,55 @@ Contains functions for computing thermodynamic data.
 .. py:class:: FullCalcStrategy
 
    An implementation of :py:class:`ising.thermo.ThermoStrategy` that runs for each possible spin configuration.
+
+.. py:class:: PlotValsStrategy
+
+   Represents the base class for different ways to compute the energy, heat capacity, and magnetic susceptibilities at different temperatures.
+
+   .. py:method:: calc_plot_vals(self, hamilt, length, temps, boltzmann)
+
+      Calculates the values.
+
+      :param hamilt: The Hamiltonian to use to calculate the energy.
+      :type hamilt: :py:class:`ising.hamiltonian.Hamiltonian`
+      :param int length: The number of positions in the Ising model.
+      :param list(float) temps: The temperatures to compute the values at.
+      :param float boltzmann: The value of the Boltzmann constant.
+      :return: Three lists containing the energies, heat capacities, and magnetic susceptibilities.
+
+.. py:class:: SequentialStrategy
+
+   See :py:class:`ising.thermo.PlotValsStrategy`. Computes the values in a single thread.
+
+.. py:class:: ThreadedStrategy
+
+   See :py:class:`ising.thermo.PlotValsStrategy`. Computes the values in several threads.
+
+   .. py:method:: getthreads(self)
+
+      Gets the number of threads.
+
+      :return: The number of threads to use for the partition function.
+
+   .. py:method:: setthreads(self, threads : int)
+
+      Sets the number of threads.
+
+      :param int threads: The new number of threads.
+
+.. py:class:: PlotValsMethod
+
+   Contains the current method to compute the plotted values.
+
+   .. py:method:: getstrat(self)
+
+      Gets the current strategy instance.
+
+      :return: A reference to the current strategy.
+
+   .. py:method:: setstrat(self, strat)
+
+      Sets the current method to a new method.
+
+      :param strat: A reference to the new strategy.
+      :type strat: :py:class:`ising.thermo.PlotValsStrategy`
