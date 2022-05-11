@@ -9,16 +9,7 @@ except ImportError :
     import constants
     import spins
     import graph
-
-####################################
-#   mmmmmmm  mmmm  mmmm    mmmm    #
-#      #    m"  "m #   "m m"  "m   #
-#      #    #    # #    # #    #   #
-#      #    #    # #    # #    #   #
-#      #     #mm#  #mmm"   #mm#    #
-####################################
-# Distinguish between periodic boundary and non-periodic boundary. Perhaps
-# also have a general graph version.
+    
 class Hamiltonian :
     def __init__(self) :
         pass

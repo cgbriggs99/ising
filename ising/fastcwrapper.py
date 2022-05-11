@@ -15,6 +15,71 @@ import concurrent.futures
 import math
 import os
 
+class CThermoStrategy(thermo.ThermoStrategy) :
+    def __init__(self) :
+        super().__init__()
+        self.__threads = max(32, 4 + os.cpu_count())
+
+    def getthreads(self) :
+        return self.__threads
+
+    def setthreads(self, threads) :
+        self.__threads = threads
+
+    def partition(self, hamilt : hamiltonian.Hamiltonian, length : int,
+                  temp : float, boltzmann : float) :
+        if isinstance(hamilt, hamiltonian.PeriodicHamiltonian) :
+            return fastc.fastc_p_partition(length, hamilt.getcoupling(), hamilt.getmagnet(),
+                                           temp, boltzmann, self.getthreads())
+        elif isinstance(hamilt, hamiltonian.NPHamiltonian) :
+            return fastc.fastc_np_partition(length, hamilt.getcoupling(), hamilt.getmagnet(),
+                                            temp, boltzmann, self.getthreads())
+        elif isinstance(hamilt, hamiltonian.GraphHamiltonian) :
+            return fastc.fastc_graph_partition(length, hamilt, temp, boltzmann, self.getthreads())
+        else :
+            return fastc.fastc_gen_partition(length, hamilt, temp, boltzmann, self.getthreads())
+        
+    def average(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
+                  temp : float, boltzmann : float, *args, **kwargs) :
+        if isinstance(hamilt, hamiltonian.PeriodicHamiltonian) :
+            return fastc.fastc_p_average(lambda sp: func(sp, *args, **kwargs), length, hamilt.getcoupling(), hamilt.getmagnet(),
+                                           temp, boltzmann, self.getthreads())
+        elif isinstance(hamilt, hamiltonian.NPHamiltonian) :
+            return fastc.fastc_np_average(lambda sp: func(sp, *args, **kwargs), length, hamilt.getcoupling(), hamilt.getmagnet(),
+                                            temp, boltzmann, self.getthreads())
+        elif isinstance(hamilt, hamiltonian.GraphHamiltonian) :
+            return fastc.fastc_graph_average(lambda sp: func(sp, *args, **kwargs), length, hamilt, temp, boltzmann, self.getthreads())
+        else :
+            return fastc.fastc_gen_average(lambda sp: func(sp, *args, **kwargs), length, hamilt, temp, boltzmann, self.getthreads())
+
+    def variance(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
+                  temp : float, boltzmann : float, *args, **kwargs) :
+        if isinstance(hamilt, hamiltonian.PeriodicHamiltonian) :
+            return fastc.fastc_p_variance(lambda sp: func(sp, *args, **kwargs), length, hamilt.getcoupling(), hamilt.getmagnet(),
+                                           temp, boltzmann, self.getthreads())
+        elif isinstance(hamilt, hamiltonian.NPHamiltonian) :
+            return fastc.fastc_np_variance(lambda sp: func(sp, *args, **kwargs), length, hamilt.getcoupling(), hamilt.getmagnet(),
+                                            temp, boltzmann, self.getthreads())
+        elif isinstance(hamilt, hamiltonian.GraphHamiltonian) :
+            return fastc.fastc_graph_variance(lambda sp: func(sp, *args, **kwargs), length, hamilt, temp, boltzmann, self.getthreads())
+        else :
+            return fastc.fastc_gen_variance(lambda sp: func(sp, *args, **kwargs), length, hamilt, temp, boltzmann, self.getthreads())
+        
+
+class CPlotStrategy(thermo.ThreadedStrategy) :
+    def __init__(self) :
+        super().__init__()
+
+    def calc_plot_vals(self, hamilt : hamiltonian.Hamiltonian, length,
+                       temps, boltzmann) :
+        if isinstance(hamilt, hamiltonian.PeriodicHamiltonian) :
+            return fastc.fastc_p_plots(length, hamilt.getcoupling(), hamilt.getmagnet(), temps, boltzmann, self.getthreads())
+        elif isinstance(hamilt, hamiltonian.NPHamiltonian) :
+            return fastc.fastc_np_plots(length, hamilt.getcoupling(), hamilt.getmagnet(), temps, boltzmann, self.getthreads())
+        elif isinstance(hamilt, hamiltonian.GraphHamiltonian) :
+            return fastc.fastc_graph_plots(length, hamilt, temps, boltzmann, self.getthreads())
+        else :
+            return fastc.fastc_gen_plot(length, hamilt, temps, boltzmann, self.getthreads())
 
 def plotvals(ham, length, temps, boltzmann = constants.BOLTZMANN_K,
                 threads = max(32, 4 + os.cpu_count()), no_c = None) :
