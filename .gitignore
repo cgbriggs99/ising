@@ -112,3 +112,5 @@ ENV/
 # Compilation files.
 *.o
 *.so
+
+build_docs/
