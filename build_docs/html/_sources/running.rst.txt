@@ -35,14 +35,6 @@ The value to use as the Boltzmann constant in whatever units needed. Default :py
 
 The number of points to plot. Default 100.
 
-.. option:: --depth N
+.. option:: --python
 
-Sets the depth of the Metropolis sampling.
-
-.. option:: --mc-points N
-
-Sets the number of seed points for the Monte-Carlo simulation.
-
-.. option:: --backend {monte-carlo, c, python}
-
-Chooses the backend. Chooses from using a Monte-Carlo method, a full calculation in C, or a full calculation in Python. Defaults to full calculation in C.
+Use a Python backend, which is slower. Defaults to using the C backend.

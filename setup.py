@@ -23,7 +23,6 @@ fastc = setuptools.distutils.core.Extension(
     "ising.fastc",
     sources=["./ising/src/fastcmodule.c", "./ising/src/ising.c"],
     libraries=["m", "pthread"] if sys.platform.lower() == "linux" else [],
-    extra_compile_args=["-Wall", "-Werror", "-O3"],
 )
 
 setup(

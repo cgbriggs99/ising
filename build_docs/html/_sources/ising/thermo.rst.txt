@@ -105,7 +105,3 @@ Contains functions for computing thermodynamic data.
 .. py:class:: FullCalcStrategy
 
    An implementation of :py:class:`ising.thermo.ThermoStrategy` that runs for each possible spin configuration.
-
-.. py:class:: PlotValsStrategy
-
-   Represents the base class for different ways to compute the energy, heat capacity, and magnetic susceptibilities at different temperatures.

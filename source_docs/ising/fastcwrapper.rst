@@ -5,14 +5,34 @@ Wraps the :py:func:`plot_vals` function to allow for more customization.
 
 .. py:module:: ising.fastcwrapper
 
-.. py:function:: plotvals(ham, length, temps[, boltzmann = BOLTZMANN_K, threads = max(32, 4 + os.cpu_count()), no_c = False])
+.. py:class:: CThermoStrategy
 
-   This is a wrapper around :py:func:`ising.fastc.plot_vals` which converts iterables to lists, hamiltonians to their parameters, and adds default values for threads, the Boltzmann constant, and contains a flag for whether to actually use the C backend. It also handles whether the C backend is included.
+See :py:class:`ising.thermo.ThermoStrategy`. Wraps the C backend.
 
-   :param ham: The hamiltonian. Currently only works on periodic boundary conditions.
-   :type ham: :py:class:`ising.hamiltonian.PeriodicHamiltonian`
-   :param int length: The number of positions in the Ising model.
-   :param iterable temps: The temperatures to plot for.
-   :param float boltzmann: The Boltzmann constant. Defaults to :py:data:`ising.constants.BOLTZMANN_K`
-   :param int threads: The number of threads to use. Defaults to ``max(32, 4 + os.cpu_count())``.
-   :param bool no_c: Whether or not to use the C backend. Defaults to ``False``.
+.. py:method:: getthreads(self)
+
+Gets the number of threads.
+
+:return: The number of threads to use for the partition function.
+
+.. py:method:: setthreads(self, threads : int)
+
+Sets the number of threads.
+
+:param int threads: The new number of threads.
+
+.. py:class:: CPlotStrategy
+
+See :py:class:`ising.thermo.PlotValsStrategy`. Wraps the C backend.
+
+.. py:method:: getthreads(self)
+
+Gets the number of threads.
+
+:return: The number of threads to use for the partition function.
+
+.. py:method:: setthreads(self, threads : int)
+
+Sets the number of threads.
+
+:param int threads: The new number of threads.
