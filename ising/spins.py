@@ -77,6 +77,8 @@ an integer.
         return _SpinIntegerIterator(self)
     def copy(self) :
         return SpinInteger(self.__numeral, self.__len)
+    def to_int(self) :
+        return self.__numeral
 
 class _SpinIntegerIterator :
     """

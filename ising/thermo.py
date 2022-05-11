@@ -59,19 +59,19 @@ class ThermoMethod(despats.singleton.Singleton) :
 
     def energy(self, hamilt : hamiltonian.Hamiltonian, length : int,
                temp = 298.15, boltzmann = constants.BOLTZMANN_K) :
-        return self.__strat.average(hamilt.energy, length, temp, boltzmann)
+        return self.__strat.average(hamilt.energy, hamilt, length, temp, boltzmann)
 
     def heatcap(self, hamilt : hamiltonian.Hamiltonian, length : int,
                 temp = 298.15, boltzmann = constants.BOLTZMANN_K) :
-        return math.sqrt(self.__strat.variance(hamilt.energy, hamilt, length,
-                                               temp, boltzmann)) / \
+        return self.__strat.variance(hamilt.energy, hamilt, length,
+                                               temp, boltzmann) / \
                                                (boltzmann * temp ** 2)
 
     def magneticsus(self, hamilt : hamiltonian.Hamiltonian, length : int,
                     temp = 298.15, boltzmann = constants.BOLTZMANN_K) :
-        return math.sqrt(self.__strat.variance(lambda sc : sc.magnetization(),
+        return self.__strat.variance(lambda sc : sc.magnetization(),
                                                hamilt, length,
-                                               temp, boltzmann)) / \
+                                               temp, boltzmann) / \
                                                (boltzmann * temp)
 
 class PlotValsStrategy(despats.singleton.Singleton) :
@@ -106,16 +106,16 @@ class ThreadedStrategy(PlotValsStrategy) :
         self.__threads = threads
 
     def calc_plot_vals(self, hamilt : hamiltonian.Hamiltonian, length,
-                       temps, boltzmann)
-    exc = concurrent.futures.ThreadPoolExecutor(self.getthreads())
-    out = (list(exc.map(lambda t : ThermoMethod.getsingleton().energy(hamilt,
-                         length, t, boltzmann), temps)),
-            list(exc.map(lambda t : ThermoMethod.getsingleton().heatcap(hamilt,
-                         length, t, boltzmann), temps)),
-            list(exc.map(lambda t : ThermoMethod.getsingleton().magneticsus(
-                    hamilt, length, t, boltzmann), temps)))
-    exc.shutdown()
-    return out
+                       temps, boltzmann) :
+        exc = concurrent.futures.ThreadPoolExecutor(self.getthreads())
+        out = (list(exc.map(lambda t : ThermoMethod.getsingleton().energy(hamilt,
+                             length, t, boltzmann), temps)),
+                list(exc.map(lambda t : ThermoMethod.getsingleton().heatcap(hamilt,
+                             length, t, boltzmann), temps)),
+                list(exc.map(lambda t : ThermoMethod.getsingleton().magneticsus(
+                        hamilt, length, t, boltzmann), temps)))
+        exc.shutdown()
+        return out
 
 class PlotValsMethod(despats.singleton.Singleton) :
     def __init__(self) :
@@ -164,12 +164,15 @@ Find the value of an intrinsic property normalized by the partition function.
 Find the variance of an intrinsic property normalized by the partition function.
 """
         part = self.partition(hamilt, length, temp, boltzmann)
-        out = sum(func(spins.SpinInteger(sp, length), *args, **kwargs) ** 2 *
+        head = sum(func(spins.SpinInteger(sp, length), *args, **kwargs) ** 2 *
                    math.exp(-hamilt.energy(spins.SpinInteger(sp, length)) / \
                             (boltzmann * temp)) for sp in range(2 ** length)) /\
-                            part - \
-                sum(func(spins.SpinInteger(sp, length), *args, **kwargs) *
+                            part
+        tail = sum(func(spins.SpinInteger(sp, length), *args, **kwargs) *
                     math.exp(-hamilt.energy(spins.SpinInteger(sp, length)) / \
                              (boltzmann * temp))
                     for sp in range(2 ** length)) ** 2 / part ** 2
+        out = head - tail
+        if out <= 0 :
+            raise ArithmeticError(f"Variance ({out} = {head} - {tail}) was less than 0!")
         return out

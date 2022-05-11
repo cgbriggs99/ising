@@ -103,9 +103,13 @@ class MetropolisStrategy(thermo.ThermoStrategy) :
 
     def average(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
                 temp : float, boltzmann : float, *args, **kwargs) :
+        if length < self.getpoints() :
+            points = length
+        else :
+            points = self.getpoints()
         total = 0
         den = 0
-        for i in RandomIterator(self.__metropolis, 2 ** length) :
+        for i in RandomIterator(points, 2 ** length) :
             sp = spins.SpinInteger(i, length)
             energy = hamilt.energy(sp) / (boltzmann * temp)
             total += func(sp, *args, **kwargs) * math.exp(-energy)
@@ -136,10 +140,14 @@ class MetropolisStrategy(thermo.ThermoStrategy) :
 
     def variance(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
                  temp : float, boltzmann : float, *args, **kwargs) :
+        if length < self.getpoints() :
+            points = length
+        else :
+            points = self.getpoints()
         total1 = 0
         total2 = 0
         den = 0
-        for i in RandomIterator(self.__metropolis, 2 ** length) :
+        for i in RandomIterator(points, 2 ** length) :
             sp = spins.SpinInteger(i, length)
             energy = hamilt.energy(sp) / (boltzmann * temp)
             total1 += func(sp, *args, **kwargs) * math.exp(-energy)

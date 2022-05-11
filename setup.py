@@ -21,7 +21,8 @@ except:
 
 fastc = setuptools.distutils.core.Extension("ising.fastc",
                                            sources = ["./ising/src/fastcmodule.c", "./ising/src/ising.c"],
-                                           libraries = ["m", "pthread"] if sys.platform == "linux" else [])
+                                           libraries = ["m", "pthread"] if sys.platform == "linux" else [],
+                                            extra_compile_args = ["-Wall", "-Werror", "-O3"])
 
 setup(
     # Self-descriptive entries which should always be present

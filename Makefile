@@ -2,6 +2,7 @@
 include ./ising/src/defs.mk
 
 all:
+	$(MAKE) -C ising all
 
 # Clean up the environment.
 .PHONY:clean

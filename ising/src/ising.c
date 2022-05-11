@@ -15,6 +15,9 @@
 #include "ising.h"
 #include <stdio.h>
 #include <stdint.h>
+#ifndef NO_PYTHON
+#  include <Python.h>
+#endif
 
 // Structures the data to pass to each thread.
 typedef struct {
@@ -24,6 +27,29 @@ typedef struct {
   double const *temps;
   double *out_ens, *out_heat, *out_magsus;
 } pass_args_t;
+
+typedef struct {
+  int index, threads;
+  int positions, len;
+  double coupling, magnet, boltzmann, temp;
+  double *sum;
+} pass_args_small_t;
+
+#ifndef NO_PYTHON
+typedef struct {
+  int index, threads, positions, len;
+  double coupling, magnet, boltzmann, temp;
+  double *sum, *partition;
+  PyObject *func;
+} pass_args_avg_t;
+
+typedef struct {
+  int index, threads, positions, len;
+  double coupling, magnet, boltzmann, temp;
+  double *sum1, *sum2, *partition;
+  PyObject *func;
+} pass_args_var_t;
+#endif
 
 // Precomputed bit counts.
 static char bit_counts[] = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
@@ -64,25 +90,45 @@ static inline int bitcount(uint32_t in) {
 }
 
 // Do this operation quickly. See ising.spins.SpinConfig.magnetization for source
-#define MAGNETIZATION(I, L) ((bitcount((uint32_t) I) << 1) - L)
+#define MAGNETIZATION(I, L) ((bitcount((uint32_t) I) * 2) - L)
 
 // Do this in bit operations instead of multiplications.
-#define SPINCOUPLE(I, L) ((bitcount((uint32_t) (((I << (L - 1)) | I >> 1) ^ ~I) & ~(((uint32_t) -1) << L)) << 1) - L)
+#define P_SPINCOUPLE(I, L) ((bitcount((uint32_t) (((I << (L - 1)) | I >> 1) ^ ~I) & ~((0xffffffff) << L)) * 2) - L)
+
+double energy(uint32_t sp, int pos, double coupling, double magnet) {
+  double mag = MAGNETIZATION(sp, pos);
+  double coup = P_SPINCOUPLE(sp, pos);
+  return (-coupling * coup + magnet * mag);
+}
+
+int magnet(uint32_t sp, int pos) {
+  int on = bitcount(sp & (0xffffffff >> (32 - pos))),
+    off = bitcount(~sp & (0xffffffff >> (32 - pos)));
+  return (on - off);
+}
+
+static inline int jcouple(uint32_t sp, int pos) {
+  uint32_t mask = sp << (pos - 1) | sp >> 1;
+  mask ^= sp;
+  mask &= ~(0xffffffff << pos);
+  return (bitcount(mask) * 2 - pos);
+}
+
 
 // Compute the energies, heat capacities, and magnetic susceptibilities.
 #ifdef _WIN32
-static DWORD compute_vals(void *arg) {
+static DWORD p_compute_vals(void *arg) {
 #else
-static void *compute_vals(void *arg) {
+static void *p_compute_vals(void *arg) {
 #endif
   pass_args_t *pass = (pass_args_t *) arg;
 
   for(int i = pass->index; i < pass->len; i += pass->threads) {
     double part = 0, energy = 0, heat = 0, magsus = 0, magav = 0,
-      expo, en, mag;
+      expo = 0, en = 0, mag = 0;
     for(int j = 0; j < (1 << pass->positions); j++) {
       mag = MAGNETIZATION(j, pass->positions);
-      en = pass->coupling * SPINCOUPLE(j, pass->positions) +
+      en = -pass->coupling * P_SPINCOUPLE(j, pass->positions) +
 	pass->magnet * mag;
       expo = exp(-en / (pass->temps[i] * pass->boltzmann));
       part += expo;
@@ -93,16 +139,15 @@ static void *compute_vals(void *arg) {
     }
     pass->out_ens[i] = energy / part;
     pass->out_heat[i] = (heat / part - (energy / part) * (energy / part)) /
+      (pass->temps[i] * pass->temps[i] *  pass->boltzmann);
+    pass->out_magsus[i] = (magsus / part - magav * magav / (part * part)) /
       (pass->temps[i] * pass->boltzmann);
-    pass->out_magsus[i] = pass->magnet * pass->magnet * (magsus / part -
-					      magav * magav / (part * part)) /
-      (pass->temps[i] * pass->boltzmann * pass->temps[i]);
   }
   return (0);
 }
 
 // Documentation in ising.h
-int threaded_ising(int positions, double coupling, double magnet,
+int p_plots(int positions, double coupling, double magnet,
 		      double boltzmann, double const *temps, int len_temps,
 		   double *out_ens, double *out_heat, double *mag_sus,
 		   int threads) {
@@ -134,17 +179,17 @@ int threaded_ising(int positions, double coupling, double magnet,
     pass_args[i].out_magsus = mag_sus;
     if(i != threads - 1) {
 #ifdef _WIN32
-      thread[i] = CreateThread(NULL, 0, compute_vals, &(pass_args[i]), 0,
+      thread[i] = CreateThread(NULL, 0, p_compute_vals, &(pass_args[i]), 0,
 			    &(ids[i]));
 #else
       pthread_attr_init(&(attr[i]));
-      pthread_create(&(thread[i]), &(attr[i]), compute_vals, &(pass_args[i]));
+      pthread_create(&(thread[i]), &(attr[i]), p_compute_vals, &(pass_args[i]));
 #endif
     }
   }
 
   // Don't leave this thread all alone. It needs work too.
-  compute_vals(&(pass_args[threads - 1]));
+  p_compute_vals(&(pass_args[threads - 1]));
 
 #ifdef _WIN32
   WaitForMultipleObjects(threads - 1, thread, TRUE, INFINITE);
@@ -167,3 +212,131 @@ int threaded_ising(int positions, double coupling, double magnet,
 
   return (0);
 }
+
+#ifdef _WIN32
+static DWORD p_compute_partition(void *arg) {
+#else
+static void *p_compute_partition(void *arg) {
+#endif
+
+  pass_args_small_t *pass = (pass_args_small_t *) arg;
+
+  for(int i = pass->index; i < pass->len; i += pass->threads) {
+    double mag = MAGNETIZATION(i, pass->positions);
+    double energy = -pass->coupling * P_SPINCOUPLE(i, pass->positions) +
+      pass->magnet * mag;
+    *(pass->sum) += exp(-energy / (pass->boltzmann * pass->temp));
+  }
+  return (0);
+}
+ 
+double p_partition(int positions, double coupling, double magnet, double temp,
+		   double boltzmann, int threads) {
+#ifdef _WIN32
+  HANDLE *thread = calloc(threads - 1, sizeof(HANDLE));
+  DWORD *ids = calloc(threads - 1, sizeof(DWORD));
+#else
+  pthread_t *thread = calloc(threads - 1, sizeof(pthread_t));
+  pthread_attr_t *attr = calloc(threads - 1, sizeof(pthread_attr_t));
+#endif
+  double *sum = calloc(threads, sizeof(double));
+  double out;
+  pass_args_small_t *pass_args = calloc(threads, sizeof(pass_args_small_t));
+  void *rets;
+
+  // Set up and run the threads.
+  for(int i = 0; i < threads; i++) {
+    pass_args[i].index = i;
+    pass_args[i].threads = threads;
+    pass_args[i].positions = positions;
+    pass_args[i].len = 1 << positions;
+    pass_args[i].coupling = coupling;
+    pass_args[i].magnet = magnet;
+    pass_args[i].boltzmann = boltzmann;
+    pass_args[i].temp = temp;
+    pass_args[i].sum = &sum[i];
+    if(i != threads - 1) {
+#ifdef _WIN32
+      thread[i] = CreateThread(NULL, 0, p_compute_partition, &(pass_args[i]), 0,
+			    &(ids[i]));
+#else
+      pthread_attr_init(&(attr[i]));
+      pthread_create(&(thread[i]), &(attr[i]), p_compute_partition, &(pass_args[i]));
+#endif
+    }
+  }
+
+  // Don't leave this thread all alone. It needs work too.
+  p_compute_partition(&(pass_args[threads - 1]));
+
+#ifdef _WIN32
+  WaitForMultipleObjects(threads - 1, thread, TRUE, INFINITE);
+#else
+  for(int i = 0; i < threads - 1; i++) {
+    pthread_join(thread[i], &rets);
+  }
+#endif
+    
+  // I hope there are no leaks.
+#ifdef _WIN32
+  free(thread);
+  free(pass_args);
+  free(ids);
+#else
+  free(pass_args);
+  free(thread);
+  free(attr);
+#endif
+  out = 0;
+  for(int i = 0; i < threads; i++) {
+    out += sum[i];
+  }
+  free(sum);
+
+  return (out);
+}
+
+#ifndef NO_PYTHON
+
+double p_average(PyObject *func, int positions, double coupling, double magnet,
+		 double temp, double boltzmann) {
+  double num = 0, den = 0;
+  PyObject *exc, *obj;
+  PyErr_Clear();
+  for(int i = 0; i < 1 << positions; i++) {
+    double mag = MAGNETIZATION(i, positions);
+    double energy = -coupling * P_SPINCOUPLE(i, positions) + magnet * mag;
+    double expo = exp(-energy / (temp * boltzmann));
+    obj = PyObject_CallFunction(func, "i", i);
+    if(obj == NULL) {
+      perror("Error when calling function!");
+      return (NAN);
+    }
+    num += PyFloat_AsDouble(obj) * expo;
+    exc = PyErr_Occurred();
+    if(exc != NULL) {
+      perror("Error with creation of float!");
+      return (NAN);
+    }
+    den += expo;
+  }
+  return (num / den);
+}
+
+double p_variance(PyObject *func, int positions, double coupling, double magnet,
+		  double temp, double boltzmann) {
+  double num1 = 0, num2 = 0, den = 0;
+  for(int i = 0; i < 1 << positions; i++) {
+    double mag = MAGNETIZATION(i, positions);
+    double energy = -coupling * P_SPINCOUPLE(i, positions) + magnet * mag;
+    double expo = exp(-energy / (temp * boltzmann));
+    double f = PyFloat_AsDouble(PyObject_CallFunction(func, "i", i));
+
+    num1 += f * expo;
+    num2 += f * f * expo;
+    den += expo;
+  }
+  return (num2 / den - num1 * num1 / den / den);
+}
+
+#endif

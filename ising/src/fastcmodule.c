@@ -9,398 +9,122 @@
 #include <Python.h>
 #include "ising.h"
 #include <stdio.h>
+#include <errno.h>
 
-PyObject *fastc_np_plots(PyObject *self, PyObject *args) {
-  int num_temps, length, threads, i;
-  double *temps, coupling, magnet, boltzmann;
-  double *out_ens, *out_heats, *out_mags;
-  PyObject *in_temps, *energies, *magsuses, *heatcaps, *out,
-    *curr, *iter;
+PyObject *fastc_energy(PyObject *self, PyObject *args) {
+  int sp, pos;
+  double coupling, magnet, result;
 
-  int ret = PyArg_ParseTuple(args, "iddOdi", &length, &coupling,
-			     &magnet, &in_temps, &boltzmann, &threads);
+  int ret = PyArg_ParseTuple(args, "iidd", &sp, &pos, &coupling, &magnet);
+
   if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_plots!");
+    perror("PyArg_ParseTuple did not return 0 in fastc_energy!");
     return (NULL);
   }
-  
-  num_temps = PyObject_Length(in_temps);
-  iter = PyObject_GetIter(in_temps);
-  if(iter == NULL) {
-    perror("Could not get the iterator in fastc_np_plots!");
-    return (NULL);
-  }
-
-  // No length.
-  if(num_temps == -1) {
-    temps = malloc(0);
-    num_temps = 0;
-    PyErr_Clear();
-    curr = PyIter_Next(iter);
-    while(curr != NULL) {
-      temps = realloc(temps, (num_temps + 1) * sizeof(double));
-      temps[num_temps] = PyFloat_AsDouble(curr);
-      num_temps++;
-      curr = PyIter_Next(iter);
-    }
-  } else { // Has length.
-    temps = malloc(num_temps * sizeof(double));
-    i = 0;
-    curr = PyIter_Next(iter);
-    while(i < num_temps && curr != NULL) {
-      temps[i] = PyFloat_AsDouble(curr);
-      i++;
-      curr = PyIter_Next(iter);
-    }
-    if(i != num_temps - 1) {
-      free(temps);
-      return (NULL);
-    }
-  }
-  out_ens = malloc(num_temps * sizeof(double));
-  out_heats = malloc(num_temps * sizeof(double));
-  out_mags = malloc(num_temps * sizeof(double));
-
-  ret = np_plots(length, coupling, magnet, boltzmann, temps, len_temps,
-		 out_ens, out_heats, out_mags, threads);
-  if(ret != 0) {
-    perror("Failed to compute plots!");
-    free(out_ens);
-    free(out_heats);
-    free(out_mags);
-    free(temps);
-    return (NULL);
-  }
-
-  energies = PyList_New(len_temps);
-  heatcaps = PyList_New(len_temps);
-  magsuses = PyList_New(len_temps);
-
-  if(energies == NULL || heatcaps == NULL || magsuses == NULL) {
-    perror("Could not allocate output arrays!");
-    free(out_ens);
-    free(out_heats);
-    free(out_mags);
-    free(temps);
-    return (NULL);
-  }
-
-  for(i = 0; i < len_temps; i++) {
-    PyList_SetItem(energies, i, PyFloat_FromDouble(out_ens[i]));
-    PyList_SetItem(heatcaps, i, PyFloat_FromDouble(out_heats[i]));
-    PyList_SetItem(magsuses, i, PyFloat_FromDouble(out_mags[i]));
-  }
-
-  free(temps);
-  free(out_heats);
-  free(out_mags);
-  free(out_ens);
-
-  return (PyTuple_Pack(3, energies, heatcaps, magsuses));
-}
-    
-PyObject *fastc_p_plots(PyObject *self, PyObject *args) {
-  int num_temps, length, threads, i;
-  double *temps, coupling, magnet, boltzmann;
-  double *out_ens, *out_heats, *out_mags;
-  PyObject *in_temps, *energies, *magsuses, *heatcaps, *out,
-    *curr, *iter;
-
-  int ret = PyArg_ParseTuple(args, "iddOdi", &length, &coupling,
-			     &magnet, &in_temps, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_plots!");
-    return (NULL);
-  }
-  
-  num_temps = PyObject_Length(in_temps);
-  iter = PyObject_GetIter(in_temps);
-  if(iter == NULL) {
-    perror("Could not get the iterator in fastc_np_plots!");
-    return (NULL);
-  }
-
-  // No length.
-  if(num_temps == -1) {
-    temps = malloc(0);
-    num_temps = 0;
-    PyErr_Clear();
-    curr = PyIter_Next(iter);
-    while(curr != NULL) {
-      temps = realloc(temps, (num_temps + 1) * sizeof(double));
-      temps[num_temps] = PyFloat_AsDouble(curr);
-      num_temps++;
-      curr = PyIter_Next(iter);
-    }
-  } else { // Has length.
-    temps = malloc(num_temps * sizeof(double));
-    i = 0;
-    curr = PyIter_Next(iter);
-    while(i < num_temps && curr != NULL) {
-      temps[i] = PyFloat_AsDouble(curr);
-      i++;
-      curr = PyIter_Next(iter);
-    }
-    if(i != num_temps - 1) {
-      free(temps);
-      return (NULL);
-    }
-  }
-  out_ens = malloc(num_temps * sizeof(double));
-  out_heats = malloc(num_temps * sizeof(double));
-  out_mags = malloc(num_temps * sizeof(double));
-
-  ret = p_plots(length, coupling, magnet, boltzmann, temps, len_temps,
-		 out_ens, out_heats, out_mags, threads);
-  if(ret != 0) {
-    perror("Failed to compute plots!");
-    free(out_ens);
-    free(out_heats);
-    free(out_mags);
-    free(temps);
-    return (NULL);
-  }
-
-  energies = PyList_New(len_temps);
-  heatcaps = PyList_New(len_temps);
-  magsuses = PyList_New(len_temps);
-
-  if(energies == NULL || heatcaps == NULL || magsuses == NULL) {
-    perror("Could not allocate output arrays!");
-    free(out_ens);
-    free(out_heats);
-    free(out_mags);
-    free(temps);
-    return (NULL);
-  }
-
-  for(i = 0; i < len_temps; i++) {
-    PyList_SetItem(energies, i, PyFloat_FromDouble(out_ens[i]));
-    PyList_SetItem(heatcaps, i, PyFloat_FromDouble(out_heats[i]));
-    PyList_SetItem(magsuses, i, PyFloat_FromDouble(out_mags[i]));
-  }
-
-  free(temps);
-  free(out_heats);
-  free(out_mags);
-  free(out_ens);
-
-  return (PyTuple_Pack(3, energies, heatcaps, magsuses));
-}    
-
-PyObject *fastc_np_partition(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann, coupling, magnet;
-
-  int ret = PyArg_ParseTuple(args, "iddddi", &length, &coupling, &magnet,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
-    return (NULL);
-  }
-
-  return (PyFloat_FromDouble(np_partition(length, coupling, magnet,
-					  temp, boltzmann, threads)));
+  result = energy((uint32_t) sp, pos, coupling, magnet);
+  return (PyFloat_FromDouble(result));
 }
 
-PyObject *fastc_np_average(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann, coupling, magnet;
-  PyObject *func;
+PyObject *fastc_magnet(PyObject *self, PyObject *args) {
+  int sp, pos, result;
 
-  int ret = PyArg_ParseTuple(args, "Oiddddi", &func, &length, &coupling, &magnet,
-			     &temp, &boltzmann, &threads);
+  int ret = PyArg_ParseTuple(args, "ii", &sp, &pos);
+
   if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
+    perror("PyArg_ParseTuple did not return 0 in fastc_magnet!");
     return (NULL);
   }
-
-  return (PyFloat_FromDouble(np_average(func, length, coupling, magnet,
-					temp, boltzmann, threads)));
-}
-
-PyObject *fastc_np_variance(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann, coupling, magnet;
-  PyObject *func;
-
-  int ret = PyArg_ParseTuple(args, "Oiddddi", &func, &length, &coupling, &magnet,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
-    return (NULL);
-  }
-
-  return (PyFloat_FromDouble(np_variance(func, length, coupling, magnet,
-					 temp, boltzmann, threads)));
+  result = magnet((uint32_t) sp, pos);
+  return (PyLong_FromLong(result));
 }
 
 PyObject *fastc_p_partition(PyObject *self, PyObject *args) {
   int length, threads;
   double temp, boltzmann, coupling, magnet;
+  PyErr_Clear();
 
   int ret = PyArg_ParseTuple(args, "iddddi", &length, &coupling, &magnet,
 			     &temp, &boltzmann, &threads);
   if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
+    perror("PyArg_ParseTuple did not return 0 in fastc_p_partition!");
     return (NULL);
   }
-
-  return (PyFloat_FromDouble(p_partition(length, coupling, magnet,
-					 temp, boltzmann, threads)));
+  double ret2 = p_partition(length, coupling, magnet,
+			    temp, boltzmann, threads);
+  printf("partition: %f\n", ret2);
+  fflush(stdout);
+  return (PyFloat_FromDouble(ret2));
 }
 
 PyObject *fastc_p_average(PyObject *self, PyObject *args) {
-  int length, threads;
+  int length;
   double temp, boltzmann, coupling, magnet;
-  PyObject *func;
+  PyObject *func, *exc, *out;
+  PyErr_Clear();
+  errno = 0;
 
-  int ret = PyArg_ParseTuple(args, "Oiddddi", &func, &length, &coupling, &magnet,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
+  int ret = PyArg_ParseTuple(args, "Oidddd", &func, &length, &coupling, &magnet,
+			     &temp, &boltzmann);
+  exc = PyErr_Occurred();
+  if(!ret || exc != NULL || errno != 0) {
+    PyErr_Print();
+    perror("PyArg_ParseTuple did not return 0 in fastc_p_average!");
     return (NULL);
   }
-
-  return (PyFloat_FromDouble(p_average(func, length, coupling, magnet,
-				       temp, boltzmann, threads)));
+  double ret2 = p_average(func, length, coupling, magnet, temp, boltzmann);
+  if(isnan(ret2)) {
+    PyErr_Print();
+    perror("Result was NaN!");
+    return (NULL);
+  }
+  out = PyFloat_FromDouble(ret2);
+  exc = PyErr_Occurred();
+  if(out == NULL || exc != NULL) {
+    PyErr_Print();
+    perror("Could not create float object!");
+    return (NULL);
+  }
+  return (out);
 }
 
 PyObject *fastc_p_variance(PyObject *self, PyObject *args) {
-  int length, threads;
+  int length;
   double temp, boltzmann, coupling, magnet;
-  PyObject *func;
+  PyObject *func, *out, *exc;
 
-  int ret = PyArg_ParseTuple(args, "Oiddddi", &func, &length, &coupling, &magnet,
-			     &temp, &boltzmann, &threads);
+  PyErr_Clear();
+  int ret = PyArg_ParseTuple(args, "Oidddd", &func, &length, &coupling, &magnet,
+			     &temp, &boltzmann);
   if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
+    perror("PyArg_ParseTuple did not return 0 in fastc_p_variance!");
     return (NULL);
   }
 
-  return (PyFloat_FromDouble(p_variance(func, length, coupling, magnet,
-					temp, boltzmann, threads)));
-}
-
-PyObject *fastc_graph_partition(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann, coupling, magnet;
-  PyObject *ham;
-  graph_ham_t *hamilt = malloc(sizeof(graph_ham_t));
-  make_graph_ham(ham, hamilt); 
-
-  int ret = PyArg_ParseTuple(args, "iOddi", &length, &ham,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
+  double ret2 = p_variance(func, length, coupling, magnet, temp, boltzmann);
+  if(isnan(ret2)) {
+    PyErr_Print();
+    perror("Result was NaN!");
     return (NULL);
   }
-
-  PyObject *out = PyFloat_FromDouble(graph_partition(length, hamilt,
-						     temp, boltzmann, threads));
-  delete_graph_ham(hamilt);
-  free(hamilt);
+  out = PyFloat_FromDouble(ret2);
+  exc = PyErr_Occurred();
+  if(out == NULL || exc != NULL) {
+    PyErr_Print();
+    perror("Could not create float object!");
+    return (NULL);
+  }
   return (out);
-}
-
-PyObject *fastc_graph_average(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann, coupling, magnet;
-  PyObject *ham, *func;
-  graph_ham_t *hamilt = malloc(sizeof(graph_ham_t));
-  make_graph_ham(ham, hamilt); 
-
-  int ret = PyArg_ParseTuple(args, "OiOddi", &func, &length, &ham,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
-    return (NULL);
-  }
-
-  PyObject *out = PyFloat_FromDouble(graph_average(func, length, hamilt,
-						   temp, boltzmann, threads));
-  delete_graph_ham(hamilt);
-  free(hamilt);
-  return (out);
-}
-
-PyObject *fastc_graph_variance(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann, coupling, magnet;
-  PyObject *ham, *func;
-  graph_ham_t *hamilt = malloc(sizeof(graph_ham_t));
-  make_graph_ham(ham, hamilt); 
-
-  int ret = PyArg_ParseTuple(args, "OiOddi", &func, &length, &ham,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
-    return (NULL);
-  }
-
-  PyObject *out = PyFloat_FromDouble(graph_variance(func, length, hamilt,
-						    temp, boltzmann, threads));
-  delete_graph_ham(hamilt);
-  free(hamilt);
-  return (out);
-}
-
-PyObject *fastc_gen_partition(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann;
-  PyObject *ham;
-
-  int ret = PyArg_ParseTuple(args, "iOddi", &length, &ham,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
-    return (NULL);
-  }
-
-  return (PyFloat_FromDouble(gen_partition(length, ham,
-					 temp, boltzmann, threads)));
-}
-
-PyObject *fastc_gen_average(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann;
-  PyObject *ham, *func;
-
-  int ret = PyArg_ParseTuple(args, "oiOddi", &func, &length, &ham,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
-    return (NULL);
-  }
-
-  return (PyFloat_FromDouble(gen_average(func, length, ham,
-					 temp, boltzmann, threads)));
-}
-
-PyObject *fastc_gen_variance(PyObject *self, PyObject *args) {
-  int length, threads;
-  double temp, boltzmann;
-  PyObject *ham, *func;
-
-  int ret = PyArg_ParseTuple(args, "oiOddi", &func, &length, &ham,
-			     &temp, &boltzmann, &threads);
-  if(!ret) {
-    perror("PyArg_ParseTuple did not return 0 in fastc_np_partitions!");
-    return (NULL);
-  }
-
-  return (PyFloat_FromDouble(gen_variance(func, length, ham,
-					 temp, boltzmann, threads)));
 }
 
 // Docstring in FastcMethods
-PyObject *fastc_pass_to_c(PyObject *self, PyObject *args) {
+PyObject *fastc_p_plots(PyObject *self, PyObject *args) {
   int positions, len, i, threads;
   double coupling, magnet, boltzmann;
   double *temps, *energies, *heats, *magsus;
   PyObject *temps_obj, *hold, *ens_list,
     *heats_list, *magsus_list;
 
+  PyErr_Clear();
   // Parse the arguments.
   int ret = PyArg_ParseTuple(args, "iddOdi", &positions,
 		       &coupling, &magnet, &temps_obj, &boltzmann,
@@ -423,7 +147,7 @@ PyObject *fastc_pass_to_c(PyObject *self, PyObject *args) {
   magsus = calloc(len, sizeof(double));
 
   // Calculate the values.
-  ret = threaded_ising(positions, coupling, magnet, boltzmann,
+  ret = p_plots(positions, coupling, magnet, boltzmann,
 		       temps, len, energies, heats, magsus, threads);
   if(ret) {
     free(energies);
@@ -482,7 +206,7 @@ PyObject *fastc_pass_to_c(PyObject *self, PyObject *args) {
 
 // Makes things work.
 static PyMethodDef FastcMethods[] = {
-  {"plot_vals", fastc_pass_to_c, METH_VARARGS, "Pass the Ising plotting function"
+  {"p_plots", fastc_p_plots, METH_VARARGS, "Pass the Ising plotting function"
    " to C.\n"
    ":param int positions: The number of spin positions.\n"
    ":param float coupling: Spin coupling constant.\n"
@@ -492,6 +216,18 @@ static PyMethodDef FastcMethods[] = {
    ":param float boltzmann: The Boltzmann constant.\n"
    ":param int threads: Number of threads to use.\n"
    ":return: Three lists of energies, heats, and magnetic susceptibilities.\n"},
+  {"p_partition", fastc_p_partition, METH_VARARGS, ""},
+  {"p_average", fastc_p_average, METH_VARARGS, ""},
+  {"p_variance", fastc_p_variance, METH_VARARGS, ""},
+  {"energy", fastc_energy, METH_VARARGS, "Find the energy of a configuration "
+   "as C would find it.\n"
+   ":param int sp: The spin configuration.\n"
+   ":param int pos: The number of positions.\n"
+   ":param double coupling: The spin coupling constant.\n"
+   ":param double magnet: The magnetization constant.\n"},
+  {"magnet", fastc_magnet, METH_VARARGS, "Find the magnetization of a configuration.\n"
+   ":param int sp: The spin configuration.\n"
+   ":param int length: The number of positions.\n"},
   {NULL, NULL, 0, NULL}
 };
 

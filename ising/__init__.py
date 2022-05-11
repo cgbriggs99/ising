@@ -5,15 +5,11 @@ from .constants import *
 from .hamiltonian import *
 from .spins import *
 from .thermo import *
+from .fastc import *
 from .fastcwrapper import *
 from .despats import *
 from .montecarlo import *
 from .graph import *
-
-try :
-    from .fastc import *
-except Exception :
-    pass
 
 # Handle versioneer
 from ._version import get_versions
