@@ -1,8 +1,6 @@
 # Get the differing Windows vs. Linux remove commands.
 include ./ising/src/defs.mk
 
-all:
-
 # Clean up the environment.
 .PHONY:clean
 clean:
@@ -13,4 +11,4 @@ clean:
 # Build the docs.
 .PHONY:docs
 docs:
-	$(MAKE) -C docs html
+	$(MAKE) -C source_docs html

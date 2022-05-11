@@ -2,6 +2,7 @@
 include ./src/defs.mk
 
 all:
+	$(MAKE) -C src all
 
 # Clean the environment.
 .PHONY:clean

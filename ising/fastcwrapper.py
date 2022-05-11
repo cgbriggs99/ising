@@ -1,48 +1,157 @@
 #!/usr/bin/python3
 
-import sys
+"""
+Wraps the C code in Python.
+"""
 
-try :
+try:
     from . import hamiltonian
     from . import thermo
-    from . import constants
-except ImportError :
+    from . import spins
+except ImportError:
     import hamiltonian
     import thermo
-    import constants
+    import spins
 
-import concurrent.futures
-import math
 import os
 
 
-def plotvals(ham, length, temps, boltzmann = constants.BOLTZMANN_K,
-                threads = max(32, 4 + os.cpu_count()), no_c = None) :
+class CThermoStrategy(thermo.ThermoStrategy):
     """
-    This is a wrapper for src.fastc.plot_vals that turns the temps into a list,
-    and has default values for several parameters. Also works with Hamiltonian.
+Calculates values in C. Only partition function is threaded.
+"""
+
+    def __init__(self):
+        super().__init__()
+        self._threads = max(32, 4 + os.cpu_count())
+
+    def getthreads(self):
+        """
+Gets the number of threads.
+"""
+        return self._threads
+
+    def setthreads(self, threads: int):
+        """
+Sets the number of threads.
+"""
+        self._threads = threads
+
+    def partition(
+        self,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+    ):
+        """
+Calculates the partition function.
+"""
+        if isinstance(hamilt, hamiltonian.PeriodicHamiltonian):
+            return fastc.p_partition(
+                length,
+                hamilt.getcoupling(),
+                hamilt.getmagnet(),
+                temp,
+                boltzmann,
+                self.getthreads(),
+            )
+        return thermo.FullCalcStrategy.getsingleton().partition(
+            hamilt, length, temp, boltzmann
+        )
+
+    def average(
+        self,
+        func,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+        *args,
+        **kwargs
+    ):
+        """
+Calculates the average.
+"""
+        if isinstance(hamilt, hamiltonian.PeriodicHamiltonian):
+            return fastc.p_average(
+                lambda sp: func(spins.SpinInteger(sp, length)),
+                length,
+                hamilt.getcoupling(),
+                hamilt.getmagnet(),
+                temp,
+                boltzmann,
+            )
+        return thermo.FullCalcStrategy.getsingleton().average(
+            func, hamilt, length, temp, boltzmann, *args, **kwargs
+        )
+
+    def variance(
+        self,
+        func,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+        *args,
+        **kwargs
+    ):
+        """
+Calculates the variance.
+"""
+        if isinstance(hamilt, hamiltonian.PeriodicHamiltonian):
+            return fastc.p_variance(
+                lambda sp: func(spins.SpinInteger(sp, length)),
+                length,
+                hamilt.getcoupling(),
+                hamilt.getmagnet(),
+                temp,
+                boltzmann,
+            )
+        return thermo.FullCalcStrategy.getsingleton().variance(
+            func, hamilt, length, temp, boltzmann, *args, **kwargs
+        )
+
+
+class CPlotStrategy(thermo.PlotValsStrategy):
     """
-    assert("ising.fastc" in sys.modules)
-    if "ising.fastc" in sys.modules and (no_c is False or no_c is None):
-        return fastc.plot_vals(length, ham.getcoupling(),
-                              ham.getmagnet(), list(temps),
-                              boltzmann, threads)
-    else :
-        exc = concurrent.futures.ThreadPoolExecutor(threads)
-        out = (list(exc.map(lambda t: thermo.average_value(ham.energy, ham,
-                                                length,temp = t,
-                                                 boltzmann = boltzmann),
-                           temps)), list(exc.map(lambda t: math.sqrt(thermo.variance(ham.energy, ham,
-                                                  length, temp = t,
-                                                  boltzmann = boltzmann)
-                                   ) / (boltzmann * t ** 2),
-                         temps)), list(exc.map(lambda t: math.sqrt(thermo.variance(
-            lambda sc: sc.magnetization(), ham, length, temp = t,
-            boltzmann = boltzmann)) / (boltzmann * t), temps)))
-        exc.shutdown()
-        return out
- 
-try :
+Calculates the values for the plotter in C. Very parallelized.
+"""
+
+    def __init__(self):
+        super().__init__()
+        self._threads = max(32, 4 + os.cpu_count())
+
+    def getthreads(self):
+        """
+Gets the number of threads.
+"""
+        return self._threads
+
+    def setthreads(self, threads):
+        """
+Sets the number of threads.
+"""
+        self._threads = threads
+
+    def calc_plot_vals(self, hamilt: hamiltonian.Hamiltonian, length, temps, boltzmann):
+        """
+Returns the energies, heat capacities, and magnetic susceptibilities at several
+temperatures.
+"""
+        if isinstance(hamilt, hamiltonian.PeriodicHamiltonian):
+            return fastc.p_plots(
+                length,
+                hamilt.getcoupling(),
+                hamilt.getmagnet(),
+                list(temps),
+                boltzmann,
+                self.getthreads(),
+            )
+        return super().calc_plot_vals(hamilt, length, temps, boltzmann)
+
+
+try:
     from . import fastc
-except ImportError :
+except ImportError:
     import fastc

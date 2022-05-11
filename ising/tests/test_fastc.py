@@ -1,31 +1,50 @@
 #!/usr/bin/python3
 
+"""
+Tests the C backend.
+"""
+
+import time
+import random
 import pytest
 import ising
-import math
-import numpy as np
-import os
-import time
 
-__length = 8
+__LENGTH = 8
 __J = -2
 __M = 1.1
-__k = 1
-__temps = np.linspace(1, 100, 50)
-__threads = 4
+__K = 1
+__THREADS = 4
 
-def test_fastc() :
-    # Test the backend.
+
+def test_fastc():
+    """
+Test the C backend.
+"""
     ham = ising.PeriodicHamiltonian(__J, __M)
-    t1 = time.perf_counter()
-    e, h, m = ising.fastcwrapper.plotvals(ham, __length, __temps, __k,
-                                       __threads, no_c = True)
-    t2 = time.perf_counter()
-    assert(any(map(lambda x: x != 0, e + h + m)))
-    t3 = time.perf_counter()
-    e, h, m = ising.fastcwrapper.plotvals(ham, __length, __temps, __k,
-                                       __threads)
-    t4 = time.perf_counter()
-    assert(any(map(lambda x: x != 0, e + h + m)))
+    thermo = ising.thermo.ThermoMethod.getsingleton()
+    thermo.setstrat(ising.fastcwrapper.CThermoStrategy.getsingleton())
+    ising.fastcwrapper.CThermoStrategy.getsingleton().setthreads(__THREADS)
+    for _ in range(100):
+        spin = random.randrange(256)
+        assert ham.energy(
+            ising.spins.SpinInteger(spin, __LENGTH)
+        ) == ising.fastc.energy(spin, __LENGTH, __J, __M)
+        assert ising.spins.SpinInteger(
+            spin, __LENGTH
+        ).magnetization() == ising.fastc.magnet(spin, __LENGTH)
+    time1 = time.perf_counter()
+    part1 = thermo.partition(ham, __LENGTH, boltzmann=__K)
+    avg1 = thermo.average(ham.energy, ham, __LENGTH, boltzmann=__K)
+    var1 = thermo.variance(ham.energy, ham, __LENGTH, boltzmann=__K)
+    time2 = time.perf_counter()
+    thermo.setstrat(ising.thermo.FullCalcStrategy.getsingleton())
+    time3 = time.perf_counter()
+    part2 = thermo.partition(ham, __LENGTH, boltzmann=__K)
+    avg2 = thermo.average(ham.energy, ham, __LENGTH, boltzmann=__K)
+    var2 = thermo.variance(ham.energy, ham, __LENGTH, boltzmann=__K)
+    time4 = time.perf_counter()
 
-    assert(abs((t4 - t3) / (t2 - t1)) < 0.1)
+    assert abs(part1 - part2) < 1e-4
+    assert abs(avg1 - avg2) < 1e-4
+    assert abs(var1 - var2) < 1e-4
+    assert abs(time2 - time1) < abs(time4 - time3) / 2
