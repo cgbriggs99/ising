@@ -107,14 +107,6 @@ int magnet(uint32_t sp, int pos) {
   return (on - off);
 }
 
-static inline int jcouple(uint32_t sp, int pos) {
-  uint32_t mask = sp << (pos - 1) | sp >> 1;
-  mask ^= sp;
-  mask &= ~(0xffffffff << pos);
-  return (bitcount(mask) * 2 - pos);
-}
-
-
 // Compute the energies, heat capacities, and magnetic susceptibilities.
 #ifdef _WIN32
 static DWORD p_compute_vals(void *arg) {
