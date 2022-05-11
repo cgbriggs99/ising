@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "ising.h"
 #include <Python.h>
+#include <stdint.h>
 
 int main(void) {
   double *ens = calloc(10, sizeof(double)),
