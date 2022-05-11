@@ -4,6 +4,7 @@
 Runner for the Ising program.
 """
 import os
+import sys
 import argparse
 
 try:
@@ -162,6 +163,7 @@ Runs the Ising command line program.
     plot.legend()
     if not test:
         plot.show()
+        sys.exit()
     return ens, endev, magdev
 
 
