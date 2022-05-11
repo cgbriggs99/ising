@@ -11,6 +11,7 @@
 #ifndef NO_PYTHON
 #include <Python.h>
 #endif
+#include <stdint.h>
 
 typedef struct {
   double *taylor_matrix;
