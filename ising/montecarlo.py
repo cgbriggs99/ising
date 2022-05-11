@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 
-try :
+"""
+Contains classes for Monte-Carlo simulations.
+"""
+
+try:
     from . import hamiltonian
     from . import spins
     from . import thermo
-except ImportError :
+except ImportError:
     import hamiltonian
     import spins
     import thermo
@@ -12,170 +16,256 @@ except ImportError :
 import math
 import random
 
-class RandomIterator :
-    def __init__(self, *args) :
+
+class RandomIterator:
+    """
+Represents an iterator over random numbers within a range.
+"""
+
+    def __init__(self, *args):
         self.__curr = 0
-        if len(args) == 2 :
+        if len(args) == 2:
             self.__start = 0
             self.__end = args[1]
             self.__length = args[0]
             self.__step = 1
-        elif len(args) == 3 :
+        elif len(args) == 3:
             self.__start = args[1]
             self.__end = args[2]
             self.__length = args[0]
             self.__step = 1
-        elif len(args) == 4 :
+        elif len(args) == 4:
             self.__start = args[1]
             self.__end = args[2]
             self.__length = args[0]
             self.__step = args[4]
-        else :
+        else:
             raise TypeError
-        assert(self.__length > 0)
-    def __iter__(self) :
+        assert self.__length > 0
+
+    def __iter__(self):
         return self
-    def __next__(self) :
-        if self.__curr >= self.__length :
+
+    def __next__(self):
+        if self.__curr >= self.__length:
             raise StopIteration
         self.__curr += 1
         return random.randrange(self.__start, self.__end, self.__step)
-    
 
-class MonteCarloStrategy(thermo.ThermoStrategy) :
-    def __init__(self) :
+
+class MonteCarloStrategy(thermo.ThermoStrategy):
+    """
+Represents a naïve implementation of the Monte-Carlo simulation.
+"""
+
+    def __init__(self):
         super().__init__()
-        self.__montecarlo = 1000
+        self._montecarlo = 1000
 
-    def setpoints(self, points) :
-        self.__montecarlo = points
+    def setpoints(self, points):
+        """
+Sets the number of points.
+"""
+        self._montecarlo = points
 
-    def getpoints(self) :
-        return self.__montecarlo
+    def getpoints(self):
+        """
+Gets the number of points.
+"""
+        return self._montecarlo
 
-    def partition(self, hamilt : hamiltonian.Hamiltonian, length : int,
-                  temp : float, boltzmann : float) :
-        return 1
+    def partition(
+        self,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+    ):
+        """
+Calculates the partition function.
+"""
+        raise NotImplementedError
 
-    def average(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
-                temp : float, boltzmann : float, *args, **kwargs) :
+    def average(
+        self,
+        func,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+        *args,
+        **kwargs
+    ):
+        """
+Calculates the average value of a function weighted with the Boltzmann distribution.
+"""
         total = 0
         den = 0
-        for i in RandomIterator(self.__montecarlo, 2 ** length) :
-            sp = spins.SpinInteger(i, length)
-            total += func(sp, *args, **kwargs) * \
-                     math.exp(-hamilt.energy(sp) / (boltzmann * temp))
-            den += math.exp(-hamilt.energy(sp) / (boltzmann * temp))
-        return (total / den)
-        
-    def variance(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
-                 temp : float, boltzmann : float, *args, **kwargs) :
-        total1 = 0
-        total2 = 0
-        den = 0
-        for i in RandomIterator(self.__montecarlo, 2 ** length) :
-            sp = spins.SpinInteger(i, length)
-            total1 += func(sp, *args, **kwargs) * \
-                      math.exp(-hamilt.energy(sp) / (boltzmann * temp))
-            total2 += func(sp, *args, **kwargs) ** 2 * \
-                      math.exp(-hamilt.energy(sp) / (boltzmann * temp))
-            den += math.exp(-hamilt.energy(sp) / (boltzmann * temp))
-        return (total2 / den - (total1 / den) ** 2)
-        
-class MetropolisStrategy(thermo.ThermoStrategy) :
-    def __init__(self) :
-        super().__init__()
-        self.__metropolis = 1000
-        self.__depth = 10
-
-    def getdepth(self) :
-        return self.__depth
-    def getpoints(self) :
-        return self.__metropolis
-    def setdepth(self, depth) :
-        self.__depth = depth
-    def setpoints(self, points) :
-        self.__metropolis = points
-
-    def partition(self, hamilt : hamiltonian.Hamiltonian, length : int,
-                  temp : float, boltzmann : float) :
-        return 1
-
-    def average(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
-                temp : float, boltzmann : float, *args, **kwargs) :
-        if length < self.getpoints() :
-            points = length
-        else :
-            points = self.getpoints()
-        total = 0
-        den = 0
-        for i in RandomIterator(points, 2 ** length) :
-            sp = spins.SpinInteger(i, length)
-            energy = hamilt.energy(sp) / (boltzmann * temp)
-            total += func(sp, *args, **kwargs) * math.exp(-energy)
-            den += math.exp(-energy)
-            for _ in range(self.__depth) :
-                for j in range(length) :
-                    sp2 = sp.copy()
-                    sp2.flipbit(j)
-                    en2 = hamilt.energy(sp) / (boltzmann * temp)
-                    diff = energy - en2
-                    total += func(sp2, *args, **kwargs) * math.exp(-en2)
-                    den += math.exp(-en2)
-                    if energy < en2 :
-                        energy = en2
-                        sp = sp2
-                        break
-                    else :
-                        #ln a = diff
-                        #u in [0, 1]
-                        #ln u in (-inf, 0)
-                        if random.random() < math.exp(diff) :
-                            energy = en2
-                            sp = sp2
-                            break
-                        else :
-                            continue
+        for i in RandomIterator(self._montecarlo, 2 ** length):
+            spin = spins.SpinInteger(i, length)
+            total += func(spin, *args, **kwargs) * math.exp(
+                -hamilt.energy(spin) / (boltzmann * temp)
+            )
+            den += math.exp(-hamilt.energy(spin) / (boltzmann * temp))
         return total / den
 
-    def variance(self, func, hamilt : hamiltonian.Hamiltonian, length : int,
-                 temp : float, boltzmann : float, *args, **kwargs) :
-        if length < self.getpoints() :
+    def variance(
+        self,
+        func,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+        *args,
+        **kwargs
+    ):
+        """
+Calculates the variance of a function weighted with the Boltzmann distribution.
+"""
+        total1 = 0
+        total2 = 0
+        den = 0
+        for i in RandomIterator(self._montecarlo, 2 ** length):
+            spin = spins.SpinInteger(i, length)
+            total1 += func(spin, *args, **kwargs) * math.exp(
+                -hamilt.energy(spin) / (boltzmann * temp)
+            )
+            total2 += func(spin, *args, **kwargs) ** 2 * math.exp(
+                -hamilt.energy(spin) / (boltzmann * temp)
+            )
+            den += math.exp(-hamilt.energy(spin) / (boltzmann * temp))
+        return total2 / den - (total1 / den) ** 2
+
+
+class MetropolisStrategy(thermo.ThermoStrategy):
+    """
+Implementation of Metropolis sampling.
+"""
+
+    def __init__(self):
+        super().__init__()
+        self._metropolis = 1000
+        self._depth = 10
+
+    def getdepth(self):
+        """
+Gets the chain depth.
+"""
+        return self._depth
+
+    def getpoints(self):
+        """
+Gets the number of seed points.
+"""
+        return self._metropolis
+
+    def setdepth(self, depth):
+        """
+Sets the chain depth.
+"""
+        self._depth = depth
+
+    def setpoints(self, points):
+        """
+Sets the number of seed points.
+"""
+        self._metropolis = points
+
+    def partition(
+        self,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+    ):
+        """
+Calculates the partition function.
+"""
+        raise NotImplementedError
+
+    def average(
+        self,
+        func,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+        *args,
+        **kwargs
+    ):
+        """
+Calculates the average value of a function weighted with the Boltzmann distribution.
+"""
+        if length < self.getpoints():
             points = length
-        else :
+        else:
+            points = self.getpoints()
+        total = 0
+        den = 0
+        for i in RandomIterator(points, 2 ** length):
+            spin = spins.SpinInteger(i, length)
+            energy = hamilt.energy(spin) / (boltzmann * temp)
+            total += func(spin, *args, **kwargs) * math.exp(-energy)
+            den += math.exp(-energy)
+            for _ in range(self._depth):
+                for j in range(length):
+                    spin2 = spin.copy()
+                    spin2.flipbit(j)
+                    ener2 = hamilt.energy(spin) / (boltzmann * temp)
+                    diff = energy - ener2
+                    total += func(spin2, *args, **kwargs) * math.exp(-ener2)
+                    den += math.exp(-ener2)
+                    if energy < ener2:
+                        energy = ener2
+                        spin = spin2
+                        break
+                    if random.random() < math.exp(diff):
+                        energy = ener2
+                        spin = spin2
+                        break
+        return total / den
+
+    def variance(
+        self,
+        func,
+        hamilt: hamiltonian.Hamiltonian,
+        length: int,
+        temp: float,
+        boltzmann: float,
+        *args,
+        **kwargs
+    ):
+        """
+Calculates the variance of a function weighted with the Boltzmann distribution.
+"""
+        if length < self.getpoints():
+            points = length
+        else:
             points = self.getpoints()
         total1 = 0
         total2 = 0
         den = 0
-        for i in RandomIterator(points, 2 ** length) :
-            sp = spins.SpinInteger(i, length)
-            energy = hamilt.energy(sp) / (boltzmann * temp)
-            total1 += func(sp, *args, **kwargs) * math.exp(-energy)
-            total2 += func(sp, *args, **kwargs) ** 2 * math.exp(-energy)
+        for i in RandomIterator(points, 2 ** length):
+            spin = spins.SpinInteger(i, length)
+            energy = hamilt.energy(spin) / (boltzmann * temp)
+            total1 += func(spin, *args, **kwargs) * math.exp(-energy)
+            total2 += func(spin, *args, **kwargs) ** 2 * math.exp(-energy)
             den += math.exp(-energy)
-            for _ in range(self.__depth) :
-                for j in range(length) :
-                    sp2 = sp.copy()
-                    sp2.flipbit(j)
-                    en2 = hamilt.energy(sp) / (boltzmann * temp)
-                    diff = energy - en2
-                    total1 += func(sp2, *args, **kwargs) * math.exp(-en2)
-                    total2 += func(sp2, *args, **kwargs) ** 2 * math.exp(-en2)
-                    den += math.exp(-en2)
-                    if energy < en2 :
-                        energy = en2
-                        sp = sp2
+            for _ in range(self._depth):
+                for j in range(length):
+                    spin2 = spin.copy()
+                    spin2.flipbit(j)
+                    ener2 = hamilt.energy(spin) / (boltzmann * temp)
+                    diff = energy - ener2
+                    total1 += func(spin2, *args, **kwargs) * math.exp(-ener2)
+                    total2 += func(spin2, *args, **kwargs) ** 2 * math.exp(-ener2)
+                    den += math.exp(-ener2)
+                    if energy < ener2:
+                        energy = ener2
+                        spin = spin2
                         break
-                    else :
-                        #ln a = diff
-                        #u in [0, 1]
-                        #ln u in (-inf, 0)
-                        if random.random() < math.exp(diff) :
-                            energy = en2
-                            sp = sp2
-                            break
-                        else :
-                            continue
+                    if random.random() < math.exp(diff):
+                        energy = ener2
+                        spin = spin2
+                        break
         return total2 / den - (total1 / den) ** 2
-                            
-            
