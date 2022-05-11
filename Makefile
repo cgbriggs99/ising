@@ -1,9 +1,6 @@
 # Get the differing Windows vs. Linux remove commands.
 include ./ising/src/defs.mk
 
-all:
-	$(MAKE) -C ising all
-
 # Clean up the environment.
 .PHONY:clean
 clean:
