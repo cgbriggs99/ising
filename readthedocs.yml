@@ -13,8 +13,8 @@ python:
 
 sphinx:
   builder: html
-  configuration: docs/conf.py
+  configuration: source_docs/conf.py
   
 
 conda:
-  environment: docs/requirements.yaml
+  environment: source_docs/requirements.yaml
